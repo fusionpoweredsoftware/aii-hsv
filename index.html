@@ -80,12 +80,23 @@
       gap: 10px;
       align-items: center;
       justify-content: space-between;
+      position: relative;
+      z-index: 5;
     }
+
+    /* Prevent overlay issues */
+    .event-actions a {
+      position: relative;
+      z-index: 10;
+      pointer-events: auto;
+    }
+
     .primary-button,
     .secondary-link {
       text-decoration: none;
       font-size: 0.9rem;
     }
+
     .primary-button {
       padding: 9px 18px;
       border-radius: 999px;
@@ -98,15 +109,18 @@
       align-items: center;
       gap: 6px;
     }
+
     .primary-button span.icon {
       font-size: 1.05rem;
     }
+
     .secondary-link {
       opacity: 0.75;
     }
     .secondary-link:hover {
       opacity: 1;
     }
+
     @media (min-width: 640px) {
       .event-meta {
         grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
@@ -157,12 +171,15 @@ Nothing formal, no agenda, just good conversation and a place to meet others in 
         <span class="icon">↗</span>
         View original event on Facebook
       </a>
-      <a
-        class="secondary-link"
-        href="mailto:ai_innovators_hsv@proton.me"
-      >
-        Contact
-      </a>
+
+      <div style="position:relative; z-index:20;">
+        <a
+          class="secondary-link"
+          href="mailto:ai_innovators_hsv@proton.me"
+        >
+          Contact
+        </a>
+      </div>
     </section>
   </main>
 </body>
