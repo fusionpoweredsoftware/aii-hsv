@@ -790,42 +790,47 @@
 
     /* Recommended Tools */
     .affiliations {
-      margin-top: 20px;
-      padding-top: 20px;
+      margin-top: 28px;
+      padding-top: 28px;
       border-top: 1px solid var(--border-subtle);
+      text-align: center;
     }
 
     .affiliations-label {
-      font-size: 0.75rem;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 10px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
     }
 
     .affiliations-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      justify-content: center;
+      gap: 12px;
       list-style: none;
     }
 
     .affiliations-list a {
       display: inline-block;
-      padding: 4px 12px;
+      padding: 8px 18px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-secondary);
-      font-size: 0.8rem;
+      background: rgba(139, 92, 246, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      font-weight: 500;
       text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
     }
 
     .affiliations-list a:hover {
       border-color: var(--border-glow);
-      color: var(--text-primary);
+      background: rgba(139, 92, 246, 0.15);
+      transform: translateY(-1px);
     }
 
     /* Netlify success state */
@@ -1288,7 +1293,7 @@
         Empowering the future of AI in the Rocket City.
       </p>
       <div class="affiliations">
-        <div class="affiliations-label">Recommended Tools</div>
+        <div class="affiliations-label">Recommended Tools for Driving AI</div>
         <ul class="affiliations-list">
           <li><a href="https://netlify.com" target="_blank" rel="noopener noreferrer">netlify.com</a></li>
           <li><a href="https://doctorclaw.ai" target="_blank" rel="noopener noreferrer">doctorclaw.ai</a></li>
