@@ -970,7 +970,7 @@
         </p>
       </div>
       <div class="form-wrapper">
-        <form name="registration" method="POST" action="/?success=true#register" data-netlify="true" netlify-honeypot="bot-field">
+        <form name="registration" method="POST" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="registration">
           <p style="display:none;">
             <label>Don't fill this out if you're human: <input name="bot-field"></label>
@@ -1085,32 +1085,44 @@
       });
     });
 
-    // Validate at least one of phone or LinkedIn before native submit
+    // Handle form submission via fetch to prevent 404 redirect on mobile
     var form = document.querySelector('form[name="registration"]');
     form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
       var phone = document.getElementById('phone').value.trim();
       var linkedin = document.getElementById('linkedin').value.trim();
       if (!phone && !linkedin) {
-        e.preventDefault();
         alert('Please provide at least a phone number or LinkedIn profile URL.');
+        return;
       }
-    });
 
-    // Show success message if redirected back after Netlify form submission
-    if (window.location.search.indexOf('success=true') !== -1) {
-      var wrapper = document.querySelector('.form-wrapper');
-      if (wrapper) {
-        wrapper.innerHTML =
-          '<div class="form-success">' +
-          '<h3>You\'re Registered!</h3>' +
-          '<p>Thanks for signing up. We\'ll be in touch with details about upcoming meetups.</p>' +
-          '</div>';
-      }
-      // Clean up the URL
-      if (window.history.replaceState) {
-        window.history.replaceState({}, '', '/#register');
-      }
-    }
+      var submitBtn = form.querySelector('.form-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      var encoded = new URLSearchParams(new FormData(form)).toString();
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encoded
+      })
+        .then(function () {
+          // Netlify processes form data before responding, so any
+          // response (200, 302, 404) means the data was captured
+          document.querySelector('.form-wrapper').innerHTML =
+            '<div class="form-success">' +
+            '<h3>You\'re Registered!</h3>' +
+            '<p>Thanks for signing up. We\'ll be in touch with details about upcoming meetups.</p>' +
+            '</div>';
+        })
+        .catch(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Register';
+          alert('Network error. Please check your connection and try again.');
+        });
+    });
   </script>
 
   <!-- Footer -->
