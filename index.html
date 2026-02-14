@@ -163,6 +163,38 @@
       color: var(--text-primary);
     }
 
+    /* Mobile hamburger menu */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 101;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-primary);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .nav-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
     /* Hero */
     .hero {
       padding: 160px 0 100px;
@@ -622,20 +654,65 @@
     }
 
     @media (max-width: 600px) {
+      .nav-toggle {
+        display: block;
+      }
+
       .nav-links {
-        gap: 16px;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(5, 5, 16, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 16px 24px;
+        gap: 0;
+        border-bottom: 1px solid var(--border-subtle);
       }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links li {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .nav-links li:last-child {
+        border-bottom: none;
+      }
+
       .nav-links a {
-        font-size: 0.82rem;
+        font-size: 1rem;
       }
+
       section {
         padding: 60px 0;
       }
+
       .hero {
         padding: 130px 0 70px;
       }
+
       .form-wrapper {
-        padding: 24px 20px;
+        padding: 24px 16px;
+      }
+
+      .topics-grid,
+      .community-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .focus-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group select,
+      .form-group input {
+        font-size: 16px;
       }
     }
 
@@ -670,6 +747,11 @@
   <nav>
     <div class="nav-inner">
       <a href="#" class="nav-brand">AI Innovators HSV</a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#topics">Topics</a></li>
@@ -908,8 +990,17 @@
               <option value="Email">Email</option>
               <option value="Discord">Discord</option>
               <option value="Facebook">Facebook</option>
+              <option value="LinkedIn">LinkedIn</option>
               <option value="Phone">Phone</option>
             </select>
+          </div>
+          <div class="form-group" id="phone-group" style="display:none;">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="(256) 555-1234">
+          </div>
+          <div class="form-group" id="linkedin-group" style="display:none;">
+            <label for="linkedin">LinkedIn Profile URL</label>
+            <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourname">
           </div>
           <div class="form-group">
             <label for="ai-topic">AI Topic of Interest</label>
@@ -974,6 +1065,65 @@
       </div>
     </div>
   </section>
+
+  <script>
+    // Hamburger menu toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    navToggle.addEventListener('click', function () {
+      navToggle.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+
+    // Close menu when a link is tapped
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navToggle.classList.remove('active');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // Show/hide conditional contact fields
+    const contactSelect = document.getElementById('preferred-contact');
+    const phoneGroup = document.getElementById('phone-group');
+    const linkedinGroup = document.getElementById('linkedin-group');
+
+    contactSelect.addEventListener('change', function () {
+      phoneGroup.style.display = this.value === 'Phone' ? 'block' : 'none';
+      linkedinGroup.style.display = this.value === 'LinkedIn' ? 'block' : 'none';
+
+      document.getElementById('phone').required = this.value === 'Phone';
+      document.getElementById('linkedin').required = this.value === 'LinkedIn';
+    });
+
+    // Handle form submission via fetch to prevent 404
+    const form = document.querySelector('form[name="registration"]');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var formData = new FormData(form);
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      })
+        .then(function (response) {
+          if (response.ok) {
+            document.querySelector('.form-wrapper').innerHTML =
+              '<div class="form-success">' +
+              '<h3>You\'re Registered!</h3>' +
+              '<p>Thanks for signing up. We\'ll be in touch with details about upcoming meetups.</p>' +
+              '</div>';
+          } else {
+            alert('Something went wrong. Please try again.');
+          }
+        })
+        .catch(function () {
+          alert('Network error. Please check your connection and try again.');
+        });
+    });
+  </script>
 
   <!-- Footer -->
   <footer>
