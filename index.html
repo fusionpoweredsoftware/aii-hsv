@@ -716,6 +716,118 @@
       }
     }
 
+    /* Upcoming Events */
+    .events-section {
+      background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .event-card {
+      padding: 32px;
+      border-radius: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s;
+    }
+
+    .event-card:hover {
+      border-color: var(--border-glow);
+    }
+
+    .event-date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      margin-bottom: 16px;
+    }
+
+    .event-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .event-card .event-description {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .event-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .event-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .event-detail .icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Affiliations */
+    .affiliations {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .affiliations-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .affiliations-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .affiliations-list a {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .affiliations-list a:hover {
+      border-color: var(--border-glow);
+      color: var(--text-primary);
+    }
+
     /* Netlify success state */
     .form-success {
       text-align: center;
@@ -754,6 +866,7 @@
       </button>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
+        <li><a href="#events">Events</a></li>
         <li><a href="#topics">Topics</a></li>
         <li><a href="#register">Register</a></li>
         <li><a href="#community">Connect</a></li>
@@ -833,6 +946,48 @@
               <span class="icon">&#127829;</span>
               <div>
                 Pizza is available for early birds &mdash; come early, grab a slice, and settle in!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Events -->
+  <section id="events" class="events-section">
+    <div class="container">
+      <div class="section-label">Upcoming Events</div>
+      <h2 class="section-title">What's Coming Up</h2>
+      <p class="section-desc">
+        Mark your calendar and join us at our next gathering.
+      </p>
+      <div class="events-grid">
+        <div class="event-card">
+          <div class="event-date-badge">&#128197; Friday, February 20, 2026</div>
+          <h3>AI Innovators Dinner Social</h3>
+          <p class="event-description">
+            The AI Innovators of Huntsville are getting together for a casual dinner social.
+            It's a chance to step away from the screen, enjoy some good food, and hang out
+            with folks who share a passion for all things AI. No presentations or slides this
+            time around &mdash; just relaxed conversation with researchers, professionals, students,
+            and anyone curious about where AI is headed. Whether you've been in the field for
+            years or are just starting to explore, you're more than welcome. Connect with
+            Huntsville's AI community over a shared meal.
+          </p>
+          <div class="event-details">
+            <div class="event-detail">
+              <span class="icon">&#128205;</span>
+              <div>
+                <strong>Las Trojas Cantina</strong><br>
+                University Dr, Huntsville, AL
+              </div>
+            </div>
+            <div class="event-detail">
+              <span class="icon">&#127860;</span>
+              <div>
+                <strong>Casual Dinner Social</strong><br>
+                No agenda &mdash; just good food and great conversation
               </div>
             </div>
           </div>
@@ -1132,6 +1287,16 @@
         <span class="footer-brand">AI Innovators of Huntsville</span><br>
         Empowering the future of AI in the Rocket City.
       </p>
+      <div class="affiliations">
+        <div class="affiliations-label">Affiliations</div>
+        <ul class="affiliations-list">
+          <li><a href="https://events.gigaparts.com" target="_blank" rel="noopener noreferrer">events.gigaparts.com</a></li>
+          <li><a href="https://netlify.com" target="_blank" rel="noopener noreferrer">netlify.com</a></li>
+          <li><a href="https://doctorclaw.ai" target="_blank" rel="noopener noreferrer">doctorclaw.ai</a></li>
+          <li><a href="https://middleclaw.com" target="_blank" rel="noopener noreferrer">middleclaw.com</a></li>
+          <li><a href="https://computatron.ai" target="_blank" rel="noopener noreferrer">computatron.ai</a></li>
+        </ul>
+      </div>
     </div>
   </footer>
 </body>
