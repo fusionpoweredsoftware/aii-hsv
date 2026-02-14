@@ -1157,7 +1157,11 @@
             <label for="linkedin">LinkedIn Profile URL</label>
             <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourname">
           </div>
-          <p class="contact-hint" style="font-size:0.8rem;color:var(--text-muted);margin:-12px 0 22px;">Please provide at least a phone number or LinkedIn profile.</p>
+          <div class="form-group" id="discord-group">
+            <label for="discord">Discord Username</label>
+            <input type="text" id="discord" name="discord" placeholder="username#1234">
+          </div>
+          <p class="contact-hint" style="font-size:0.8rem;color:var(--text-muted);margin:-12px 0 22px;">Please provide at least a phone number, LinkedIn profile, or Discord username.</p>
           <div class="form-group">
             <label for="ai-topic">AI Topic of Interest</label>
             <select id="ai-topic" name="ai-topic" required>
@@ -1247,8 +1251,9 @@
 
       var phone = document.getElementById('phone').value.trim();
       var linkedin = document.getElementById('linkedin').value.trim();
-      if (!phone && !linkedin) {
-        alert('Please provide at least a phone number or LinkedIn profile URL.');
+      var discord = document.getElementById('discord').value.trim();
+      if (!phone && !linkedin && !discord) {
+        alert('Please provide at least a phone number, LinkedIn profile URL, or Discord username.');
         return;
       }
 
