@@ -1157,7 +1157,7 @@
             <label for="linkedin">LinkedIn Profile URL</label>
             <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourname">
           </div>
-          <div class="form-group" id="discord-group">
+          <div class="form-group" id="discord-group" style="display:none;">
             <label for="discord">Discord Username</label>
             <input type="text" id="discord" name="discord" placeholder="username#1234">
           </div>
@@ -1242,6 +1242,13 @@
         navToggle.classList.remove('active');
         navLinks.classList.remove('open');
       });
+    });
+
+    // Show/hide Discord username field based on preferred contact selection
+    var contactSelect = document.getElementById('preferred-contact');
+    var discordGroup = document.getElementById('discord-group');
+    contactSelect.addEventListener('change', function () {
+      discordGroup.style.display = this.value === 'Discord' ? '' : 'none';
     });
 
     // Handle form submission via fetch to prevent 404 redirect on mobile
