@@ -299,49 +299,42 @@
       color: var(--text-primary);
     }
 
-    /* CTA */
-    .flyer-cta {
+    /* Find us */
+    .find-us {
       text-align: center;
     }
 
-    .cta-button {
-      display: inline-block;
-      padding: 0.9rem 2.5rem;
+    .find-us-heading {
       font-family: var(--font-heading);
       font-size: 1rem;
       font-weight: 600;
-      color: #fff;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .find-us-url {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
       background: var(--accent-gradient);
-      border: none;
-      border-radius: 12px;
-      text-decoration: none;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 24px rgba(139, 92, 246, 0.3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
     }
 
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
-    }
-
-    .cta-links {
-      margin-top: 1.25rem;
+    .find-us-channels {
       display: flex;
       flex-wrap: wrap;
       gap: 1.5rem;
       justify-content: center;
       font-size: 0.85rem;
-    }
-
-    .cta-links a {
       color: var(--text-secondary);
-      text-decoration: none;
-      transition: color 0.2s;
     }
 
-    .cta-links a:hover {
-      color: var(--accent-cyan);
+    .find-us-channels span {
+      color: var(--text-muted);
     }
 
     /* Footer note */
@@ -489,13 +482,13 @@
         <strong>Pizza provided</strong> for early arrivals &mdash; come hungry, leave inspired.
       </p>
 
-      <!-- CTA -->
-      <div class="flyer-cta">
-        <a href="https://aiihsv.netlify.app/#register" class="cta-button">Register Now</a>
-        <div class="cta-links">
-          <a href="https://www.facebook.com/groups/ai.innovators.hsv/">Facebook Group</a>
-          <a href="https://discord.gg/8kAcKRMBs8">Discord</a>
-          <a href="https://events.gigaparts.com/">Gigaparts Events</a>
+      <!-- Find Us -->
+      <div class="find-us">
+        <div class="find-us-heading">Join Us Online</div>
+        <span class="find-us-url">aiihsv.netlify.app</span>
+        <div class="find-us-channels">
+          <span>Facebook:</span> AI Innovators HSV
+          <span>Discord:</span> discord.gg/8kAcKRMBs8
         </div>
       </div>
     </div>
