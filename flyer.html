@@ -312,28 +312,40 @@
       margin-bottom: 0.75rem;
     }
 
-    .find-us-url {
-      display: block;
-      font-family: var(--font-heading);
-      font-size: 1.15rem;
-      font-weight: 700;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1rem;
-    }
-
-    .find-us-channels {
+    .qr-codes {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 2rem;
       justify-content: center;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
+      margin-top: 0.5rem;
     }
 
-    .find-us-channels span {
+    .qr-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .qr-item img {
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      background: #fff;
+      padding: 6px;
+    }
+
+    .qr-label {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .qr-url {
+      font-size: 0.7rem;
       color: var(--text-muted);
     }
 
@@ -482,13 +494,32 @@
         <strong>Pizza provided</strong> for early arrivals &mdash; come hungry, leave inspired.
       </p>
 
-      <!-- Find Us -->
+      <!-- Find Us / QR Codes -->
       <div class="find-us">
-        <div class="find-us-heading">Join Us Online</div>
-        <span class="find-us-url">aiihsv.netlify.app</span>
-        <div class="find-us-channels">
-          <span>Facebook:</span> AI Innovators HSV
-          <span>Discord:</span> discord.gg/8kAcKRMBs8
+        <div class="find-us-heading">Scan to Connect</div>
+
+        <div class="qr-item" style="margin-bottom: 1.5rem;">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Faiihsv.netlify.app%2F%23register" alt="Register QR Code" style="width: 180px; height: 180px; border-radius: 16px; padding: 10px;">
+          <div class="qr-label" style="font-size: 0.95rem;">Register Now</div>
+          <div class="qr-url">aiihsv.netlify.app/#register</div>
+        </div>
+
+        <div class="qr-codes">
+          <div class="qr-item">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Faiihsv.netlify.app" alt="Website QR Code">
+            <div class="qr-label">Website</div>
+            <div class="qr-url">aiihsv.netlify.app</div>
+          </div>
+          <div class="qr-item">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwww.facebook.com%2Fgroups%2Fai.innovators.hsv%2F" alt="Facebook QR Code">
+            <div class="qr-label">Facebook</div>
+            <div class="qr-url">AI Innovators HSV</div>
+          </div>
+          <div class="qr-item">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fdiscord.gg%2F8kAcKRMBs8" alt="Discord QR Code">
+            <div class="qr-label">Discord</div>
+            <div class="qr-url">discord.gg/8kAcKRMBs8</div>
+          </div>
         </div>
       </div>
     </div>
