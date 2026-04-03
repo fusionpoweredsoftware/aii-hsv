@@ -26,17 +26,17 @@
     }
 
     :root {
-      --bg-primary: #050510;
-      --bg-secondary: rgba(10, 10, 30, 0.85);
-      --bg-card: rgba(15, 15, 40, 0.7);
-      --accent-blue: #3b82f6;
-      --accent-purple: #8b5cf6;
-      --accent-cyan: #06b6d4;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f8fc;
+      --bg-card: #ffffff;
+      --accent-blue: #2563eb;
+      --accent-purple: #7c3aed;
+      --accent-cyan: #0891b2;
       --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
-      --text-primary: #ffffff;
-      --text-secondary: rgba(240, 240, 245, 0.85);
-      --text-muted: rgba(240, 240, 245, 0.75);
-      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-primary: #1a1a2e;
+      --text-secondary: #3a3a5c;
+      --text-muted: #6b6b8a;
+      --border-subtle: rgba(0, 0, 0, 0.1);
       --border-glow: rgba(139, 92, 246, 0.3);
       --font-heading: 'Space Grotesk', system-ui, sans-serif;
       --font-body: 'Inter', system-ui, sans-serif;
@@ -48,7 +48,7 @@
 
     body {
       font-family: var(--font-body);
-      background: var(--bg-primary);
+      background: #ffffff;
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
@@ -59,26 +59,9 @@
       padding: 2rem;
     }
 
-    /* Animated background */
+    /* Background - hidden for print-friendly design */
     .bg-grid {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background-image:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59, 130, 246, 0.12), transparent),
-        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(139, 92, 246, 0.08), transparent),
-        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(6, 182, 212, 0.06), transparent);
-      pointer-events: none;
-    }
-
-    .bg-grid::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 60px 60px;
+      display: none;
     }
 
     /* Floating particles */
@@ -109,14 +92,11 @@
       z-index: 1;
       width: 8.5in;
       max-height: 11in;
-      background: var(--bg-card);
+      background: #ffffff;
       border: 1px solid var(--border-subtle);
       border-radius: 24px;
       overflow: hidden;
-      backdrop-filter: blur(20px);
-      box-shadow:
-        0 0 60px rgba(139, 92, 246, 0.1),
-        0 0 120px rgba(59, 130, 246, 0.05);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     }
 
     /* Top accent bar */
@@ -140,7 +120,7 @@
       height: 56px;
       border-radius: 12px;
       margin: 0 auto 0.4rem;
-      box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
     }
 
     .flyer-org {
@@ -171,8 +151,8 @@
       border-radius: 100px;
       font-size: 1rem;
       font-weight: 600;
-      background: rgba(139, 92, 246, 0.15);
-      border: 1px solid rgba(139, 92, 246, 0.3);
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid rgba(124, 58, 237, 0.25);
       color: var(--accent-purple);
     }
 
@@ -184,8 +164,8 @@
       justify-content: center;
       padding: 0.6rem 1.25rem;
       margin-bottom: 0.75rem;
-      background: rgba(59, 130, 246, 0.06);
-      border: 1px solid rgba(59, 130, 246, 0.12);
+      background: rgba(37, 99, 235, 0.05);
+      border: 1px solid rgba(37, 99, 235, 0.15);
       border-radius: 16px;
     }
 
@@ -229,7 +209,7 @@
       padding: 0.5rem 1.1rem;
       border-radius: 12px;
       border: 1px solid var(--border-subtle);
-      background: rgba(10, 10, 30, 0.5);
+      background: #f9f9fd;
       transition: border-color 0.3s;
     }
 
@@ -251,15 +231,15 @@
     }
 
     .talk-card:first-child .talk-number {
-      background: rgba(59, 130, 246, 0.15);
+      background: rgba(37, 99, 235, 0.1);
       color: var(--accent-blue);
-      border: 1px solid rgba(59, 130, 246, 0.3);
+      border: 1px solid rgba(37, 99, 235, 0.25);
     }
 
     .talk-card:last-child .talk-number {
-      background: rgba(6, 182, 212, 0.15);
+      background: rgba(8, 145, 178, 0.1);
       color: var(--accent-cyan);
-      border: 1px solid rgba(6, 182, 212, 0.3);
+      border: 1px solid rgba(8, 145, 178, 0.25);
     }
 
     .talk-type {
@@ -295,7 +275,7 @@
     /* Divider */
     .divider {
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
+      background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.25), transparent);
       margin-bottom: 0.35rem;
     }
 
@@ -360,7 +340,7 @@
     .flyer-footer {
       text-align: center;
       padding: 0.4rem 2rem;
-      background: rgba(5, 5, 16, 0.5);
+      background: #f4f4f8;
       border-top: 1px solid var(--border-subtle);
     }
 
@@ -401,7 +381,7 @@
 
     @media print {
       body {
-        background: #0a0a1e;
+        background: #ffffff;
         padding: 0;
         min-height: auto;
       }
@@ -503,7 +483,7 @@
 
       <!-- Pizza note -->
       <p class="pizza-note">
-        <strong>Pizza provided</strong> for early arrivals &mdash; come hungry, leave inspired.
+        🍕 <strong>Pizza provided</strong> for early arrivals &mdash; come hungry, leave inspired. 🍕
       </p>
 
       <!-- Find Us / QR Codes -->
