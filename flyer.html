@@ -33,9 +33,9 @@
       --accent-purple: #8b5cf6;
       --accent-cyan: #06b6d4;
       --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
-      --text-primary: #f0f0f5;
-      --text-secondary: rgba(240, 240, 245, 0.7);
-      --text-muted: rgba(240, 240, 245, 0.5);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(240, 240, 245, 0.85);
+      --text-muted: rgba(240, 240, 245, 0.75);
       --border-subtle: rgba(255, 255, 255, 0.08);
       --border-glow: rgba(139, 92, 246, 0.3);
       --font-heading: 'Space Grotesk', system-ui, sans-serif;
@@ -126,7 +126,7 @@
     }
 
     .flyer-content {
-      padding: 1.5rem 2rem;
+      padding: 1.25rem 1.75rem;
     }
 
     /* Header */
@@ -145,8 +145,8 @@
 
     .flyer-org {
       font-family: var(--font-heading);
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       background: var(--accent-gradient);
@@ -158,7 +158,7 @@
 
     .flyer-title {
       font-family: var(--font-heading);
-      font-size: 1.9rem;
+      font-size: 2.6rem;
       font-weight: 700;
       line-height: 1.15;
       color: var(--text-primary);
@@ -167,10 +167,10 @@
 
     .flyer-badge {
       display: inline-block;
-      padding: 0.3rem 1rem;
+      padding: 0.35rem 1.1rem;
       border-radius: 100px;
-      font-size: 0.8rem;
-      font-weight: 500;
+      font-size: 1rem;
+      font-weight: 600;
       background: rgba(139, 92, 246, 0.15);
       border: 1px solid rgba(139, 92, 246, 0.3);
       color: var(--accent-purple);
@@ -193,26 +193,27 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.85rem;
+      font-size: 1rem;
     }
 
     .meta-icon {
-      width: 16px;
-      height: 16px;
+      width: 22px;
+      height: 22px;
       flex-shrink: 0;
       color: var(--accent-cyan);
     }
 
     .meta-label {
       color: var(--text-muted);
-      font-size: 0.65rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      font-weight: 600;
     }
 
     .meta-value {
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: var(--text-primary);
     }
 
@@ -238,14 +239,14 @@
 
     .talk-number {
       display: inline-block;
-      width: 26px;
-      height: 26px;
-      line-height: 26px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
       text-align: center;
       border-radius: 8px;
       font-family: var(--font-heading);
       font-weight: 700;
-      font-size: 0.75rem;
+      font-size: 0.9rem;
       margin-bottom: 0.4rem;
     }
 
@@ -262,8 +263,8 @@
     }
 
     .talk-type {
-      font-size: 0.7rem;
-      font-weight: 600;
+      font-size: 0.85rem;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--text-muted);
@@ -272,21 +273,21 @@
 
     .talk-title {
       font-family: var(--font-heading);
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-size: 1.35rem;
+      font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 0.25rem;
     }
 
     .talk-speaker {
-      font-size: 0.85rem;
+      font-size: 1.05rem;
       color: var(--accent-purple);
-      font-weight: 500;
+      font-weight: 600;
       margin-bottom: 0.35rem;
     }
 
     .talk-desc {
-      font-size: 0.8rem;
+      font-size: 1rem;
       color: var(--text-secondary);
       line-height: 1.45;
     }
@@ -301,13 +302,15 @@
     /* Pizza note */
     .pizza-note {
       text-align: center;
-      font-size: 0.85rem;
+      font-size: 1.1rem;
       color: var(--text-secondary);
       margin-bottom: 0.75rem;
+      font-weight: 500;
     }
 
     .pizza-note strong {
       color: var(--text-primary);
+      font-weight: 700;
     }
 
     /* Find us */
@@ -317,8 +320,8 @@
 
     .find-us-heading {
       font-family: var(--font-heading);
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 0.5rem;
     }
@@ -331,8 +334,8 @@
     }
 
     .qr-item img {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       border-radius: 10px;
       background: #fff;
       padding: 5px;
@@ -340,16 +343,17 @@
 
     .qr-label {
       font-family: var(--font-heading);
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 700;
       color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
     .qr-url {
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     /* Footer note */
@@ -361,7 +365,8 @@
     }
 
     .flyer-footer p {
-      font-size: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 500;
       color: var(--text-muted);
     }
 
@@ -409,10 +414,36 @@
         box-shadow: none;
         max-width: 100%;
         border-radius: 0;
+        border: none;
       }
 
       .flyer-content {
-        padding: 1.5rem 2rem;
+        padding: 1rem 1.5rem;
+      }
+
+      .flyer-title {
+        font-size: 2.8rem;
+      }
+
+      .flyer-org {
+        font-size: 1.2rem;
+      }
+
+      .meta-value {
+        font-size: 1.15rem;
+      }
+
+      .talk-title {
+        font-size: 1.4rem;
+      }
+
+      .talk-desc {
+        font-size: 1rem;
+      }
+
+      .qr-item img {
+        width: 130px;
+        height: 130px;
       }
     }
   </style>
