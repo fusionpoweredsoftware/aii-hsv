@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Innovators of Huntsville - April 2026 Event Flyer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join AI Innovators of Huntsville on Friday, April 10 for a talk on RAG by Dhanur Sharma and a live demo of Wanda, a voice assistant that navigates the web.">
+
+  <meta property="og:title" content="AI Innovators of Huntsville - April Meetup">
+  <meta property="og:description" content="RAG talk by Dhanur Sharma + Wanda voice assistant demo. Friday, April 10 at 6 PM at Gigaparts.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aiihsv.netlify.app/flyer.html">
+  <meta property="og:image" content="https://aiihsv.netlify.app/event-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #050510;
+      --bg-secondary: rgba(10, 10, 30, 0.85);
+      --bg-card: rgba(15, 15, 40, 0.7);
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --accent-cyan: #06b6d4;
+      --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+      --text-primary: #f0f0f5;
+      --text-secondary: rgba(240, 240, 245, 0.7);
+      --text-muted: rgba(240, 240, 245, 0.5);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(139, 92, 246, 0.3);
+      --font-heading: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    /* Animated background */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59, 130, 246, 0.12), transparent),
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(139, 92, 246, 0.08), transparent),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(6, 182, 212, 0.06), transparent);
+      pointer-events: none;
+    }
+
+    .bg-grid::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Floating particles */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.4;
+      animation: float linear infinite;
+    }
+
+    .particle:nth-child(1) { width: 4px; height: 4px; background: var(--accent-blue); left: 10%; animation-duration: 18s; }
+    .particle:nth-child(2) { width: 6px; height: 6px; background: var(--accent-purple); left: 30%; animation-duration: 22s; animation-delay: -5s; }
+    .particle:nth-child(3) { width: 3px; height: 3px; background: var(--accent-cyan); left: 55%; animation-duration: 20s; animation-delay: -8s; }
+    .particle:nth-child(4) { width: 5px; height: 5px; background: var(--accent-blue); left: 75%; animation-duration: 25s; animation-delay: -3s; }
+    .particle:nth-child(5) { width: 4px; height: 4px; background: var(--accent-purple); left: 90%; animation-duration: 19s; animation-delay: -10s; }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Flyer container */
+    .flyer {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 0 60px rgba(139, 92, 246, 0.1),
+        0 0 120px rgba(59, 130, 246, 0.05);
+    }
+
+    /* Top accent bar */
+    .flyer-accent {
+      height: 4px;
+      background: var(--accent-gradient);
+    }
+
+    .flyer-content {
+      padding: 3rem 2.5rem;
+    }
+
+    /* Header */
+    .flyer-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .flyer-org {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+
+    .flyer-title {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .flyer-badge {
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: var(--accent-purple);
+    }
+
+    /* Date & location bar */
+    .flyer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+      background: rgba(59, 130, 246, 0.06);
+      border: 1px solid rgba(59, 130, 246, 0.12);
+      border-radius: 16px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .meta-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--accent-cyan);
+    }
+
+    .meta-label {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .meta-value {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Featured talks */
+    .talks {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .talk-card {
+      padding: 1.75rem;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 10, 30, 0.5);
+      transition: border-color 0.3s;
+    }
+
+    .talk-card:hover {
+      border-color: var(--border-glow);
+    }
+
+    .talk-number {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      border-radius: 10px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .talk-card:first-child .talk-number {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--accent-blue);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .talk-card:last-child .talk-number {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+
+    .talk-type {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .talk-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .talk-speaker {
+      font-size: 0.95rem;
+      color: var(--accent-purple);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .talk-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
+      margin-bottom: 2rem;
+    }
+
+    /* Pizza note */
+    .pizza-note {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .pizza-note strong {
+      color: var(--text-primary);
+    }
+
+    /* Find us */
+    .find-us {
+      text-align: center;
+    }
+
+    .find-us-heading {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .find-us-url {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .find-us-channels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .find-us-channels span {
+      color: var(--text-muted);
+    }
+
+    /* Footer note */
+    .flyer-footer {
+      text-align: center;
+      padding: 1.25rem 2.5rem;
+      background: rgba(5, 5, 16, 0.5);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .flyer-footer p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      .flyer-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .flyer-title {
+        font-size: 1.8rem;
+      }
+
+      .flyer-meta {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .talk-title {
+        font-size: 1.2rem;
+      }
+
+      .flyer-footer {
+        padding: 1rem 1.5rem;
+      }
+    }
+
+    @media print {
+      body {
+        background: #0a0a1e;
+        padding: 0;
+      }
+
+      .bg-grid, .particle {
+        display: none;
+      }
+
+      .flyer {
+        box-shadow: none;
+        max-width: 100%;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+
+  <div class="flyer">
+    <div class="flyer-accent"></div>
+
+    <div class="flyer-content">
+      <!-- Header -->
+      <div class="flyer-header">
+        <div class="flyer-org">AI Innovators of Huntsville</div>
+        <h1 class="flyer-title">April Monthly Meetup</h1>
+        <span class="flyer-badge">Two Featured Presentations</span>
+      </div>
+
+      <!-- Date & Location -->
+      <div class="flyer-meta">
+        <div class="meta-item">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <div>
+            <div class="meta-label">Date</div>
+            <div class="meta-value">Friday, April 10, 2026</div>
+          </div>
+        </div>
+        <div class="meta-item">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <div>
+            <div class="meta-label">Time</div>
+            <div class="meta-value">6:00 PM</div>
+          </div>
+        </div>
+        <div class="meta-item">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <div>
+            <div class="meta-label">Location</div>
+            <div class="meta-value">Gigaparts &middot; Huntsville, AL</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Talks -->
+      <div class="talks">
+        <div class="talk-card">
+          <div class="talk-number">1</div>
+          <div class="talk-type">Presentation</div>
+          <div class="talk-title">Retrieval-Augmented Generation (RAG)</div>
+          <div class="talk-speaker">Dhanur Sharma</div>
+          <p class="talk-desc">
+            Discover how RAG combines the power of large language models with external knowledge retrieval to produce more accurate, grounded, and up-to-date AI responses. Learn the architecture, real-world applications, and best practices.
+          </p>
+        </div>
+
+        <div class="talk-card">
+          <div class="talk-number">2</div>
+          <div class="talk-type">Live Demo</div>
+          <div class="talk-title">Wanda &mdash; Voice Assistant That Navigates the Web</div>
+          <p class="talk-desc">
+            Meet Wanda, an AI-powered voice assistant that can browse, search, and interact with websites using natural language commands. See a live demonstration of hands-free web navigation in action.
+          </p>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Pizza note -->
+      <p class="pizza-note">
+        <strong>Pizza provided</strong> for early arrivals &mdash; come hungry, leave inspired.
+      </p>
+
+      <!-- Find Us -->
+      <div class="find-us">
+        <div class="find-us-heading">Join Us Online</div>
+        <span class="find-us-url">aiihsv.netlify.app</span>
+        <div class="find-us-channels">
+          <span>Facebook:</span> AI Innovators HSV
+          <span>Discord:</span> discord.gg/8kAcKRMBs8
+        </div>
+      </div>
+    </div>
+
+    <div class="flyer-footer">
+      <p>AI Innovators of Huntsville &middot; Every 2nd Friday at Gigaparts &middot; All skill levels welcome</p>
+    </div>
+  </div>
+</body>
+</html>
