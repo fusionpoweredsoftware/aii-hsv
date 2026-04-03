@@ -12,7 +12,7 @@
   <meta property="og:url" content="https://aiihsv.netlify.app/flyer.html">
   <meta property="og:image" content="https://aiihsv.netlify.app/event-image.png">
 
-  <link rel="icon" type="image/webp" href="small-ai-innovators-icon.webp">
+  <link rel="icon" type="image/png" href="aiihsv-logo-complete-icon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -107,7 +107,7 @@
       transform: translate(-50%, -50%);
       width: 90%;
       height: 90%;
-      background: url('BLACK-on-TRANSPARENT-ai-logo.png') center center / contain no-repeat;
+      background: url('aiihsv-logo-complete-watermark.png') center center / contain no-repeat;
       opacity: 0.06;
       pointer-events: none;
       z-index: 1;
@@ -120,13 +120,13 @@
     }
 
     .flyer-content {
-      padding: 1rem 1.75rem;
+      padding: 0.6rem 1.75rem;
     }
 
     /* Header */
     .flyer-header {
       text-align: center;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.4rem;
     }
 
     .flyer-header-icon {
@@ -176,8 +176,8 @@
       flex-wrap: wrap;
       gap: 1.25rem;
       justify-content: center;
-      padding: 0.6rem 1.25rem;
-      margin-bottom: 0.6rem;
+      padding: 0.4rem 1.25rem;
+      margin-bottom: 0.4rem;
       background: rgba(200, 200, 225, 0.5);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
@@ -215,13 +215,13 @@
     .talks {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-      margin-bottom: 0.6rem;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
     }
 
     .talk-card {
-      padding: 0.5rem 1.1rem;
-      border-radius: 12px;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
       border: 1px solid var(--border-subtle);
       background: rgba(200, 200, 225, 0.5);
       transition: border-color 0.3s;
@@ -233,15 +233,15 @@
 
     .talk-number {
       display: inline-block;
-      width: 28px;
-      height: 28px;
-      line-height: 28px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
       text-align: center;
-      border-radius: 8px;
+      border-radius: 6px;
       font-family: var(--font-heading);
       font-weight: 700;
-      font-size: 0.85rem;
-      margin-bottom: 0.15rem;
+      font-size: 0.8rem;
+      margin-bottom: 0;
     }
 
     .talk-card:first-child .talk-number {
@@ -250,40 +250,47 @@
       border: 1px solid rgba(37, 99, 235, 0.75);
     }
 
-    .talk-card:last-child .talk-number {
+    .talk-card:nth-child(2) .talk-number {
       background: rgba(8, 145, 178, 0.1);
       color: var(--accent-cyan);
       border: 1px solid rgba(8, 145, 178, 0.75);
     }
 
+    .talk-card:nth-child(3) .talk-number {
+      background: rgba(124, 58, 237, 0.1);
+      color: var(--accent-purple);
+      border: 1px solid rgba(124, 58, 237, 0.75);
+    }
+
     .talk-type {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--text-muted);
-      margin-bottom: 0.1rem;
+      margin-bottom: 0;
     }
 
     .talk-title {
       font-family: var(--font-heading);
-      font-size: 1.35rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 0.15rem;
+      margin-bottom: 0;
     }
 
     .talk-speaker {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       color: var(--accent-purple);
       font-weight: 600;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0;
     }
 
     .talk-desc {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--text-secondary);
-      line-height: 1.3;
+      line-height: 1.25;
+      margin: 0;
     }
 
     /* Divider */
@@ -430,10 +437,10 @@
     <div class="flyer-content">
       <!-- Header -->
       <div class="flyer-header">
-        <img src="WHITE-on-DARKBLUE-ai-logo.png" alt="AI Innovators of Huntsville" class="flyer-header-icon">
+        <img src="aiihsv-logo-complete-bg.png" alt="AI Innovators of Huntsville" class="flyer-header-icon">
         <div class="flyer-org">AI Innovators of Huntsville</div>
         <h1 class="flyer-title">April Monthly Meetup</h1>
-        <span class="flyer-badge">Two Featured Presentations</span>
+        <span class="flyer-badge">Featured Presentations + Open Mic</span>
       </div>
 
       <!-- Date & Location -->
@@ -492,6 +499,15 @@
             Meet Wanda, an AI-powered voice assistant that can browse, search, and interact with websites using natural language commands. See a live demonstration of hands-free web navigation in action.
           </p>
         </div>
+
+        <div class="talk-card">
+          <div class="talk-number">3</div>
+          <div class="talk-type">Open Mic</div>
+          <div class="talk-title">Your Presentation Here</div>
+          <p class="talk-desc">
+            Have something interesting worth showing? Visitors are welcome to present! Bring a demo, a project, or a topic you're passionate about and share it with the group.
+          </p>
+        </div>
       </div>
 
       <!-- Divider -->
@@ -499,7 +515,7 @@
 
       <!-- Pizza note -->
       <p class="pizza-note">
-        🍕 <strong>Pizza provided</strong> for early arrivals &mdash; come hungry, leave inspired. 🍕
+        🍕 <strong>Pizza provided</strong> for early arrivals. 🍕
       </p>
 
       <!-- Find Us / QR Codes -->
