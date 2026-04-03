@@ -124,13 +124,13 @@
     }
 
     .flyer-content {
-      padding: 3rem 2.5rem;
+      padding: 2rem 2.5rem;
     }
 
     /* Header */
     .flyer-header {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.5rem;
     }
 
     .flyer-org {
@@ -143,16 +143,16 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
     .flyer-title {
       font-family: var(--font-heading);
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 700;
       line-height: 1.15;
       color: var(--text-primary);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .flyer-badge {
@@ -172,8 +172,8 @@
       flex-wrap: wrap;
       gap: 1.5rem;
       justify-content: center;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 2.5rem;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
       background: rgba(59, 130, 246, 0.06);
       border: 1px solid rgba(59, 130, 246, 0.12);
       border-radius: 16px;
@@ -209,12 +209,12 @@
     .talks {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .talk-card {
-      padding: 1.75rem;
+      padding: 1.25rem 1.5rem;
       border-radius: 16px;
       border: 1px solid var(--border-subtle);
       background: rgba(10, 10, 30, 0.5);
@@ -235,7 +235,7 @@
       font-family: var(--font-heading);
       font-weight: 700;
       font-size: 0.85rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.6rem;
     }
 
     .talk-card:first-child .talk-number {
@@ -261,38 +261,38 @@
 
     .talk-title {
       font-family: var(--font-heading);
-      font-size: 1.4rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: var(--text-primary);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.35rem;
     }
 
     .talk-speaker {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: var(--accent-purple);
       font-weight: 500;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
     .talk-desc {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--text-secondary);
-      line-height: 1.65;
+      line-height: 1.55;
     }
 
     /* Divider */
     .divider {
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
     }
 
     /* Pizza note */
     .pizza-note {
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: var(--text-secondary);
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
     }
 
     .pizza-note strong {
@@ -387,6 +387,7 @@
       body {
         background: #0a0a1e;
         padding: 0;
+        min-height: auto;
       }
 
       .bg-grid, .particle {
@@ -397,6 +398,10 @@
         box-shadow: none;
         max-width: 100%;
         border-radius: 0;
+      }
+
+      .flyer-content {
+        padding: 1.5rem 2rem;
       }
     }
   </style>
@@ -490,9 +495,9 @@
       <div class="find-us">
         <div class="find-us-heading">Scan to Connect</div>
 
-        <div class="qr-item" style="margin-bottom: 1.5rem;">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Faiihsv.netlify.app%2F%23register" alt="Register QR Code" style="width: 180px; height: 180px; border-radius: 16px; padding: 10px;">
-          <div class="qr-label" style="font-size: 0.95rem;">Register Now</div>
+        <div class="qr-item" style="margin-bottom: 1rem;">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Faiihsv.netlify.app%2F%23register" alt="Register QR Code" style="width: 130px; height: 130px; border-radius: 12px; padding: 8px;">
+          <div class="qr-label" style="font-size: 0.85rem;">Register Now</div>
           <div class="qr-url">aiihsv.netlify.app/#register</div>
         </div>
 
