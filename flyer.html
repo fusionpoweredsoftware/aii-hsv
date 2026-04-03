@@ -36,7 +36,7 @@
       --text-primary: #1a1a2e;
       --text-secondary: #3a3a5c;
       --text-muted: #6b6b8a;
-      --border-subtle: rgba(0, 0, 0, 0.1);
+      --border-subtle: rgba(0, 0, 0, 0.25);
       --border-glow: rgba(139, 92, 246, 0.3);
       --font-heading: 'Space Grotesk', system-ui, sans-serif;
       --font-body: 'Inter', system-ui, sans-serif;
@@ -107,6 +107,26 @@
 
     .flyer-content {
       padding: 1rem 1.75rem;
+      position: relative;
+    }
+
+    .flyer-content::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70%;
+      height: 80%;
+      background: url('transparent-head.png') center center / contain no-repeat;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .flyer-content > * {
+      position: relative;
+      z-index: 1;
     }
 
     /* Header */
@@ -152,7 +172,7 @@
       font-size: 1rem;
       font-weight: 600;
       background: rgba(124, 58, 237, 0.1);
-      border: 1px solid rgba(124, 58, 237, 0.25);
+      border: 1px solid rgba(124, 58, 237, 0.4);
       color: var(--accent-purple);
     }
 
@@ -165,7 +185,7 @@
       padding: 0.6rem 1.25rem;
       margin-bottom: 0.75rem;
       background: rgba(37, 99, 235, 0.05);
-      border: 1px solid rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(37, 99, 235, 0.3);
       border-radius: 16px;
     }
 
@@ -233,13 +253,13 @@
     .talk-card:first-child .talk-number {
       background: rgba(37, 99, 235, 0.1);
       color: var(--accent-blue);
-      border: 1px solid rgba(37, 99, 235, 0.25);
+      border: 1px solid rgba(37, 99, 235, 0.4);
     }
 
     .talk-card:last-child .talk-number {
       background: rgba(8, 145, 178, 0.1);
       color: var(--accent-cyan);
-      border: 1px solid rgba(8, 145, 178, 0.25);
+      border: 1px solid rgba(8, 145, 178, 0.4);
     }
 
     .talk-type {
