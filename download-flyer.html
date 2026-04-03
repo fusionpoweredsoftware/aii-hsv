@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download Flyer - AI Innovators of Huntsville</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #050510;
+      color: #f0f0f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 480px;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 1.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      color: rgba(240, 240, 245, 0.6);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .status {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: rgba(240, 240, 245, 0.5);
+      min-height: 1.4em;
+    }
+
+    /* Hidden off-screen render area */
+    .render-area {
+      position: fixed;
+      left: -9999px;
+      top: 0;
+      width: 800px;
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Download Event Flyer</h1>
+    <p>Generate a high-quality PDF that looks exactly like the web version of the flyer.</p>
+    <button class="btn" id="downloadBtn" onclick="generatePDF()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Download PDF
+    </button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="render-area" id="renderArea"></div>
+
+  <script>
+    // Wait for libraries to be available
+    function waitForLibs() {
+      return new Promise((resolve, reject) => {
+        let attempts = 0;
+        const check = () => {
+          if (window.html2canvas && (window.jspdf || window.jsPDF)) {
+            resolve();
+          } else if (attempts++ > 50) {
+            reject(new Error('Libraries failed to load. Check your internet connection.'));
+          } else {
+            setTimeout(check, 200);
+          }
+        };
+        check();
+      });
+    }
+
+    async function generatePDF() {
+      const btn = document.getElementById('downloadBtn');
+      const status = document.getElementById('status');
+      const renderArea = document.getElementById('renderArea');
+
+      btn.disabled = true;
+      status.textContent = 'Loading libraries...';
+
+      await waitForLibs();
+
+      status.textContent = 'Loading flyer content...';
+
+      try {
+        // Fetch flyer.html and extract its content
+        const response = await fetch('flyer.html');
+        const html = await response.text();
+
+        // Parse the flyer HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        // Extract styles
+        const styles = doc.querySelectorAll('style');
+        const links = doc.querySelectorAll('link[rel="stylesheet"], link[rel="preconnect"]');
+
+        // Build a self-contained render container
+        renderArea.innerHTML = '';
+
+        // Create a shadow-like container with full flyer styling
+        const wrapper = document.createElement('div');
+        wrapper.id = 'flyer-render';
+
+        // Add Google Fonts links to main document head if not present
+        links.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href && !document.querySelector(`link[href="${href}"]`)) {
+            const newLink = link.cloneNode(true);
+            document.head.appendChild(newLink);
+          }
+        });
+
+        // Build style block with flyer styles scoped to our render container
+        let styleText = '';
+        styles.forEach(s => { styleText += s.textContent; });
+
+        // Override body styles to apply to our wrapper instead, and set a
+        // fixed width so the capture is consistent
+        const scopedStyle = document.createElement('style');
+        scopedStyle.textContent = styleText + `
+          #flyer-render {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #050510;
+            color: #f0f0f5;
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            width: 800px;
+            position: relative;
+          }
+          #flyer-render .bg-grid {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+          }
+          #flyer-render .particle {
+            display: none;
+          }
+          #flyer-render .flyer {
+            position: relative;
+            z-index: 1;
+          }
+        `;
+        wrapper.appendChild(scopedStyle);
+
+        // Copy the body content from the flyer
+        const bodyContent = doc.body.innerHTML;
+        const contentDiv = document.createElement('div');
+        contentDiv.innerHTML = bodyContent;
+        // Move children into wrapper
+        while (contentDiv.firstChild) {
+          wrapper.appendChild(contentDiv.firstChild);
+        }
+
+        renderArea.appendChild(wrapper);
+        renderArea.style.visibility = 'visible';
+
+        // Wait for fonts & images to load
+        status.textContent = 'Waiting for fonts and images...';
+        await document.fonts.ready;
+
+        // Give images and QR codes time to load
+        const images = renderArea.querySelectorAll('img');
+        await Promise.all(Array.from(images).map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        }));
+
+        // Small extra delay for rendering to settle
+        await new Promise(r => setTimeout(r, 500));
+
+        status.textContent = 'Capturing flyer...';
+
+        // Use html2canvas to capture
+        const canvas = await html2canvas(wrapper, {
+          backgroundColor: '#050510',
+          scale: 2, // 2x for high quality
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          width: 800,
+          windowWidth: 800,
+        });
+
+        status.textContent = 'Generating PDF...';
+
+        // Calculate PDF dimensions to match the aspect ratio
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+
+        // Use letter size as base, scale to fit
+        const jsPDFModule = window.jspdf || window.jsPDF;
+        if (!jsPDFModule) {
+          throw new Error('jsPDF library failed to load. Check your internet connection and try again.');
+        }
+        const jsPDF = jsPDFModule.jsPDF || jsPDFModule;
+        const pdfWidth = 8.5; // inches
+        const pdfHeight = (imgHeight / imgWidth) * pdfWidth;
+
+        const pdf = new jsPDF({
+          orientation: pdfHeight > pdfWidth ? 'portrait' : 'landscape',
+          unit: 'in',
+          format: [pdfWidth, pdfHeight],
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('aii-hsv-april-2026-flyer.pdf');
+
+        status.textContent = 'Download complete!';
+
+        // Clean up
+        renderArea.innerHTML = '';
+        renderArea.style.visibility = 'hidden';
+
+      } catch (err) {
+        console.error(err);
+        status.textContent = 'Error: ' + err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
