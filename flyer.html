@@ -17,6 +17,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
 
   <style>
     *, *::before, *::after {
@@ -419,6 +421,37 @@
       }
     }
 
+    /* Download button */
+    .download-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .download-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .download-btn:active { transform: translateY(0); }
+    .download-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .download-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
     @media print {
       body {
         background: #ffffff;
@@ -436,6 +469,10 @@
         max-height: none;
         border-radius: 0;
         border: none;
+      }
+
+      .download-btn {
+        display: none;
       }
     }
   </style>
@@ -552,5 +589,71 @@
       <p>AI Innovators of Huntsville &middot; Every 2nd Friday at Gigaparts &middot; All skill levels welcome</p>
     </div>
   </div>
+
+  <button class="download-btn" id="downloadBtn" onclick="generatePDF()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    Download Flyer
+  </button>
+
+  <script>
+    async function generatePDF() {
+      const btn = document.getElementById('downloadBtn');
+      const flyer = document.querySelector('.flyer');
+
+      btn.disabled = true;
+      btn.textContent = 'Generating...';
+
+      try {
+        // Wait for libraries
+        if (!window.html2canvas || !(window.jspdf || window.jsPDF)) {
+          throw new Error('Libraries failed to load. Check your internet connection.');
+        }
+
+        await document.fonts.ready;
+
+        // Hide the button during capture
+        btn.style.display = 'none';
+
+        const canvas = await html2canvas(flyer, {
+          backgroundColor: '#ffffff',
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+        });
+
+        // Show the button again
+        btn.style.display = '';
+
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        const pdfWidth = 8.5;
+        const pdfHeight = (imgHeight / imgWidth) * pdfWidth;
+
+        const jsPDFModule = window.jspdf || window.jsPDF;
+        const jsPDF = jsPDFModule.jsPDF || jsPDFModule;
+
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'in',
+          format: [pdfWidth, pdfHeight],
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('aii-hsv-april-2026-flyer.pdf');
+      } catch (err) {
+        console.error(err);
+        alert('Error generating PDF: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download Flyer';
+      }
+    }
+  </script>
 </body>
 </html>
