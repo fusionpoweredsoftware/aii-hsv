@@ -181,8 +181,7 @@
       flex-direction: column;
       justify-content: center;
       text-align: left;
-      min-width: 0;
-      overflow: hidden;
+      width: fit-content;
     }
 
     .flyer-brand-text span {
@@ -194,6 +193,13 @@
       color: #0a0a2e;
       display: block;
       white-space: nowrap;
+    }
+
+    .flyer-brand-text .brand-letters {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      white-space: normal;
     }
 
     .flyer-title {
@@ -535,7 +541,7 @@
           <div class="flyer-brand-ai">AI</div>
           <div class="flyer-brand-text">
             <span>Innovators of</span>
-            <span>Huntsville</span>
+            <span class="brand-letters" aria-label="Huntsville"><i>H</i><i>u</i><i>n</i><i>t</i><i>s</i><i>v</i><i>i</i><i>l</i><i>l</i><i>e</i></span>
           </div>
         </div>
         <h1 class="flyer-title">April Monthly Meetup &mdash; Featured Presentations + Open Mic</h1>
@@ -644,30 +650,6 @@
   </button>
 
   <script>
-    // Match HUNTSVILLE width to INNOVATORS OF via letter-spacing
-    document.fonts.ready.then(function() {
-      const spans = document.querySelectorAll('.flyer-brand-text span');
-      if (spans.length < 2) return;
-      const topSpan = spans[0];
-      const botSpan = spans[1];
-      const styles = window.getComputedStyle(topSpan);
-
-      // Measure using a canvas for pixel-accurate font metrics
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const font = styles.fontWeight + ' ' + styles.fontSize + ' ' + styles.fontFamily;
-      ctx.font = font;
-
-      const topText = topSpan.textContent.toUpperCase();
-      const botText = botSpan.textContent.toUpperCase();
-      const targetWidth = ctx.measureText(topText).width;
-      const naturalWidth = ctx.measureText(botText).width;
-      const charCount = botText.length;
-      const extraSpace = targetWidth - naturalWidth;
-      const spacing = extraSpace / (charCount - 1);
-      botSpan.style.letterSpacing = Math.max(0, spacing) + 'px';
-    });
-
     async function generatePDF() {
       const btn = document.getElementById('downloadBtn');
       const flyer = document.querySelector('.flyer');
