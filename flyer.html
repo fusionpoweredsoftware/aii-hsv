@@ -650,20 +650,29 @@
       if (spans.length >= 2) {
         const topSpan = spans[0];
         const botSpan = spans[1];
-        const targetWidth = topSpan.scrollWidth;
-        const text = botSpan.textContent;
-        const charCount = text.length;
-        // Create a temp span to measure natural width
-        const temp = document.createElement('span');
-        temp.style.cssText = window.getComputedStyle(botSpan).cssText;
-        temp.style.letterSpacing = '0';
-        temp.style.position = 'absolute';
-        temp.style.visibility = 'hidden';
-        temp.style.whiteSpace = 'nowrap';
-        temp.textContent = text;
-        document.body.appendChild(temp);
-        const naturalWidth = temp.scrollWidth;
-        document.body.removeChild(temp);
+        const styles = window.getComputedStyle(topSpan);
+
+        // Measure true width of top span without container constraints
+        function measureText(text, letterSpacing) {
+          const temp = document.createElement('span');
+          temp.style.fontFamily = styles.fontFamily;
+          temp.style.fontSize = styles.fontSize;
+          temp.style.fontWeight = styles.fontWeight;
+          temp.style.textTransform = styles.textTransform;
+          temp.style.letterSpacing = letterSpacing || styles.letterSpacing;
+          temp.style.position = 'absolute';
+          temp.style.visibility = 'hidden';
+          temp.style.whiteSpace = 'nowrap';
+          temp.textContent = text;
+          document.body.appendChild(temp);
+          const width = temp.getBoundingClientRect().width;
+          document.body.removeChild(temp);
+          return width;
+        }
+
+        const targetWidth = measureText(topSpan.textContent);
+        const naturalWidth = measureText(botSpan.textContent, '0px');
+        const charCount = botSpan.textContent.length;
         const extraSpace = targetWidth - naturalWidth;
         const spacing = extraSpace / (charCount - 1);
         botSpan.style.letterSpacing = Math.max(0, spacing) + 'px';
