@@ -292,6 +292,12 @@
       border-color: var(--border-glow);
     }
 
+    .talk-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     .talk-number {
       display: inline-block;
       width: 24px;
@@ -606,8 +612,10 @@
       <!-- Talks -->
       <div class="talks">
         <div class="talk-card">
-          <div class="talk-number">1</div>
-          <div class="talk-type">Presentation</div>
+          <div class="talk-header">
+            <div class="talk-number">1</div>
+            <div class="talk-type">Presentation</div>
+          </div>
           <div class="talk-title">Retrieval-Augmented Generation (RAG)</div>
           <div class="talk-speaker">Dhanur Sharma</div>
           <p class="talk-desc">
@@ -616,8 +624,10 @@
         </div>
 
         <div class="talk-card">
-          <div class="talk-number">2</div>
-          <div class="talk-type">Live Demo</div>
+          <div class="talk-header">
+            <div class="talk-number">2</div>
+            <div class="talk-type">Live Demo</div>
+          </div>
           <div class="talk-title">Wanda &mdash; Voice Assistant That Navigates the Web</div>
           <p class="talk-desc">
             Meet Wanda, an AI-powered voice assistant that can browse, search, and interact with websites using natural language commands. See a live demonstration of hands-free web navigation in action.
@@ -625,8 +635,10 @@
         </div>
 
         <div class="talk-card">
-          <div class="talk-number">3</div>
-          <div class="talk-type">Open Mic</div>
+          <div class="talk-header">
+            <div class="talk-number">3</div>
+            <div class="talk-type">Open Mic</div>
+          </div>
           <div class="talk-title">Your Presentation Here</div>
           <p class="talk-desc">
             Have something interesting worth showing? Visitors are welcome to present! Bring a demo, a project, or a topic you're passionate about and share it with the group.
