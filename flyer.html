@@ -338,6 +338,12 @@
       margin-bottom: 0;
     }
 
+    .talk-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
     .talk-title {
       font-family: var(--font-heading);
       font-size: 1.2rem;
@@ -616,8 +622,10 @@
             <div class="talk-number">1</div>
             <div class="talk-type">Presentation</div>
           </div>
-          <div class="talk-title">Retrieval-Augmented Generation (RAG)</div>
-          <div class="talk-speaker">Dhanur Sharma</div>
+          <div class="talk-title-row">
+            <div class="talk-title">Retrieval-Augmented Generation (RAG)</div>
+            <div class="talk-speaker">Dhanur Sharma</div>
+          </div>
           <p class="talk-desc">
             Discover how RAG combines the power of large language models with external knowledge retrieval to produce more accurate, grounded, and up-to-date AI responses. Learn the architecture, real-world applications, and best practices.
           </p>
