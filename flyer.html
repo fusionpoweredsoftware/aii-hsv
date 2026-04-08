@@ -110,7 +110,7 @@
       width: 65%;
       height: 65%;
       background: url('aiihsv-logo-complete-watermark.png') center center / contain no-repeat;
-      opacity: 0.12;
+      opacity: 0.07;
       pointer-events: none;
       z-index: 1;
     }
@@ -143,7 +143,7 @@
     /* Header */
     .flyer-header {
       text-align: center;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0;
     }
 
     .flyer-brand {
@@ -228,7 +228,8 @@
       line-height: 1.1;
       white-space: nowrap;
       color: var(--text-secondary);
-      margin-bottom: 0.25rem;
+      margin-top: 0.7rem;
+      margin-bottom: 0.7rem;
     }
 
     /* Date & location bar */
@@ -236,10 +237,10 @@
       display: flex;
       flex-wrap: wrap;
       gap: 1.25rem;
-      justify-content: center;
-      padding: 0.4rem 1.25rem;
-      margin-bottom: 0.4rem;
-      background: rgba(200, 200, 225, 0.5);
+      justify-content: space-between;
+      padding: 1.25rem;
+      margin-bottom: 0.7rem;
+      background: rgba(215, 215, 235, 0.35);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
     }
@@ -276,20 +277,26 @@
     .talks {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      margin-bottom: 0.4rem;
+      gap: 0.7rem;
+      margin-bottom: 0.7rem;
     }
 
     .talk-card {
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
+      padding: 1.25rem;
+      border-radius: 12px;
       border: 1px solid var(--border-subtle);
-      background: rgba(200, 200, 225, 0.5);
+      background: rgba(215, 215, 235, 0.35);
       transition: border-color 0.3s;
     }
 
     .talk-card:hover {
       border-color: var(--border-glow);
+    }
+
+    .talk-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .talk-number {
@@ -332,6 +339,12 @@
       margin-bottom: 0;
     }
 
+    .talk-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
     .talk-title {
       font-family: var(--font-heading);
       font-size: 1.2rem;
@@ -348,7 +361,7 @@
     }
 
     .talk-desc {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       color: var(--text-secondary);
       line-height: 1.25;
       margin: 0;
@@ -606,18 +619,24 @@
       <!-- Talks -->
       <div class="talks">
         <div class="talk-card">
-          <div class="talk-number">1</div>
-          <div class="talk-type">Presentation</div>
-          <div class="talk-title">Retrieval-Augmented Generation (RAG)</div>
-          <div class="talk-speaker">Dhanur Sharma</div>
+          <div class="talk-header">
+            <div class="talk-number">1</div>
+            <div class="talk-type">Presentation</div>
+          </div>
+          <div class="talk-title-row">
+            <div class="talk-title">Retrieval-Augmented Generation (RAG)</div>
+            <div class="talk-speaker">Dhanur Sharma</div>
+          </div>
           <p class="talk-desc">
             Discover how RAG combines the power of large language models with external knowledge retrieval to produce more accurate, grounded, and up-to-date AI responses. Learn the architecture, real-world applications, and best practices.
           </p>
         </div>
 
         <div class="talk-card">
-          <div class="talk-number">2</div>
-          <div class="talk-type">Live Demo</div>
+          <div class="talk-header">
+            <div class="talk-number">2</div>
+            <div class="talk-type">Live Demo</div>
+          </div>
           <div class="talk-title">Wanda &mdash; Voice Assistant That Navigates the Web</div>
           <p class="talk-desc">
             Meet Wanda, an AI-powered voice assistant that can browse, search, and interact with websites using natural language commands. See a live demonstration of hands-free web navigation in action.
@@ -625,8 +644,10 @@
         </div>
 
         <div class="talk-card">
-          <div class="talk-number">3</div>
-          <div class="talk-type">Open Mic</div>
+          <div class="talk-header">
+            <div class="talk-number">3</div>
+            <div class="talk-type">Open Mic</div>
+          </div>
           <div class="talk-title">Your Presentation Here</div>
           <p class="talk-desc">
             Have something interesting worth showing? Visitors are welcome to present! Bring a demo, a project, or a topic you're passionate about and share it with the group.
