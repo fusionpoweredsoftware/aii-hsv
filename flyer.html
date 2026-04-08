@@ -645,39 +645,28 @@
 
   <script>
     // Match HUNTSVILLE width to INNOVATORS OF via letter-spacing
-    (function() {
+    document.fonts.ready.then(function() {
       const spans = document.querySelectorAll('.flyer-brand-text span');
-      if (spans.length >= 2) {
-        const topSpan = spans[0];
-        const botSpan = spans[1];
-        const styles = window.getComputedStyle(topSpan);
+      if (spans.length < 2) return;
+      const topSpan = spans[0];
+      const botSpan = spans[1];
+      const styles = window.getComputedStyle(topSpan);
 
-        // Measure true width of top span without container constraints
-        function measureText(text, letterSpacing) {
-          const temp = document.createElement('span');
-          temp.style.fontFamily = styles.fontFamily;
-          temp.style.fontSize = styles.fontSize;
-          temp.style.fontWeight = styles.fontWeight;
-          temp.style.textTransform = styles.textTransform;
-          temp.style.letterSpacing = letterSpacing || styles.letterSpacing;
-          temp.style.position = 'absolute';
-          temp.style.visibility = 'hidden';
-          temp.style.whiteSpace = 'nowrap';
-          temp.textContent = text;
-          document.body.appendChild(temp);
-          const width = temp.getBoundingClientRect().width;
-          document.body.removeChild(temp);
-          return width;
-        }
+      // Measure using a canvas for pixel-accurate font metrics
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const font = styles.fontWeight + ' ' + styles.fontSize + ' ' + styles.fontFamily;
+      ctx.font = font;
 
-        const targetWidth = measureText(topSpan.textContent);
-        const naturalWidth = measureText(botSpan.textContent, '0px');
-        const charCount = botSpan.textContent.length;
-        const extraSpace = targetWidth - naturalWidth;
-        const spacing = extraSpace / (charCount - 1);
-        botSpan.style.letterSpacing = Math.max(0, spacing) + 'px';
-      }
-    })();
+      const topText = topSpan.textContent.toUpperCase();
+      const botText = botSpan.textContent.toUpperCase();
+      const targetWidth = ctx.measureText(topText).width;
+      const naturalWidth = ctx.measureText(botText).width;
+      const charCount = botText.length;
+      const extraSpace = targetWidth - naturalWidth;
+      const spacing = extraSpace / (charCount - 1);
+      botSpan.style.letterSpacing = Math.max(0, spacing) + 'px';
+    });
 
     async function generatePDF() {
       const btn = document.getElementById('downloadBtn');
