@@ -107,8 +107,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 90%;
-      height: 90%;
+      width: 65%;
+      height: 65%;
       background: url('aiihsv-logo-complete-watermark.png') center center / contain no-repeat;
       opacity: 0.12;
       pointer-events: none;
@@ -123,8 +123,6 @@
       width: 100%;
       height: 100%;
       background:
-        url('aiihsv-logo-complete-watermark.png') top left / 35% auto no-repeat,
-        url('aiihsv-logo-complete-watermark.png') top right / 35% auto no-repeat,
         url('aiihsv-logo-complete-watermark.png') bottom left / 35% auto no-repeat,
         url('aiihsv-logo-complete-watermark.png') bottom right / 35% auto no-repeat;
       opacity: 0.1;
@@ -139,26 +137,27 @@
     }
 
     .flyer-content {
-      padding: 0.6rem 1.75rem;
+      padding: 0.6rem 1rem;
     }
 
     /* Header */
     .flyer-header {
       text-align: center;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
     }
 
     .flyer-brand {
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.4rem;
+      gap: 0.25rem;
+      margin-bottom: 0.2rem;
+      max-width: 100%;
     }
 
     .flyer-header-icon {
-      width: 110px;
-      height: 110px;
-      border-radius: 18px;
+      width: 155px;
+      height: 155px;
+      border-radius: 20px;
       box-shadow: 0 0 24px rgba(124, 58, 237, 0.25);
       flex-shrink: 0;
       margin-right: 0.25rem;
@@ -166,13 +165,13 @@
 
     .flyer-brand-ai {
       font-family: var(--font-heading);
-      font-size: 9.5rem;
+      font-size: 13rem;
       font-weight: 700;
       line-height: 0.75;
       color: #0a0a2e;
       flex-shrink: 0;
       margin-right: 0.25rem;
-      height: 110px;
+      height: 155px;
       display: flex;
       align-items: center;
     }
@@ -182,24 +181,38 @@
       flex-direction: column;
       justify-content: center;
       text-align: left;
-      height: 110px;
+      width: fit-content;
+      align-self: stretch;
     }
 
     .flyer-brand-text span {
       font-family: var(--font-heading);
       font-weight: 700;
-      font-size: 2.85rem;
-      line-height: 1.05;
-      letter-spacing: 0.05em;
+      font-size: 4.3rem;
+      line-height: 1;
       text-transform: uppercase;
       color: #0a0a2e;
+      display: block;
+      white-space: nowrap;
+    }
+
+    .flyer-brand-text .brand-letters {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      white-space: normal;
+    }
+
+    .flyer-brand-text .brand-letters i {
+      font-style: normal;
     }
 
     .flyer-title {
       font-family: var(--font-heading);
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 600;
       line-height: 1.1;
+      white-space: nowrap;
       color: var(--text-secondary);
       margin-bottom: 0.25rem;
     }
@@ -533,7 +546,7 @@
           <div class="flyer-brand-ai">AI</div>
           <div class="flyer-brand-text">
             <span>Innovators of</span>
-            <span>Huntsville</span>
+            <span class="brand-letters" aria-label="Huntsville"><i>H</i><i>u</i><i>n</i><i>t</i><i>s</i><i>v</i><i>i</i><i>l</i><i>l</i><i>e</i></span>
           </div>
         </div>
         <h1 class="flyer-title">April Monthly Meetup &mdash; Featured Presentations + Open Mic</h1>
