@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+  <script src="html2canvas.min.js"></script>
+  <script src="jspdf.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -112,7 +112,7 @@
           if (window.html2canvas && (window.jspdf || window.jsPDF)) {
             resolve();
           } else if (attempts++ > 50) {
-            reject(new Error('Libraries failed to load. Check your internet connection.'));
+            reject(new Error('PDF libraries failed to load. Try refreshing the page.'));
           } else {
             setTimeout(check, 200);
           }
@@ -129,11 +129,11 @@
       btn.disabled = true;
       status.textContent = 'Loading libraries...';
 
-      await waitForLibs();
-
-      status.textContent = 'Loading flyer content...';
-
       try {
+        await waitForLibs();
+
+        status.textContent = 'Loading flyer content...';
+
         // Fetch flyer.html and extract its content
         const response = await fetch('flyer.html');
         const html = await response.text();
@@ -262,7 +262,7 @@
 
         const imgData = canvas.toDataURL('image/png');
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save('aii-hsv-april-2026-flyer.pdf');
+        pdf.save('aii-hsv-june-2026-flyer.pdf');
 
         status.textContent = 'Download complete!';
 
