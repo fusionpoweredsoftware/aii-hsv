@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <title>AI Innovators of Huntsville - July 2026 Event Flyer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Join AI Innovators of Huntsville on Friday, July 10 for a demo of the Agent Presentation Protocol (APP), MATLAB Copilot and agentic workflows, and planning efficiently with AI featuring PlanMan.">
+  <meta name="description" content="Join AI Innovators of Huntsville on Friday, July 10 for a demo of the Agent Presentation Protocol (APP), planning efficiently with AI featuring PlanMan, and MATLAB Copilot and agentic workflows.">
 
   <meta property="og:title" content="AI Innovators of Huntsville - July Meetup">
-  <meta property="og:description" content="Agent Presentation Protocol (APP) Demo + MATLAB Copilot &amp; Agentic Workflows + Planning Efficiently with AI. Friday, July 10 at 6 PM at Gigaparts.">
+  <meta property="og:description" content="Agent Presentation Protocol (APP) Demo + Planning Efficiently with AI + MATLAB Copilot &amp; Agentic Workflows. Friday, July 10 at 6 PM at Gigaparts.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://aiihsv.netlify.app/flyer.html">
   <meta property="og:image" content="https://aiihsv.netlify.app/event-image2.png">
@@ -365,7 +365,7 @@
 
     /* Divider */
     .divider {
-      height: 1px;
+      height: 2px;
       background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.25), transparent);
       margin-bottom: 0.35rem;
     }
@@ -631,20 +631,6 @@
         <div class="talk-card">
           <div class="talk-header">
             <div class="talk-number">2</div>
-            <div class="talk-type">Presentation</div>
-          </div>
-          <div class="talk-title-row">
-            <div class="talk-title">MATLAB Copilot &amp; Agentic Workflows</div>
-            <div class="talk-speaker">Kevin Holly</div>
-          </div>
-          <p class="talk-desc">
-            An inside look at MATLAB Copilot and how agentic workflows are bringing AI assistance to engineering and scientific computing.
-          </p>
-        </div>
-
-        <div class="talk-card">
-          <div class="talk-header">
-            <div class="talk-number">3</div>
             <div class="talk-type">Presentation + Demo</div>
           </div>
           <div class="talk-title-row">
@@ -653,6 +639,20 @@
           </div>
           <p class="talk-desc">
             How to use AI to plan efficiently, featuring a demo of PlanMan &mdash; a planning tool inspired by DevMan (heydevman.com) and Wanda (wwwand.com).
+          </p>
+        </div>
+
+        <div class="talk-card">
+          <div class="talk-header">
+            <div class="talk-number">3</div>
+            <div class="talk-type">Presentation</div>
+          </div>
+          <div class="talk-title-row">
+            <div class="talk-title">MATLAB Copilot &amp; Agentic Workflows</div>
+            <div class="talk-speaker">Kevin Holly</div>
+          </div>
+          <p class="talk-desc">
+            An inside look at MATLAB Copilot and how agentic workflows are bringing AI assistance to engineering and scientific computing.
           </p>
         </div>
       </div>
@@ -693,6 +693,16 @@
   </button>
 
   <script>
+    // html2canvas crashes with "createPattern ... width or height of 0" when
+    // an element with a gradient or image background renders at a sub-pixel
+    // size (browser zoom / display scaling can shrink a 1px element below
+    // 1px). Skip those backgrounds instead of crashing.
+    const nativeCreatePattern = CanvasRenderingContext2D.prototype.createPattern;
+    CanvasRenderingContext2D.prototype.createPattern = function (image, repetition) {
+      if (image && (!image.width || !image.height)) return null;
+      return nativeCreatePattern.apply(this, arguments);
+    };
+
     async function generatePDF() {
       const btn = document.getElementById('downloadBtn');
       const flyer = document.querySelector('.flyer');
