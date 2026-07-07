@@ -444,53 +444,106 @@
     }
 
     /* Responsive */
-    @media (max-width: 600px) {
-      body {
-        padding: 1rem;
+
+    /* Below the flyer's natural 8.5in width: go fluid and scale the brand
+       lockup with the flyer instead of clipping it. */
+    @media (max-width: 900px) {
+      .flyer {
+        width: 100%;
+        max-height: none;
       }
 
-      .flyer-content {
-        padding: 2rem 1.5rem;
+      .flyer-header {
+        container-type: inline-size;
       }
 
       .flyer-brand {
-        gap: 0.1rem;
+        gap: 0;
       }
 
+      /* px values are fallbacks for browsers without container query units */
       .flyer-header-icon {
-        width: 70px;
-        height: 70px;
+        width: 56px;
+        height: 56px;
+        width: 16cqw;
+        height: 16cqw;
+        border-radius: 12px;
+        margin-right: 4px;
+        margin-right: 0.6cqw;
       }
 
       .flyer-brand-ai {
-        font-size: 6rem;
-        height: 70px;
+        font-size: 75px;
+        height: 56px;
+        font-size: 21.5cqw;
+        height: 16cqw;
+        margin-right: 4px;
+        margin-right: 0.6cqw;
       }
 
-      .flyer-brand-text {
-        height: 70px;
+      .flyer-brand-divider {
+        height: 2px;
       }
 
       .flyer-brand-text span {
-        font-size: 1.8rem;
+        font-size: 21px;
+        font-size: 5.9cqw;
+      }
+
+      .flyer-title {
+        white-space: normal;
+      }
+
+      .talk-title-row {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem 0.75rem;
+      }
+
+      .flyer-content {
+        padding: 1.25rem 1rem 0.75rem;
       }
 
       .flyer-title {
         font-size: 1rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
       }
 
       .flyer-meta {
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         gap: 0.75rem;
+        padding: 1rem;
+      }
+
+      .talk-card {
+        padding: 1rem;
+      }
+
+      .talk-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
       }
 
       .talk-title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
 
       .flyer-footer {
-        padding: 1rem 1.5rem;
+        padding: 0.6rem 1rem;
+      }
+
+      .download-btn {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.6rem 1.1rem;
+        font-size: 0.85rem;
       }
     }
 
