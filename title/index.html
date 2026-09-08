@@ -62,29 +62,15 @@
       background-size: 60px 60px;
     }
 
-    /* Floating particles */
-    .particle {
+    /* Circuitry canvas */
+    #circuit-canvas {
       position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       z-index: 0;
-      animation: float linear infinite;
-      opacity: 0;
+      pointer-events: none;
     }
-
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(0); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-    }
-
-    .particle:nth-child(1) { left: 10%; width: 3px; height: 3px; background: var(--accent-blue); animation-duration: 18s; animation-delay: 0s; }
-    .particle:nth-child(2) { left: 25%; width: 2px; height: 2px; background: var(--accent-purple); animation-duration: 22s; animation-delay: 3s; }
-    .particle:nth-child(3) { left: 45%; width: 4px; height: 4px; background: var(--accent-cyan); animation-duration: 16s; animation-delay: 6s; }
-    .particle:nth-child(4) { left: 65%; width: 2px; height: 2px; background: var(--accent-blue); animation-duration: 20s; animation-delay: 2s; }
-    .particle:nth-child(5) { left: 80%; width: 3px; height: 3px; background: var(--accent-purple); animation-duration: 24s; animation-delay: 5s; }
-    .particle:nth-child(6) { left: 90%; width: 2px; height: 2px; background: var(--accent-cyan); animation-duration: 19s; animation-delay: 8s; }
 
     /* Title content */
     .title-content {
@@ -121,12 +107,7 @@
 </head>
 <body>
   <div class="bg-grid"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
+  <canvas id="circuit-canvas" aria-hidden="true"></canvas>
 
   <div class="title-content">
     <img src="../aiihsv-logo-complete.png" alt="AI Innovators of Huntsville" class="logo">
@@ -135,5 +116,214 @@
       of Huntsville
     </h1>
   </div>
+  <!-- Circuitry background -->
+  <script>
+  (function () {
+    var canvas = document.getElementById('circuit-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var GRID = 46;
+    var COLORS = ['#3b82f6', '#8b5cf6', '#06b6d4'];
+    var DIRS = [[1,0],[1,-1],[0,-1],[-1,-1],[-1,0],[-1,1],[0,1],[1,1]];
+
+    var traces = [], pulses = [], w = 0, h = 0, dpr = 1, cols = 0, rows = 0, raf = 0;
+
+    function buildTrace(cols, rows, used) {
+      var x = (Math.random() * cols) | 0;
+      var y = (Math.random() * rows) | 0;
+      var d = (Math.random() * 8) | 0;
+      var pts = [[x, y]];
+      var steps = 8 + ((Math.random() * 14) | 0);
+      for (var i = 0; i < steps; i++) {
+        if (Math.random() < 0.35) d = (d + (Math.random() < 0.5 ? 1 : 7)) % 8;
+        var run = 1 + ((Math.random() * 3) | 0);
+        var nx = x + DIRS[d][0] * run;
+        var ny = y + DIRS[d][1] * run;
+        if (nx < 0 || ny < 0 || nx > cols || ny > rows) { d = (d + 4) % 8; continue; }
+        var key = x + ':' + y + '>' + nx + ':' + ny;
+        if (used[key]) break;
+        used[key] = 1;
+        x = nx; y = ny;
+        pts.push([x, y]);
+      }
+      return pts.length > 2 ? pts : null;
+    }
+
+    function measure(pts) {
+      var segs = [], total = 0;
+      for (var i = 1; i < pts.length; i++) {
+        var dx = (pts[i][0] - pts[i-1][0]) * GRID;
+        var dy = (pts[i][1] - pts[i-1][1]) * GRID;
+        var len = Math.sqrt(dx * dx + dy * dy);
+        segs.push(len);
+        total += len;
+      }
+      return { segs: segs, total: total };
+    }
+
+    function pointAt(trace, dist) {
+      var pts = trace.pts, segs = trace.segs, acc = 0;
+      for (var i = 0; i < segs.length; i++) {
+        if (acc + segs[i] >= dist) {
+          var t = segs[i] ? (dist - acc) / segs[i] : 0;
+          return [
+            (pts[i][0] + (pts[i+1][0] - pts[i][0]) * t) * GRID,
+            (pts[i][1] + (pts[i+1][1] - pts[i][1]) * t) * GRID
+          ];
+        }
+        acc += segs[i];
+      }
+      var last = pts[pts.length - 1];
+      return [last[0] * GRID, last[1] * GRID];
+    }
+
+    function build() {
+      cols = Math.ceil(w / GRID);
+      rows = Math.ceil(h / GRID);
+      traces = [];
+      var used = {};
+      var target = Math.max(10, Math.min(46, ((cols * rows) / 26) | 0));
+      for (var i = 0; i < target * 3 && traces.length < target; i++) {
+        var pts = buildTrace(cols, rows, used);
+        if (!pts) continue;
+        var m = measure(pts);
+        traces.push({ pts: pts, segs: m.segs, total: m.total, color: COLORS[(Math.random() * COLORS.length) | 0] });
+      }
+      pulses = [];
+      var count = reduced ? 0 : Math.min(18, traces.length);
+      for (var j = 0; j < count; j++) {
+        pulses.push({
+          trace: traces[(Math.random() * traces.length) | 0],
+          dist: 0,
+          speed: 24 + Math.random() * 46,
+          size: 1.6 + Math.random() * 1.6,
+          delay: Math.random() * 6
+        });
+      }
+    }
+
+    function drawStatic() {
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      for (var i = 0; i < traces.length; i++) {
+        var t = traces[i], pts = t.pts;
+        ctx.beginPath();
+        ctx.moveTo(pts[0][0] * GRID, pts[0][1] * GRID);
+        for (var j = 1; j < pts.length; j++) ctx.lineTo(pts[j][0] * GRID, pts[j][1] * GRID);
+        ctx.strokeStyle = t.color;
+        ctx.globalAlpha = 0.14;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        // pads at each end, vias at corners
+        ctx.globalAlpha = 0.22;
+        for (var k = 0; k < pts.length; k++) {
+          var isEnd = (k === 0 || k === pts.length - 1);
+          if (!isEnd && Math.random() < 0.75) continue;
+          var px = pts[k][0] * GRID, py = pts[k][1] * GRID;
+          ctx.beginPath();
+          ctx.arc(px, py, isEnd ? 3.2 : 2, 0, Math.PI * 2);
+          ctx.fillStyle = t.color;
+          ctx.fill();
+          if (isEnd) {
+            ctx.beginPath();
+            ctx.arc(px, py, 1.2, 0, Math.PI * 2);
+            ctx.fillStyle = '#050510';
+            ctx.fill();
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    var staticLayer = document.createElement('canvas');
+    var sctx = staticLayer.getContext('2d');
+
+    function cacheStatic() {
+      staticLayer.width = canvas.width;
+      staticLayer.height = canvas.height;
+      var main = ctx;
+      ctx = sctx;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      drawStatic();
+      ctx = main;
+    }
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build();
+      cacheStatic();
+      if (reduced) { ctx.clearRect(0, 0, w, h); ctx.drawImage(staticLayer, 0, 0, w, h); }
+    }
+
+    var last = 0;
+    function frame(now) {
+      var dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
+      last = now;
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(staticLayer, 0, 0, w, h);
+
+      ctx.globalCompositeOperation = 'lighter';
+      for (var i = 0; i < pulses.length; i++) {
+        var p = pulses[i];
+        if (p.delay > 0) { p.delay -= dt; continue; }
+        p.dist += p.speed * dt;
+        if (p.dist > p.trace.total) {
+          p.trace = traces[(Math.random() * traces.length) | 0];
+          p.dist = 0;
+          p.speed = 24 + Math.random() * 46;
+          p.delay = Math.random() * 3;
+          continue;
+        }
+        // glowing comet tail along the trace path
+        for (var s = 0; s < 7; s++) {
+          var d = p.dist - s * 7;
+          if (d < 0) break;
+          var pt = pointAt(p.trace, d);
+          var fade = 1 - s / 7;
+          ctx.globalAlpha = 0.5 * fade * fade;
+          ctx.beginPath();
+          ctx.arc(pt[0], pt[1], p.size * fade, 0, Math.PI * 2);
+          ctx.fillStyle = p.trace.color;
+          ctx.fill();
+        }
+        var head = pointAt(p.trace, p.dist);
+        var g = ctx.createRadialGradient(head[0], head[1], 0, head[0], head[1], p.size * 7);
+        g.addColorStop(0, p.trace.color);
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.globalAlpha = 0.55;
+        ctx.beginPath();
+        ctx.arc(head[0], head[1], p.size * 7, 0, Math.PI * 2);
+        ctx.fillStyle = g;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
+      raf = requestAnimationFrame(frame);
+    }
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resize, 200);
+    });
+
+    resize();
+    if (!reduced) raf = requestAnimationFrame(frame);
+    document.addEventListener('visibilitychange', function () {
+      if (reduced) return;
+      if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
+      else if (!raf) { last = 0; raf = requestAnimationFrame(frame); }
+    });
+  })();
+  </script>
 </body>
 </html>
