@@ -238,10 +238,12 @@
       transform: scaleX(-1);
     }
 
-    .hero-badge .note {
-      text-transform: none;
-      letter-spacing: 0.02em;
-      color: var(--text-muted);
+    .hero-notice strong { white-space: nowrap; }
+
+    .hero-notice {
+      margin: -16px 0 28px;
+      font-size: 0.9rem;
+      color: var(--accent-cyan);
     }
 
     @media (max-width: 480px) {
@@ -897,7 +899,8 @@
   <header class="hero">
     <div class="container">
       <img src="aiihsv-logo-complete.png" alt="AI Innovators of Huntsville" class="hero-icon">
-      <div class="hero-badge"><span>Every 2nd Friday at Gigaparts <span class="note">(unless posted otherwise)</span></span></div>
+      <div class="hero-badge"><span>Every 2nd Friday at Gigaparts</span></div>
+      <p class="hero-notice" data-until="2026-09-26">This month we meet on <strong>Friday, September 25</strong>.</p>
       <h1>
         <span class="gradient-text">AI Innovators</span><br>
         of Huntsville
@@ -1543,6 +1546,12 @@
       else if (!raf) { last = 0; raf = requestAnimationFrame(frame); }
     });
   })();
+  </script>
+  <!-- Hide dated notices once they pass -->
+  <script>
+    document.querySelectorAll('[data-until]').forEach(function (el) {
+      if (new Date() >= new Date(el.dataset.until + 'T00:00:00')) el.remove();
+    });
   </script>
 </body>
 </html>
