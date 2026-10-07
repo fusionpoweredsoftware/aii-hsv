@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scenarios Challenge - AI Innovators of Huntsville</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How do AIs make a judgement call? Play Scenarios at the October 9 meetup: an AI writes the problem, you pick the items, and the AI makes the call on your answer. Two rounds, a final, and prizes.">
+  <link rel="icon" type="image/png" href="aiihsv-logo-complete-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #050510;
+      --bg-card: rgba(15, 15, 40, 0.7);
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --accent-cyan: #06b6d4;
+      --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+      --text-primary: #f0f0f5;
+      --text-secondary: rgba(240, 240, 245, 0.7);
+      --text-muted: rgba(240, 240, 245, 0.5);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(139, 92, 246, 0.3);
+      --font-heading: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59, 130, 246, 0.12), transparent),
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(139, 92, 246, 0.08), transparent),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(6, 182, 212, 0.06), transparent);
+      background-attachment: fixed;
+    }
+
+    a { color: var(--accent-cyan); }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 32px 16px 48px; }
+
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; font-family: var(--font-heading); font-weight: 600; }
+    .brand img { height: 32px; }
+    .date-pill {
+      font-size: 0.85rem; color: var(--text-secondary);
+      border: 1px solid var(--border-subtle); border-radius: 8px; padding: 6px 12px;
+    }
+
+    h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15; margin-bottom: 8px; }
+    h1 span { background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lede { color: var(--text-secondary); max-width: 720px; margin-bottom: 24px; }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 16px; padding: 28px; backdrop-filter: blur(10px);
+      margin-bottom: 16px;
+    }
+    .card h2 { font-family: var(--font-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-cyan); margin-bottom: 12px; }
+    .card p { color: var(--text-secondary); }
+    .card p + p { margin-top: 10px; }
+    .card p strong { color: var(--text-primary); }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid .card { margin-bottom: 0; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } .card { padding: 20px; } }
+
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .flow span {
+      font-size: 0.82rem; padding: 4px 10px; border-radius: 999px;
+      border: 1px solid rgba(6, 182, 212, 0.35); background: rgba(6, 182, 212, 0.08);
+    }
+    .flow i { color: var(--text-muted); font-style: normal; font-size: 0.8rem; }
+
+    ol.rounds { list-style: none; counter-reset: round; }
+    ol.rounds li { counter-increment: round; display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); }
+    ol.rounds li:last-child { border-bottom: none; }
+    ol.rounds li::before {
+      content: counter(round); flex: none; width: 28px; height: 28px; border-radius: 8px;
+      display: grid; place-items: center; font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem;
+      background: rgba(139, 92, 246, 0.15); border: 1px solid var(--border-glow); color: var(--text-primary);
+    }
+    ol.rounds strong { color: var(--text-primary); }
+
+    .prizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .prize { text-align: center; padding: 16px 8px; border-radius: 12px; border: 1px solid var(--border-subtle); background: rgba(255, 255, 255, 0.02); }
+    .prize .icon { font-size: 2rem; line-height: 1.2; }
+    .prize .place { font-family: var(--font-heading); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-top: 6px; }
+    .prize .what { font-family: var(--font-heading); font-weight: 600; font-size: 1.05rem; }
+    .prize.first { border-color: var(--border-glow); background: rgba(139, 92, 246, 0.1); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-subtle); }
+    th { font-family: var(--font-heading); color: var(--accent-cyan); font-weight: 600; }
+    td { color: var(--text-secondary); }
+    td:last-child { font-family: var(--font-heading); font-weight: 600; color: var(--text-primary); }
+
+    .question { border-left: 3px solid var(--accent-purple); padding: 10px 14px; background: rgba(139, 92, 246, 0.07); border-radius: 0 8px 8px 0; }
+    .question strong { color: var(--text-primary); }
+
+    footer { margin-top: 24px; font-size: 0.85rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="brand" href="./"><img src="aiihsv-logo-complete-icon.png" alt="">AI Innovators of Huntsville</a>
+      <span class="date-pill">Friday, October 9 &middot; 6:00 PM &middot; Gigaparts</span>
+    </header>
+
+    <h1>How Do AIs Make a <span>Judgement Call?</span></h1>
+    <p class="lede">
+      The Scenarios Challenge. An AI writes a problem, you pick three items from your hand to solve it,
+      and the AI makes the call on whether your answer works &mdash; then tells everyone why.
+    </p>
+
+    <div class="card">
+      <h2>How a turn works</h2>
+      <div class="flow">
+        <span>AI writes a scenario</span><i>&rarr;</i>
+        <span>You play 3 items</span><i>&rarr;</i>
+        <span>AI makes the call on each item</span><i>&rarr;</i>
+        <span>Reasoning goes on screen</span>
+      </div>
+      <p style="margin-top:14px">
+        For every item you play, the AI says <strong>how it helps</strong> or <strong>why it doesn&rsquo;t</strong>.
+        That reasoning is the real show: we&rsquo;ll watch where an AI&rsquo;s judgement is sharp, where it&rsquo;s generous,
+        and where it gets it wrong.
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Format</h2>
+        <ol class="rounds">
+          <li><span><strong>Round 1</strong> &mdash; a group of 6 plays.</span></li>
+          <li><span><strong>Round 2</strong> &mdash; another group of 6 plays.</span></li>
+          <li><span><strong>Final</strong> &mdash; the top 3 from each group play for the prizes.</span></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h2>Scoring</h2>
+        <table>
+          <thead><tr><th>Items the AI accepts</th><th>Points</th></tr></thead>
+          <tbody>
+            <tr><td>1 of 3</td><td>1</td></tr>
+            <tr><td>2 of 3</td><td>3</td></tr>
+            <tr><td>3 of 3</td><td>6</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Prizes</h2>
+      <div class="prizes">
+        <div class="prize first"><div class="icon">&#129302;</div><div class="place">1st place</div><div class="what">Robot</div></div>
+        <div class="prize"><div class="icon">&#128085;</div><div class="place">2nd place</div><div class="what">Shirt</div></div>
+        <div class="prize"><div class="icon">&#127922;</div><div class="place">3rd place</div><div class="what">Dice</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>How to play</h2>
+      <p>
+        Playing is <strong>optional</strong>. If you want in, draw a number when you arrive; players for each round
+        are called by number and get an invite link to join the game. Everyone else watches the game on the big screen.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>After the challenge</h2>
+      <p class="question">
+        <strong>Is a LAM just an LLM with a harness?</strong> An open discussion on large action models
+        &mdash; see the <a href="models.html">8 AI model types</a> for background.
+      </p>
+      <p>Then the floor is open: bring anything you&rsquo;d like to share.</p>
+    </div>
+
+    <footer>AI Innovators of Huntsville &middot; Every 2nd Friday at Gigaparts &middot; <a href="./">aiihsv.netlify.app</a></footer>
+  </div>
+</body>
+</html>
