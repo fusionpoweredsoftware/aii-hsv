@@ -4,317 +4,383 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ofHuntsville - Free Websites for Huntsville</title>
-  <meta name="description" content="Free websites for Huntsville's local businesses, artists and makers, at yourname.ofhuntsville.org. A Fuelpa LLC project.">
+  <meta name="description" content="Free websites for Huntsville's local businesses, artists and makers, at yourname.ofhuntsville.org.">
   <meta name="robots" content="noindex">
-  <link rel="icon" type="image/svg+xml" href="hosting/mark.svg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,600,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --info: #3b99e0;
-      --hero-tint: rgba(9, 162, 255, 0.85);
+      --blue: #3b99e0;
+      --blue-bright: #09a2ff;
+      --blue-deep: #1b5f9e;
       --text: #212529;
       --muted: #6c757d;
       --bg: #fff;
-      --soft: #f8f9fa;
-      --dark: #212529;
+      --soft: #f4f8fc;
+      --dark: #1d2125;
       --border: #e3e6ea;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Montserrat, system-ui, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
-    }
-    a { color: var(--info); }
+    body { margin: 0; font-family: Montserrat, system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+    a { color: var(--blue); }
     .container { max-width: 1140px; margin: 0 auto; padding: 0 16px; }
 
+    /* Wordmark */
+    .wordmark { font-weight: 800; letter-spacing: -.02em; color: var(--text); text-decoration: none; white-space: nowrap; }
+    .wordmark .of { color: var(--blue); font-weight: 600; }
+
     /* Nav */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 10;
-      background: var(--bg);
-      box-shadow: 0 0 15px rgba(0,0,0,.1);
-    }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 10; background: rgba(255,255,255,.96); box-shadow: 0 0 15px rgba(0,0,0,.08); }
     .nav .container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .brand { display: inline-flex; align-items: center; text-decoration: none; }
-    .brand img { height: 40px; display: block; }
-    .nav-links { display: flex; gap: 2rem; }
-    .nav-links a {
-      font-weight: 600; font-size: .8rem; text-transform: uppercase;
-      color: var(--text); text-decoration: none; opacity: .75;
-    }
+    .nav .wordmark { font-size: 1.45rem; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links a { font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text); text-decoration: none; opacity: .7; }
     .nav-links a:hover { opacity: 1; }
+    .nav-links a.pill { opacity: 1; color: #fff; background: var(--blue); padding: 8px 16px; border-radius: 999px; }
 
     /* Hero */
     .hero {
-      position: relative;
-      min-height: 680px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center;
-      background: url("hosting/hero.jpg") center / cover no-repeat;
-      color: #fff;
-      padding: 104px 16px 64px;
+      position: relative; overflow: hidden; color: #fff;
+      background: linear-gradient(160deg, var(--blue-bright) 0%, var(--blue) 45%, var(--blue-deep) 100%);
+      padding: 120px 16px 0;
     }
-    .hero::before { content: ""; position: absolute; inset: 0; background: var(--hero-tint); }
-    .hero .text { position: relative; max-width: 900px; width: 100%; text-shadow: 1px 1px 1px rgba(0,0,0,.15); }
-    .hero .lead { font-size: clamp(18px, 2.4vw, 24px); opacity: .9; margin: 0 0 12px; }
-    .typed-wrap {
-      font-weight: 700;
-      font-size: clamp(30px, 7vw, 72px);
-      line-height: 1.15;
-      margin: 0 0 24px;
-      word-break: break-word;
-      min-height: 2.3em;
+    .hero-inner { position: relative; z-index: 2; max-width: 960px; margin: 0 auto; text-align: center; }
+    .eyebrow { display: inline-block; font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; background: rgba(255,255,255,.16); padding: 6px 14px; border-radius: 999px; margin-bottom: 20px; }
+    .hero h1 { font-size: clamp(30px, 5vw, 52px); line-height: 1.15; margin: 0 0 16px; font-weight: 800; }
+    .hero .sub { font-size: clamp(16px, 2vw, 20px); opacity: .92; max-width: 620px; margin: 0 auto 36px; }
+
+    /* Browser mockup */
+    .browser {
+      max-width: 760px; margin: 0 auto; background: #fff; color: var(--text);
+      border-radius: 12px 12px 0 0; box-shadow: 0 20px 60px rgba(0,0,0,.25); overflow: hidden; text-align: left;
     }
-    .typed { color: #fff; }
-    .cursor {
-      display: inline-block; width: .07em; height: .9em;
-      background: #fff; margin-left: .04em; vertical-align: -.08em;
-      animation: blink 1s steps(1) infinite;
+    .bar { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #eef2f6; border-bottom: 1px solid var(--border); }
+    .dots { display: flex; gap: 6px; flex: none; }
+    .dots i { width: 11px; height: 11px; border-radius: 50%; background: #cfd6dd; display: block; }
+    .address {
+      flex: 1; min-width: 0; background: #fff; border-radius: 999px; padding: 8px 16px;
+      font-size: clamp(14px, 2.6vw, 22px); font-weight: 600; white-space: nowrap; overflow: hidden;
+      border: 1px solid var(--border);
     }
-    .suffix { display: block; font-size: .45em; font-weight: 600; opacity: .75; }
+    .address .lock { color: #2fa36b; margin-right: 6px; font-size: .8em; }
+    .address .typed { color: var(--text); }
+    .address .suffix { color: var(--muted); font-weight: 500; }
+    .cursor { display: inline-block; width: 2px; height: 1em; background: var(--blue); vertical-align: -.12em; margin: 0 -2px 0 0; animation: blink 1s steps(1) infinite; }
     @keyframes blink { 50% { opacity: 0; } }
-    .hero .tagline { font-size: clamp(18px, 2.4vw, 24px); margin: 0 0 32px; }
-    .btn {
-      display: inline-block;
-      padding: 14px 32px;
-      border-radius: 999px;
-      font-weight: 600;
-      text-decoration: none;
-      background: #fff; color: var(--info);
-      box-shadow: 0 2px 10px rgba(0,0,0,.15);
-      transition: transform .15s ease;
-    }
+    .preview { padding: 28px 28px 34px; transition: opacity .3s ease; min-height: 210px; }
+    .preview.fade { opacity: 0; }
+    .pv-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .pv-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex: none; }
+    .pv-name { font-weight: 800; font-size: 1.35rem; line-height: 1.2; }
+    .pv-tag { color: var(--muted); font-size: .9rem; }
+    .pv-lines span { display: block; height: 10px; border-radius: 5px; background: #edf0f3; margin: 10px 0; }
+    .pv-lines span:nth-child(2) { width: 85%; } .pv-lines span:nth-child(3) { width: 60%; }
+    .pv-btn { display: inline-block; margin-top: 14px; padding: 8px 18px; border-radius: 999px; color: #fff; font-size: .85rem; font-weight: 600; }
+
+    .skyline { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 160px; z-index: 1; opacity: .22; }
+
+    .cta-row { position: relative; z-index: 2; text-align: center; padding: 0 16px; margin: 36px 0 0; }
+    .btn { display: inline-block; padding: 14px 32px; border-radius: 999px; font-weight: 700; text-decoration: none; background: var(--blue); color: #fff; box-shadow: 0 6px 20px rgba(59,153,224,.35); transition: transform .15s ease; }
     .btn:hover { transform: translateY(-2px); }
-    .btn.blue { background: var(--info); color: #fff; }
+    .btn.ghost { background: #fff; color: var(--blue); border: 2px solid var(--blue); box-shadow: none; }
 
     /* Sections */
-    section.block { padding: 72px 0; }
+    section.block { padding: 80px 0; }
     section.block.soft { background: var(--soft); }
-    .heading { text-align: center; margin-bottom: 40px; }
-    .heading h2 { color: var(--info); font-size: 2rem; margin: 0 0 12px; }
-    .heading p { max-width: 560px; margin: 0 auto; color: var(--muted); }
+    .heading { text-align: center; margin-bottom: 44px; }
+    .heading h2 { color: var(--blue); font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0 0 12px; font-weight: 700; }
+    .heading p { max-width: 580px; margin: 0 auto; color: var(--muted); }
 
-    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
-    .step { padding: 8px 20px 8px 64px; position: relative; }
-    .step .num {
-      position: absolute; left: 12px; top: 8px;
-      width: 36px; height: 36px; border-radius: 50%;
-      background: var(--info); color: #fff; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
+    .who { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .who > div { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
+    .who .ico { font-size: 26px; line-height: 1; }
+    .who h4 { margin: 0 0 4px; font-size: 1rem; }
+    .who p { margin: 0; font-size: .85rem; color: var(--muted); }
+
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; counter-reset: s; }
+    .step { text-align: center; padding: 0 12px; }
+    .step .num { width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 14px; background: var(--soft); color: var(--blue); font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; border: 2px solid var(--blue); }
     .step h4 { margin: 0 0 6px; font-size: 1.1rem; }
     .step p { margin: 0; color: var(--muted); font-size: .95rem; }
 
-    .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
-    .card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.075);
-      padding: 32px 24px;
-      text-align: center;
-      display: flex; flex-direction: column;
-    }
-    .card.featured { border-top: 3px solid var(--info); }
+    .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; align-items: stretch; }
+    .card { position: relative; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.05); padding: 32px 24px; text-align: center; display: flex; flex-direction: column; }
+    .card.featured { border: 2px solid var(--blue); box-shadow: 0 10px 30px rgba(59,153,224,.18); }
+    .badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--blue); color: #fff; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }
     .card h4 { margin: 0 0 8px; font-size: 1.1rem; }
-    .price { font-size: 2.4rem; font-weight: 700; color: var(--info); line-height: 1.1; }
-    .price small { font-size: .9rem; font-weight: 400; color: var(--muted); }
-    .card ul { list-style: none; padding: 0; margin: 20px 0 24px; color: var(--muted); font-size: .95rem; flex: 1; }
-    .card li { padding: 6px 0; border-bottom: 1px solid var(--border); }
-    .card li:last-child { border-bottom: 0; }
-    .note { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 28px; }
+    .price { font-size: 2.5rem; font-weight: 800; color: var(--text); line-height: 1.1; }
+    .price small { font-size: .9rem; font-weight: 500; color: var(--muted); }
+    .card ul { list-style: none; padding: 0; margin: 20px 0 24px; color: var(--muted); font-size: .92rem; flex: 1; text-align: left; }
+    .card li { padding: 7px 0 7px 26px; position: relative; }
+    .card li::before { content: "✓"; position: absolute; left: 4px; color: var(--blue); font-weight: 700; }
+    .card .btn { padding: 11px 20px; font-size: .92rem; }
 
-    .arts { text-align: center; max-width: 680px; margin: 0 auto; }
-    .arts p { color: var(--muted); }
+    .local { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+    .local h2 { color: var(--blue); font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0 0 16px; }
+    .local p { color: var(--muted); margin: 0 0 14px; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .stat { background: var(--soft); border-radius: 10px; padding: 22px; text-align: center; }
+    .stat b { display: block; font-size: 1.9rem; font-weight: 800; color: var(--blue); }
+    .stat span { font-size: .85rem; color: var(--muted); }
 
-    /* Footer */
-    footer { background: var(--dark); color: #ccc; padding-top: 32px; }
-    footer .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
-    footer h5 { color: #fff; font-size: 18px; margin: 24px 0 8px; }
-    footer ul { list-style: none; padding: 0; margin: 0; line-height: 1.8; }
-    footer a { color: #d2d1d1; text-decoration: none; }
+    .faq { max-width: 760px; margin: 0 auto; }
+    .faq details { border-bottom: 1px solid var(--border); padding: 18px 4px; }
+    .faq summary { font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--blue); font-size: 1.3rem; line-height: 1; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { color: var(--muted); margin: 12px 0 0; }
+
+    .final { text-align: center; background: linear-gradient(160deg, var(--blue) 0%, var(--blue-deep) 100%); color: #fff; padding: 72px 16px; }
+    .final h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0 0 12px; }
+    .final p { opacity: .9; margin: 0 0 28px; }
+    .final .btn { background: #fff; color: var(--blue); }
+
+    footer { background: var(--dark); color: #b9bec4; padding: 44px 0 0; }
+    footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: flex-start; }
+    footer .wordmark { color: #fff; font-size: 1.6rem; }
+    footer .tag { margin: 6px 0 0; font-size: .9rem; }
+    footer nav { display: flex; flex-wrap: wrap; gap: 20px; }
+    footer a { color: #d2d1d1; text-decoration: none; font-size: .9rem; }
     footer a:hover { color: #fff; }
-    .copyright { text-align: center; margin-top: 40px; padding: 12px 16px; border-top: 1px solid #2c3136; font-size: .9rem; }
+    .copyright { text-align: center; margin-top: 40px; padding: 14px 16px; border-top: 1px solid #2c3136; font-size: .82rem; }
 
-    @media (max-width: 600px) {
-      .nav-links { gap: 1rem; }
+    @media (max-width: 760px) {
+      .local { grid-template-columns: 1fr; gap: 32px; }
       .nav-links a.hide-sm { display: none; }
-      .hero { min-height: 560px; }
+      .preview { padding: 22px 20px 28px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .cursor { animation: none; }
       html { scroll-behavior: auto; }
+      .preview { transition: none; }
     }
   </style>
 </head>
 <body>
   <nav class="nav">
     <div class="container">
-      <a class="brand" href="#top"><img src="hosting/mark.svg" alt=""><img src="hosting/logo.png" alt="Fuelpa LLC"></a>
+      <a class="wordmark" href="#top"><span class="of">of</span>Huntsville</a>
       <div class="nav-links">
         <a href="#how" class="hide-sm">How it works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact</a>
+        <a href="#pricing" class="hide-sm">Pricing</a>
+        <a href="#start" class="pill">Get your site</a>
       </div>
     </div>
   </nav>
 
   <main id="top">
     <section class="hero">
-      <div class="text">
-        <p class="lead">Picture your business online...</p>
-        <h1 class="typed-wrap" aria-label="yourbusiness.ofhuntsville.org">
-          <span class="typed" id="typed">yourcoffeeshop</span><span class="cursor" aria-hidden="true"></span>
-          <span class="suffix">.ofhuntsville.org</span>
-        </h1>
-        <p class="tagline">Free websites for Huntsville's local businesses, artists and makers.</p>
-        <a class="btn" href="mailto:inquire@fuelpa.com?subject=My%20free%20ofHuntsville%20site">Claim your free site</a>
+      <div class="hero-inner">
+        <span class="eyebrow">Free websites for Huntsville</span>
+        <h1>Picture your business online.</h1>
+        <p class="sub">A real website with a Huntsville address, built for you. Free for local businesses, artists and makers.</p>
+
+        <div class="browser" aria-label="Example website preview">
+          <div class="bar">
+            <div class="dots"><i></i><i></i><i></i></div>
+            <div class="address"><span class="lock" aria-hidden="true">🔒</span><span class="typed" id="typed">yourcoffeeshop</span><span class="cursor" aria-hidden="true"></span><span class="suffix">.ofhuntsville.org</span></div>
+          </div>
+          <div class="preview" id="preview">
+            <div class="pv-top">
+              <div class="pv-icon" id="pv-icon">☕</div>
+              <div><div class="pv-name" id="pv-name">Your Coffee Shop</div><div class="pv-tag" id="pv-tag">Fresh roasts, downtown Huntsville</div></div>
+            </div>
+            <div class="pv-lines"><span></span><span></span><span></span></div>
+            <span class="pv-btn" id="pv-btn">See the menu</span>
+          </div>
+        </div>
+      </div>
+
+      <svg class="skyline" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+        <path fill="#fff" d="M0 160V118c60-14 120-30 200-30s150 22 230 22 120-30 190-30 140 20 210 20 120-26 200-26 120 18 190 18 140-24 220-24v112z"/>
+        <path fill="#fff" d="M330 160V96h28v-22h24v22h30v64zM460 160V84h22V64h18v20h26v76zM890 160V90h34v-16h20v16h28v70zM1010 160V100h40v60zM1080 160V80h26v80z"/>
+        <path fill="#fff" d="M720 160V58l-8 10V38l12-30 12 30v30l-8-10v102z"/>
+      </svg>
+    </section>
+    <div class="cta-row" id="start">
+      <a class="btn" href="mailto:inquire@fuelpa.com?subject=My%20free%20ofHuntsville%20site">Claim your free site</a>
+    </div>
+
+    <section class="block">
+      <div class="container">
+        <div class="heading">
+          <h2>Made for Huntsville's local scene</h2>
+          <p>If you make, serve or create something here, your site should say so.</p>
+        </div>
+        <div class="who">
+          <div><span class="ico">☕</span><div><h4>Coffee shops</h4><p>Menus, hours and the latest roast.</p></div></div>
+          <div><span class="ico">🍺</span><div><h4>Breweries</h4><p>What's on tap and what's happening.</p></div></div>
+          <div><span class="ico">🎨</span><div><h4>Artists & makers</h4><p>A gallery for your studio work.</p></div></div>
+          <div><span class="ico">🚚</span><div><h4>Food trucks</h4><p>Where you'll park this week.</p></div></div>
+          <div><span class="ico">👗</span><div><h4>Boutiques</h4><p>New arrivals and store hours.</p></div></div>
+          <div><span class="ico">🎸</span><div><h4>Bands & musicians</h4><p>Shows, songs and booking.</p></div></div>
+          <div><span class="ico">🌿</span><div><h4>Home services</h4><p>Lawn care, cleaning, repairs.</p></div></div>
+          <div><span class="ico">🥐</span><div><h4>Bakeries</h4><p>Orders, specials and photos.</p></div></div>
+        </div>
       </div>
     </section>
 
-    <section class="block" id="how">
+    <section class="block soft" id="how">
       <div class="container">
         <div class="heading">
           <h2>How it works</h2>
-          <p>Being local is your edge. A Huntsville address on the web says so before anyone reads a word.</p>
+          <p>Three steps from idea to a live site.</p>
         </div>
         <div class="steps">
-          <div class="step"><span class="num">1</span>
-            <h4>Tell us about you</h4>
-            <p>Send your name, what you do, and the address you want.</p>
-          </div>
-          <div class="step"><span class="num">2</span>
-            <h4>We build it</h4>
-            <p>Free sites are ready in about three days. Paid requests start as soon as we're notified.</p>
-          </div>
-          <div class="step"><span class="num">3</span>
-            <h4>You go live</h4>
-            <p>Your site lives at <strong>yourname.ofhuntsville.org</strong>, ready to share.</p>
-          </div>
+          <div class="step"><div class="num">1</div><h4>Tell us about you</h4><p>Your name, what you do, and the address you want.</p></div>
+          <div class="step"><div class="num">2</div><h4>We build it</h4><p>Free sites are ready in about three days. Paid requests start as soon as we're notified.</p></div>
+          <div class="step"><div class="num">3</div><h4>You go live</h4><p>Share <strong>yourname.ofhuntsville.org</strong> with the whole city.</p></div>
         </div>
       </div>
     </section>
 
-    <section class="block soft" id="pricing">
+    <section class="block" id="pricing">
       <div class="container">
         <div class="heading">
-          <h2>Pricing</h2>
-          <p>Start free. Grow when you need more sites.</p>
+          <h2>Simple monthly plans</h2>
+          <p>Start free. Add more sites as you grow.</p>
         </div>
         <div class="tiers">
           <div class="card">
             <h4>Free</h4>
             <div class="price">$0<small>/mo</small></div>
-            <ul>
-              <li>1 website</li>
-              <li>Ready in about 3 days</li>
-              <li>yourname.ofhuntsville.org</li>
-            </ul>
-            <a class="btn blue" href="mailto:inquire@fuelpa.com?subject=Free%20ofHuntsville%20site">Get started</a>
+            <ul><li>1 website</li><li>Ready in about 3 days</li><li>yourname.ofhuntsville.org</li></ul>
+            <a class="btn ghost" href="mailto:inquire@fuelpa.com?subject=Free%20ofHuntsville%20site">Get started</a>
           </div>
           <div class="card">
             <h4>Basic</h4>
             <div class="price">$15<small>/mo</small></div>
-            <ul>
-              <li>5 websites</li>
-              <li>Work starts on notification</li>
-              <li>yourname.ofhuntsville.org</li>
-            </ul>
-            <a class="btn blue" href="mailto:inquire@fuelpa.com?subject=Basic%20ofHuntsville%20plan">Choose Basic</a>
+            <ul><li>5 websites</li><li>Work starts on notification</li><li>yourname.ofhuntsville.org</li></ul>
+            <a class="btn ghost" href="mailto:inquire@fuelpa.com?subject=Basic%20ofHuntsville%20plan">Choose Basic</a>
           </div>
           <div class="card featured">
+            <span class="badge">Most sites per dollar</span>
             <h4>Premium</h4>
             <div class="price">$60<small>/mo</small></div>
-            <ul>
-              <li>20 websites</li>
-              <li>Work starts on notification</li>
-              <li>yourname.ofhuntsville.org</li>
-            </ul>
-            <a class="btn blue" href="mailto:inquire@fuelpa.com?subject=Premium%20ofHuntsville%20plan">Choose Premium</a>
+            <ul><li>20 websites</li><li>Work starts on notification</li><li>yourname.ofhuntsville.org</li></ul>
+            <a class="btn" href="mailto:inquire@fuelpa.com?subject=Premium%20ofHuntsville%20plan">Choose Premium</a>
           </div>
           <div class="card">
             <h4>Shareholder</h4>
             <div class="price">$250<small>/mo</small></div>
-            <ul>
-              <li>Unlimited websites</li>
-              <li>Referral payouts</li>
-              <li>Work starts on notification</li>
-            </ul>
-            <a class="btn blue" href="mailto:inquire@fuelpa.com?subject=Shareholder%20ofHuntsville%20plan">Become a Shareholder</a>
+            <ul><li>Unlimited websites</li><li>Referral payouts</li><li>Work starts on notification</li></ul>
+            <a class="btn ghost" href="mailto:inquire@fuelpa.com?subject=Shareholder%20ofHuntsville%20plan">Become a Shareholder</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="block" id="contact">
-      <div class="container arts">
-        <div class="heading">
-          <h2>Made in Huntsville</h2>
+    <section class="block soft">
+      <div class="container local">
+        <div>
+          <h2>Local is your edge</h2>
+          <p>People in Huntsville want to support people in Huntsville. An ofhuntsville.org address tells them you're one of them before they read a word.</p>
+          <p>ofHuntsville is backed by a local company that supports the arts, so creatives and small shops get a real web presence without the cost.</p>
         </div>
-        <p>ofHuntsville is a project of <strong>Fuelpa LLC</strong>, a proud supporter of the arts. Questions? Email <a href="mailto:inquire@fuelpa.com">inquire@fuelpa.com</a>.</p>
+        <div class="stats">
+          <div class="stat"><b>$0</b><span>to get started</span></div>
+          <div class="stat"><b>~3 days</b><span>to a free site</span></div>
+          <div class="stat"><b>4</b><span>plans to grow into</span></div>
+          <div class="stat"><b>100%</b><span>Huntsville</span></div>
+        </div>
       </div>
+    </section>
+
+    <section class="block">
+      <div class="container">
+        <div class="heading"><h2>Questions</h2></div>
+        <div class="faq">
+          <details><summary>Is the free site really free?</summary><p>Yes. One site on the Free plan costs nothing each month.</p></details>
+          <details><summary>How long does it take?</summary><p>Free sites take about three days. On a paid plan, work starts as soon as we're notified of your request.</p></details>
+          <details><summary>What address will my site have?</summary><p>Your site lives at yourname.ofhuntsville.org, using the name you choose.</p></details>
+          <details><summary>What do Shareholders get?</summary><p>Unlimited websites plus payouts for people you refer.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <h2>Your Huntsville address is waiting.</h2>
+      <p>Tell us what you do and we'll take it from there.</p>
+      <a class="btn" href="mailto:inquire@fuelpa.com?subject=My%20free%20ofHuntsville%20site">Claim your free site</a>
     </section>
   </main>
 
   <footer>
     <div class="container">
-      <img src="hosting/mark.svg" alt="Fuelpa LLC" height="64">
-      <div class="cols">
+      <div class="row">
         <div>
-          <h5>Get started</h5>
-          <ul><li><a href="#pricing">Pricing</a></li><li><a href="#how">How it works</a></li></ul>
+          <a class="wordmark" href="#top"><span class="of">of</span>Huntsville</a>
+          <p class="tag">Websites for the people of Huntsville.</p>
         </div>
-        <div>
-          <h5>Inquiries</h5>
-          <ul><li><a href="mailto:inquire@fuelpa.com">inquire@fuelpa.com</a></li></ul>
-        </div>
-        <div>
-          <h5>Support</h5>
-          <ul><li><a href="mailto:support@fuelpa.com">support@fuelpa.com</a></li></ul>
-        </div>
-        <div>
-          <h5>Fuelpa</h5>
-          <ul><li><a href="https://fuelpa.com">fuelpa.com</a></li></ul>
-        </div>
+        <nav>
+          <a href="#how">How it works</a>
+          <a href="#pricing">Pricing</a>
+          <a href="mailto:inquire@fuelpa.com">inquire@fuelpa.com</a>
+          <a href="mailto:support@fuelpa.com">Support</a>
+        </nav>
       </div>
     </div>
-    <div class="copyright">© <span id="year">2026</span> Fuelpa LLC</div>
+    <div class="copyright">© <span id="year">2026</span> ofHuntsville · an initiative of Fuelpa LLC</div>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
     (function () {
-      var names = ['yourcoffeeshop', 'yourbrewery', 'yourartstudio', 'yourfoodtruck',
-                   'yourboutique', 'yourbakery', 'yourlawncare', 'yourband'];
-      var el = document.getElementById('typed');
+      var sites = [
+        { slug: 'yourcoffeeshop', name: 'Your Coffee Shop', tag: 'Fresh roasts, downtown Huntsville', icon: '☕', color: '#8a5a3c', bg: '#f6ede6', btn: 'See the menu' },
+        { slug: 'yourbrewery',    name: 'Your Brewery',     tag: "What's on tap this week",         icon: '🍺', color: '#c98a12', bg: '#fbf2df', btn: 'View the taps' },
+        { slug: 'yourartstudio',  name: 'Your Art Studio',  tag: 'Original work, made in Huntsville', icon: '🎨', color: '#8e44ad', bg: '#f3e9f8', btn: 'Visit the gallery' },
+        { slug: 'yourfoodtruck',  name: 'Your Food Truck',  tag: "Find out where we're parked",      icon: '🚚', color: '#d9480f', bg: '#fdebe2', btn: "This week's stops" },
+        { slug: 'yourboutique',   name: 'Your Boutique',    tag: 'New arrivals every Friday',        icon: '👗', color: '#c2255c', bg: '#fbe6ee', btn: 'Shop new arrivals' },
+        { slug: 'yourbakery',     name: 'Your Bakery',      tag: 'Baked fresh every morning',        icon: '🥐', color: '#b7791f', bg: '#fbf0dc', btn: 'Place an order' },
+        { slug: 'yourlawncare',   name: 'Your Lawn Care',   tag: 'Serving Madison County',           icon: '🌿', color: '#2f9e44', bg: '#e6f6e9', btn: 'Get a quote' },
+        { slug: 'yourband',       name: 'Your Band',        tag: 'Live around the Rocket City',      icon: '🎸', color: '#1c7ed6', bg: '#e3f0fc', btn: 'Upcoming shows' }
+      ];
+      var typed = document.getElementById('typed');
+      var preview = document.getElementById('preview');
+      var els = { icon: document.getElementById('pv-icon'), name: document.getElementById('pv-name'),
+                  tag: document.getElementById('pv-tag'), btn: document.getElementById('pv-btn') };
+
+      function show(s) {
+        els.icon.textContent = s.icon;
+        els.icon.style.background = s.bg;
+        els.name.textContent = s.name;
+        els.name.style.color = s.color;
+        els.tag.textContent = s.tag;
+        els.btn.textContent = s.btn;
+        els.btn.style.background = s.color;
+      }
+      show(sites[0]);
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-      var i = 0, len = names[0].length, deleting = true;
+      var i = 0, len = sites[0].slug.length, deleting = true;
       function tick() {
-        var word = names[i], delay;
+        var delay;
         if (deleting) {
           len--;
           delay = 45;
+          if (len === 6) preview.classList.add('fade');
           if (len <= 4) { // keep "your", then type the next name
             deleting = false;
-            i = (i + 1) % names.length;
+            i = (i + 1) % sites.length;
+            show(sites[i]);
             delay = 300;
           }
         } else {
           len++;
-          delay = 90 + Math.random() * 60;
-          if (len >= names[i].length) { deleting = true; delay = 1800; }
+          delay = 85 + Math.random() * 60;
+          if (len === 6) preview.classList.remove('fade');
+          if (len >= sites[i].slug.length) { deleting = true; delay = 2000; }
         }
-        el.textContent = names[i].slice(0, len);
+        typed.textContent = sites[i].slug.slice(0, len);
         setTimeout(tick, delay);
       }
-      setTimeout(tick, 1800);
+      setTimeout(tick, 2000);
     })();
   </script>
 </body>
