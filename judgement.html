@@ -282,12 +282,38 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
         </div>
       </section>
 
+      <section data-id="alignment" data-label="The Alignment Problem" hidden>
+        <h2>The Alignment Problem</h2>
+        <p>
+          <strong>Brian Christian, <em>The Alignment Problem: Machine Learning and Human Values</em> (2020).</strong>
+          The best plain-language account of why AI systems judge the way they do. Christian&rsquo;s point of view:
+          a system does exactly what we <em>specified</em>, not what we <em>meant</em>, and every gap between the two
+          is a place where its judgement quietly drifts from ours.
+        </p>
+        <div class="grid">
+          <ul class="items">
+            <li><strong>Prophecy</strong> Models trained on human data inherit human judgement, flaws included: biased risk scores, word embeddings that absorb stereotypes, and systems nobody can explain.</li>
+            <li><strong>Agency</strong> Reward an agent for a number and it optimizes the number, not the goal. Proxies get gamed, and clever shortcuts look like success.</li>
+          </ul>
+          <ul class="items">
+            <li><strong>Normativity</strong> Since we can&rsquo;t write our values down completely, let machines learn them by watching and asking us &mdash; the line of research that led to training models on human preferences.</li>
+            <li><strong>Humility</strong> A system that stays uncertain about what we want, and defers or asks, is safer than one that is confident about the wrong thing.</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <p><strong>Why it matters here:</strong> an AI judge is the alignment problem in miniature. Its sense of
+          &ldquo;good&rdquo; is a learned proxy for ours, built from raters&rsquo; choices. Every bias on the previous
+          tabs is a gap between what we asked for and what we meant.</p>
+        </div>
+      </section>
+
       <section data-id="discuss" data-label="Discuss" hidden>
         <h2>Questions for the room</h2>
         <ul class="items">
           <li><strong>When is a judgement call good enough?</strong> Where would you accept an AI&rsquo;s verdict without a human check, and where never?</li>
           <li><strong>Judges all the way down</strong> If models are trained on AI feedback and graded by AI judges, whose standards are we really measuring?</li>
           <li><strong>Explanations</strong> Does a convincing explanation make you trust a call more than it should?</li>
+          <li><strong>Specified vs. meant</strong> Where have you seen an AI do exactly what you asked and still miss the point?</li>
           <li><strong>Disagreement</strong> When the AI and a person disagree, who should win, and how would you know?</li>
         </ul>
       </section>
