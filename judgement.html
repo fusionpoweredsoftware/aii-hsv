@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How AIs Make a Judgement Call - AI Innovators of Huntsville</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The theory behind AI judgement calls: token probabilities, where a model's sense of good and bad comes from, how prompts and rubrics shape a verdict, known biases, and how to make an AI judge trustworthy.">
+  <link rel="icon" type="image/png" href="aiihsv-logo-complete-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #050510;
+      --bg-card: rgba(15, 15, 40, 0.7);
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --accent-cyan: #06b6d4;
+      --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+      --text-primary: #f0f0f5;
+      --text-secondary: rgba(240, 240, 245, 0.7);
+      --text-muted: rgba(240, 240, 245, 0.5);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(139, 92, 246, 0.3);
+      --font-heading: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59, 130, 246, 0.12), transparent),
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(139, 92, 246, 0.08), transparent),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(6, 182, 212, 0.06), transparent);
+      background-attachment: fixed;
+    }
+
+    a { color: var(--accent-cyan); }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 32px 16px 48px; }
+
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; font-family: var(--font-heading); font-weight: 600; }
+    .brand img { height: 32px; }
+
+    h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15; margin-bottom: 8px; }
+    h1 span { background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lede { color: var(--text-secondary); max-width: 720px; margin-bottom: 24px; }
+
+    /* Pager tabs */
+    .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .tab {
+      font-family: var(--font-heading); font-weight: 600; font-size: 0.9rem;
+      background: var(--bg-card); color: var(--text-secondary);
+      border: 1px solid var(--border-subtle); border-radius: 8px;
+      padding: 8px 12px; cursor: pointer;
+    }
+    .tab:hover { color: var(--text-primary); }
+    .tab[aria-selected="true"] { color: var(--text-primary); border-color: var(--accent-purple); background: rgba(139, 92, 246, 0.15); }
+    .tab .step { color: var(--text-muted); font-weight: 400; margin-right: 4px; }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 16px; padding: 28px; backdrop-filter: blur(10px);
+    }
+    .card h2 { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 6px; }
+    .card h3 { font-family: var(--font-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-cyan); margin: 22px 0 8px; }
+    .card p { color: var(--text-secondary); }
+    .card p + p { margin-top: 10px; }
+    .card strong { color: var(--text-primary); }
+    .card section[hidden] { display: none; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } .card { padding: 20px; } }
+
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .flow span {
+      font-size: 0.82rem; padding: 4px 10px; border-radius: 999px;
+      border: 1px solid rgba(6, 182, 212, 0.35); background: rgba(6, 182, 212, 0.08);
+    }
+    .flow i { color: var(--text-muted); font-style: normal; font-size: 0.8rem; }
+
+    .callout { border-left: 3px solid var(--accent-purple); padding: 10px 14px; background: rgba(139, 92, 246, 0.07); border-radius: 0 8px 8px 0; margin-top: 14px; }
+    .callout p { color: var(--text-secondary); }
+
+    ul.items { list-style: none; }
+    ul.items li { padding: 10px 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: 0.95rem; }
+    ul.items li:last-child { border-bottom: none; }
+    ul.items strong { display: block; font-family: var(--font-heading); }
+
+    pre {
+      font-size: 0.82rem; line-height: 1.5; white-space: pre-wrap;
+      background: rgba(0, 0, 0, 0.35); border: 1px solid var(--border-subtle);
+      border-radius: 10px; padding: 12px 14px; color: var(--text-secondary);
+    }
+
+    /* Probability demo */
+    .demo { margin-top: 8px; }
+    .bar-row { display: grid; grid-template-columns: 64px 1fr 52px; align-items: center; gap: 10px; margin: 6px 0; font-size: 0.9rem; }
+    .bar-row .label { font-family: var(--font-heading); font-weight: 600; }
+    .bar-track { height: 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.05); overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; background: var(--accent-gradient); transition: width 0.2s; }
+    .bar-row .pct { text-align: right; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+    .slider { display: flex; align-items: center; gap: 12px; margin-top: 14px; font-size: 0.9rem; color: var(--text-secondary); flex-wrap: wrap; }
+    .slider input { flex: 1; min-width: 160px; accent-color: var(--accent-purple); }
+    .slider output { font-family: var(--font-heading); color: var(--text-primary); min-width: 32px; }
+
+    .pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; }
+    .pager button {
+      background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-subtle);
+      border-radius: 8px; padding: 10px 16px; font-family: var(--font-heading); font-weight: 600; cursor: pointer;
+    }
+    .pager button:disabled { opacity: 0.35; cursor: default; }
+    .pager .count { color: var(--text-muted); font-size: 0.85rem; }
+
+    footer { margin-top: 32px; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="brand" href="index.html"><img src="aiihsv-logo-complete.png" alt="">AI Innovators HSV</a>
+    </header>
+
+    <h1>How AIs Make a <span>Judgement Call</span></h1>
+    <p class="lede">
+      When an AI decides whether an answer is good, it isn&rsquo;t weighing evidence the way a person does.
+      It&rsquo;s predicting text. This page walks through what that means, where a model&rsquo;s sense of
+      &ldquo;good&rdquo; comes from, and why its calls can be useful and still go wrong.
+    </p>
+
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+
+    <main class="card" role="tabpanel" aria-live="polite" id="page">
+
+      <section data-id="overview" data-label="Overview">
+        <h2>A call is a prediction</h2>
+        <p>
+          Ask a model &ldquo;Does this answer solve the problem? Yes or no.&rdquo; and it doesn&rsquo;t look anything up
+          or run a test. It reads the whole prompt and predicts the most fitting next words. The verdict is
+          whatever text is most likely to follow, given everything it learned in training and everything
+          you put in the prompt.
+        </p>
+        <h3>The pipeline</h3>
+        <div class="flow">
+          <span>Situation + criteria</span><i>&rsaquo;</i>
+          <span>Tokens</span><i>&rsaquo;</i>
+          <span>Learned patterns</span><i>&rsaquo;</i>
+          <span>Probabilities</span><i>&rsaquo;</i>
+          <span>Verdict + reasons</span>
+        </div>
+        <div class="callout">
+          <p><strong>The one idea:</strong> every AI judgement is shaped by three things &mdash; what the model
+          learned in training, what the prompt asks for, and how the answer is sampled. Change any of them
+          and the call can change.</p>
+        </div>
+      </section>
+
+      <section data-id="probabilities" data-label="Probabilities" hidden>
+        <h2>Yes, no, or maybe</h2>
+        <p>
+          At the moment of the verdict, the model assigns a score to every possible next token. Those scores
+          are turned into probabilities. The model doesn&rsquo;t &ldquo;believe&rdquo; one answer; it holds a
+          spread across all of them, and one gets picked.
+        </p>
+        <p>
+          <strong>Temperature</strong> controls how that pick happens. Near zero, the top choice nearly always
+          wins. Higher, the spread flattens and less likely answers start to show up &mdash; which is why the same
+          question can get a different call on a second try.
+        </p>
+        <h3>Try it</h3>
+        <div class="demo" id="demo"></div>
+        <div class="slider">
+          <label for="temp">Temperature</label>
+          <input id="temp" type="range" min="0.1" max="2" step="0.1" value="1">
+          <output id="tempOut" for="temp">1.0</output>
+        </div>
+        <p class="note" style="margin-top:12px;font-size:0.85rem;color:var(--text-muted)">
+          Illustrative numbers. Some APIs expose these as &ldquo;logprobs&rdquo;, which lets you read a
+          judge&rsquo;s confidence instead of just its answer.
+        </p>
+      </section>
+
+      <section data-id="training" data-label="Training" hidden>
+        <h2>Where &ldquo;good&rdquo; comes from</h2>
+        <p>A model has no built-in standards. Its sense of what counts as a good answer is layered on in training.</p>
+        <ul class="items">
+          <li><strong>Pretraining</strong> Reading huge amounts of human text teaches it how people argue, praise, critique and grade.</li>
+          <li><strong>Instruction tuning</strong> Examples of good responses teach it to follow requests like &ldquo;rate this from 1 to 10&rdquo;.</li>
+          <li><strong>Preference training (RLHF and similar)</strong> People, or other AIs, compare pairs of answers and pick the better one. A <em>reward model</em> learns to predict those picks, and the main model is tuned to score well on it. In other words, AI judges were trained by judges.</li>
+          <li><strong>Written principles</strong> Some labs also train against a written set of principles (a &ldquo;constitution&rdquo;), so the model learns to critique answers against stated rules.</li>
+        </ul>
+        <div class="callout">
+          <p>Whatever the raters rewarded &mdash; including their blind spots &mdash; becomes part of the model&rsquo;s taste.</p>
+        </div>
+      </section>
+
+      <section data-id="prompt" data-label="The Prompt" hidden>
+        <h2>The prompt sets the standard</h2>
+        <p>The same model makes very different calls depending on how the question is framed.</p>
+        <div class="grid">
+          <div>
+            <h3>Three ways to judge</h3>
+            <ul class="items">
+              <li><strong>Pointwise</strong> Score one answer on its own (&ldquo;rate 1&ndash;10&rdquo;).</li>
+              <li><strong>Pairwise</strong> Pick the better of two answers. Usually more consistent than scores.</li>
+              <li><strong>Reference-based</strong> Compare against a known good answer.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What sharpens a call</h3>
+            <ul class="items">
+              <li><strong>A rubric</strong> Spell out what earns credit and what doesn&rsquo;t.</li>
+              <li><strong>Examples</strong> Show a few judged cases so it copies the standard.</li>
+              <li><strong>A fixed format</strong> Ask for structured output so verdicts can be counted.</li>
+            </ul>
+          </div>
+        </div>
+        <h3>A minimal judge prompt</h3>
+        <pre>You are grading whether an answer solves a problem.
+Problem: {problem}
+Answer: {answer}
+Criteria: The answer must be practical and directly address the problem.
+First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
+      </section>
+
+      <section data-id="reasoning" data-label="Reasoning" hidden>
+        <h2>Reasons first, verdict second</h2>
+        <p>
+          A model writes one token at a time, and each token is conditioned on everything before it. If the
+          verdict comes first, any explanation after it is written to fit a decision already made. If the
+          reasoning comes first, the verdict is conditioned on that reasoning.
+        </p>
+        <p>
+          That&rsquo;s why judge prompts often ask the model to <strong>think before it answers</strong>, and why
+          &ldquo;reasoning&rdquo; models that write long internal deliberation tend to judge better on hard cases.
+        </p>
+        <div class="callout">
+          <p><strong>Caveat:</strong> written reasoning isn&rsquo;t guaranteed to be the real reason. Research on
+          chain-of-thought faithfulness has found models giving plausible explanations that leave out what
+          actually drove the answer. Treat the explanation as evidence, not proof.</p>
+        </div>
+      </section>
+
+      <section data-id="biases" data-label="Biases" hidden>
+        <h2>Known biases of AI judges</h2>
+        <p>These have been measured repeatedly in studies of &ldquo;LLM-as-a-judge&rdquo;.</p>
+        <div class="grid">
+          <ul class="items">
+            <li><strong>Position bias</strong> In pairwise comparisons, favoring whichever answer appears first (or second).</li>
+            <li><strong>Length bias</strong> Rating longer, more detailed-sounding answers higher, even when they aren&rsquo;t better.</li>
+            <li><strong>Self-preference</strong> Preferring answers written in its own style, or by its own model family.</li>
+          </ul>
+          <ul class="items">
+            <li><strong>Leniency</strong> Giving the benefit of the doubt; preference training rewards agreeable responses.</li>
+            <li><strong>Surface matching</strong> Rewarding the right keywords instead of the right idea.</li>
+            <li><strong>Framing and anchoring</strong> Swaying toward a verdict the prompt hints at, or toward a score it saw earlier.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section data-id="trust" data-label="Trust" hidden>
+        <h2>Making an AI judge trustworthy</h2>
+        <ul class="items">
+          <li><strong>Check against people</strong> Have humans judge a sample and measure how often the AI agrees.</li>
+          <li><strong>Swap the order</strong> In pairwise judging, run both orders and only count consistent verdicts.</li>
+          <li><strong>Ask more than once</strong> Sample several verdicts, or use a panel of different models, and take the majority.</li>
+          <li><strong>Check calibration</strong> When it says it&rsquo;s 80% sure, is it right about 80% of the time?</li>
+          <li><strong>Keep it narrow</strong> Clear rubric, low temperature, structured output, reasons before verdict.</li>
+        </ul>
+        <div class="callout">
+          <p>AI judges are fast, cheap and consistent at scale, which is why they grade benchmarks, filter
+          training data and power reward models. They&rsquo;re most trustworthy as a measured instrument, not an oracle.</p>
+        </div>
+      </section>
+
+      <section data-id="discuss" data-label="Discuss" hidden>
+        <h2>Questions for the room</h2>
+        <ul class="items">
+          <li><strong>When is a judgement call good enough?</strong> Where would you accept an AI&rsquo;s verdict without a human check, and where never?</li>
+          <li><strong>Judges all the way down</strong> If models are trained on AI feedback and graded by AI judges, whose standards are we really measuring?</li>
+          <li><strong>Explanations</strong> Does a convincing explanation make you trust a call more than it should?</li>
+          <li><strong>Disagreement</strong> When the AI and a person disagree, who should win, and how would you know?</li>
+        </ul>
+      </section>
+
+    </main>
+
+    <div class="pager">
+      <button id="prev" type="button">&larr; Prev</button>
+      <span class="count" id="count"></span>
+      <button id="next" type="button">Next &rarr;</button>
+    </div>
+
+    <footer>AI Innovators of Huntsville &middot; October 9, 2026</footer>
+  </div>
+
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const sections = Array.from(document.querySelectorAll('#page section'));
+      const pages = sections.map((s) => ({ id: s.dataset.id, label: s.dataset.label, el: s }));
+
+      $('tabs').innerHTML = pages.map((p, i) =>
+        '<button class="tab" role="tab" data-id="' + p.id + '"><span class="step">' + (i + 1) + '</span>' + p.label + '</button>'
+      ).join('');
+      $('tabs').addEventListener('click', (e) => {
+        const b = e.target.closest('.tab');
+        if (b) go(b.dataset.id);
+      });
+
+      // Probability demo: fixed logits, softmax at the chosen temperature.
+      const options = [['Yes', 2.0], ['No', 1.1], ['Maybe', -0.4]];
+      $('demo').innerHTML = options.map(([label]) =>
+        '<div class="bar-row"><span class="label">' + label + '</span>' +
+        '<div class="bar-track"><div class="bar-fill"></div></div><span class="pct"></span></div>'
+      ).join('');
+      function renderDemo() {
+        const t = parseFloat($('temp').value);
+        $('tempOut').textContent = t.toFixed(1);
+        const exps = options.map(([, logit]) => Math.exp(logit / t));
+        const sum = exps.reduce((a, b) => a + b, 0);
+        document.querySelectorAll('#demo .bar-row').forEach((row, i) => {
+          const pct = (exps[i] / sum) * 100;
+          row.querySelector('.bar-fill').style.width = pct.toFixed(1) + '%';
+          row.querySelector('.pct').textContent = pct.toFixed(0) + '%';
+        });
+      }
+      $('temp').addEventListener('input', renderDemo);
+      renderDemo();
+
+      let index = 0;
+      function go(id) {
+        const i = pages.findIndex((p) => p.id === id);
+        index = i < 0 ? 0 : i;
+        const p = pages[index];
+        pages.forEach((q) => { q.el.hidden = q !== p; });
+        document.querySelectorAll('.tab').forEach((t) => t.setAttribute('aria-selected', t.dataset.id === p.id));
+        $('prev').disabled = index === 0;
+        $('next').disabled = index === pages.length - 1;
+        $('count').textContent = (index + 1) + ' / ' + pages.length;
+        if (location.hash.slice(1) !== p.id) history.replaceState(null, '', '#' + p.id);
+      }
+
+      $('prev').addEventListener('click', () => go(pages[Math.max(0, index - 1)].id));
+      $('next').addEventListener('click', () => go(pages[Math.min(pages.length - 1, index + 1)].id));
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT') return;
+        if (e.key === 'ArrowLeft') $('prev').click();
+        if (e.key === 'ArrowRight') $('next').click();
+      });
+      window.addEventListener('hashchange', () => go(location.hash.slice(1)));
+
+      go(location.hash.slice(1));
+    })();
+  </script>
+</body>
+</html>
