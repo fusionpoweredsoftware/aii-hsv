@@ -6,7 +6,8 @@
   <title>ofHuntsville - Free Websites for Huntsville</title>
   <meta name="description" content="Free websites for Huntsville's local businesses, artists and makers, at yourname.ofhuntsville.org.">
   <meta name="robots" content="noindex">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233b99e0'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Montserrat,Arial,sans-serif' font-weight='800' font-size='30' fill='%23fff'%3EoH%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" sizes="32x32" href="hosting/ofh-icon-32.png">
+  <link rel="apple-touch-icon" href="hosting/ofh-icon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800&display=swap" rel="stylesheet">
@@ -31,6 +32,8 @@
     /* Wordmark */
     .wordmark { font-weight: 800; letter-spacing: -.02em; color: var(--text); text-decoration: none; white-space: nowrap; }
     .wordmark .of { color: var(--blue); font-weight: 600; }
+    .wordmark { display: inline-flex; align-items: center; }
+    .wordmark .mark { width: 1.6em; height: 1.6em; margin-right: .4em; display: block; }
 
     /* Nav */
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 10; background: rgba(255,255,255,.96); box-shadow: 0 0 15px rgba(0,0,0,.08); }
@@ -163,7 +166,7 @@
 <body>
   <nav class="nav">
     <div class="container">
-      <a class="wordmark" href="#top"><span class="of">of</span>Huntsville</a>
+      <a class="wordmark" href="#top"><img class="mark" src="hosting/ofh-icon-180.png" alt=""><span class="of">of</span>Huntsville</a>
       <div class="nav-links">
         <a href="#how" class="hide-sm">How it works</a>
         <a href="#pricing" class="hide-sm">Pricing</a>
@@ -313,7 +316,7 @@
     <div class="container">
       <div class="row">
         <div>
-          <a class="wordmark" href="#top"><span class="of">of</span>Huntsville</a>
+          <a class="wordmark" href="#top"><img class="mark" src="hosting/ofh-icon-180.png" alt=""><span class="of">of</span>Huntsville</a>
           <p class="tag">Websites for the people of Huntsville.</p>
         </div>
         <nav>
