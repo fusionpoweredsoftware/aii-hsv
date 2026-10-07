@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>8 AI Model Types - AI Innovators of Huntsville</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Eight specialized AI model types (LLM, LCM, LAM, MoE, VLM, SLM, MLM, SAM) with pipelines, concrete examples, living catalogs, and one scenario that connects them.">
+  <link rel="icon" type="image/png" href="aiihsv-logo-complete-icon.png">
+  <link rel="alternate" type="application/json" href="models.json" title="Machine-readable version">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #050510;
+      --bg-card: rgba(15, 15, 40, 0.7);
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --accent-cyan: #06b6d4;
+      --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+      --text-primary: #f0f0f5;
+      --text-secondary: rgba(240, 240, 245, 0.7);
+      --text-muted: rgba(240, 240, 245, 0.5);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(139, 92, 246, 0.3);
+      --font-heading: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59, 130, 246, 0.12), transparent),
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(139, 92, 246, 0.08), transparent),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(6, 182, 212, 0.06), transparent);
+      background-attachment: fixed;
+    }
+
+    a { color: var(--accent-cyan); }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 32px 16px 48px; }
+
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; font-family: var(--font-heading); font-weight: 600; }
+    .brand img { height: 32px; }
+    .json-link {
+      font-size: 0.85rem; color: var(--text-secondary); text-decoration: none;
+      border: 1px solid var(--border-subtle); border-radius: 8px; padding: 6px 12px;
+    }
+    .json-link:hover { color: var(--text-primary); border-color: var(--border-glow); }
+
+    h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15; margin-bottom: 8px; }
+    h1 span { background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lede { color: var(--text-secondary); max-width: 720px; margin-bottom: 24px; }
+
+    /* Pager tabs */
+    .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .tab {
+      font-family: var(--font-heading); font-weight: 600; font-size: 0.9rem;
+      background: var(--bg-card); color: var(--text-secondary);
+      border: 1px solid var(--border-subtle); border-radius: 8px;
+      padding: 8px 12px; cursor: pointer;
+    }
+    .tab:hover { color: var(--text-primary); }
+    .tab[aria-selected="true"] { color: var(--text-primary); border-color: var(--accent-purple); background: rgba(139, 92, 246, 0.15); }
+    .tab .step { color: var(--text-muted); font-weight: 400; margin-right: 4px; }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 16px; padding: 28px; backdrop-filter: blur(10px);
+    }
+    .card h2 { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 2px; }
+    .card h2 small { font-size: 1rem; color: var(--text-secondary); font-weight: 500; margin-left: 8px; }
+    .card h3 { font-family: var(--font-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-cyan); margin: 22px 0 8px; }
+    .card p { color: var(--text-secondary); }
+    .card p strong { color: var(--text-primary); }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } .card { padding: 20px; } }
+
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .flow span {
+      font-size: 0.82rem; padding: 4px 10px; border-radius: 999px;
+      border: 1px solid rgba(6, 182, 212, 0.35); background: rgba(6, 182, 212, 0.08);
+    }
+    .flow i { color: var(--text-muted); font-style: normal; font-size: 0.8rem; }
+
+    .scenario { border-left: 3px solid var(--accent-purple); padding: 10px 14px; background: rgba(139, 92, 246, 0.07); border-radius: 0 8px 8px 0; }
+    .scenario .handoff { display: block; margin-top: 6px; font-size: 0.85rem; color: var(--text-muted); }
+
+    ul.links { list-style: none; }
+    ul.links li { padding: 6px 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.92rem; }
+    ul.links li:last-child { border-bottom: none; }
+    ul.links .meta { color: var(--text-muted); font-size: 0.8rem; margin-left: 6px; }
+    .note { font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; }
+
+    dl.dims { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 0.9rem; }
+    dl.dims dt { color: var(--text-muted); text-transform: capitalize; }
+    dl.dims dd { color: var(--text-secondary); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+    th { font-family: var(--font-heading); color: var(--accent-cyan); font-weight: 600; text-transform: capitalize; }
+    td:first-child { font-family: var(--font-heading); font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+    td { color: var(--text-secondary); }
+    .table-wrap { overflow-x: auto; }
+
+    ol.chain { padding-left: 20px; color: var(--text-secondary); }
+    ol.chain li { margin: 6px 0; }
+    ol.chain a { font-family: var(--font-heading); font-weight: 600; text-decoration: none; }
+
+    .pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; }
+    .pager button {
+      background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-subtle);
+      border-radius: 8px; padding: 10px 16px; font-family: var(--font-heading); font-weight: 600; cursor: pointer;
+    }
+    .pager button:disabled { opacity: 0.35; cursor: default; }
+    .pager .count { color: var(--text-muted); font-size: 0.85rem; }
+
+    footer { margin-top: 32px; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="brand" href="index.html"><img src="aiihsv-logo-complete.png" alt="">AI Innovators HSV</a>
+      <a class="json-link" href="models.json">Machine-readable version (JSON)</a>
+    </header>
+
+    <h1>8 Specialized <span>AI Model Types</span></h1>
+    <p class="lede" id="lede">Loading...</p>
+
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+    <main id="page" class="card" role="tabpanel" aria-live="polite"></main>
+
+    <div class="pager">
+      <button id="prev" type="button">&larr; Prev</button>
+      <span class="count" id="count"></span>
+      <button id="next" type="button">Next &rarr;</button>
+    </div>
+
+    <footer id="footer"></footer>
+  </div>
+
+  <script>
+    (async function () {
+      const $ = (id) => document.getElementById(id);
+      const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+      let data;
+      try {
+        const res = await fetch('models.json', { cache: 'no-cache' });
+        data = await res.json();
+      } catch (e) {
+        $('lede').innerHTML = 'Could not load the catalog. Open <a href="models.json">models.json</a> directly.';
+        return;
+      }
+
+      const byId = Object.fromEntries(data.models.map((m) => [m.id, m]));
+      const chain = data.scenario.order.map((id) => byId[id]);
+      // Pages: overview, the 8 models in scenario order, then the comparison.
+      const pages = [{ id: 'overview', label: 'Overview' }]
+        .concat(chain.map((m, i) => ({ id: m.id, label: m.acronym, step: i + 1 })))
+        .concat([{ id: 'compare', label: 'Compare' }]);
+
+      $('lede').textContent = data.about;
+      $('footer').innerHTML = 'Updated ' + esc(data.updated) + ' · Same content as <a href="models.json">models.json</a>';
+
+      $('tabs').innerHTML = pages.map((p) =>
+        '<button class="tab" role="tab" data-id="' + p.id + '">' +
+        (p.step ? '<span class="step">' + p.step + '</span>' : '') + esc(p.label) + '</button>'
+      ).join('');
+      $('tabs').addEventListener('click', (e) => {
+        const b = e.target.closest('.tab');
+        if (b) go(b.dataset.id);
+      });
+
+      const linkList = (items, metaKey) => '<ul class="links">' + items.map((x) =>
+        '<li><a href="' + esc(x.url) + '" target="_blank" rel="noopener noreferrer">' + esc(x.name) + '</a>' +
+        '<span class="meta">' + esc(x[metaKey]) + '</span></li>'
+      ).join('') + '</ul>';
+
+      function renderOverview() {
+        const s = data.scenario;
+        return '<h2>' + esc(s.title) + '</h2>' +
+          '<h3>The one idea</h3><p>' + esc(data.unifying_idea) + '</p>' +
+          '<h3>The scenario</h3><p>' + esc(s.setup) + '</p>' +
+          '<h3>The chain</h3><ol class="chain">' + chain.map((m) =>
+            '<li><a href="#' + m.id + '">' + esc(m.acronym) + '</a> ' + esc(m.passes_on) + '</li>'
+          ).join('') + '</ol>' +
+          '<h3>Outcome</h3><p>' + esc(s.outcome) + '</p>' +
+          '<h3>Examples vs. living catalogs</h3><p>Each type lists <strong>examples</strong> (specific models you can try today) and <strong>living catalogs</strong> (databases, hubs and leaderboards that keep adding new examples as they are released), so the page stays useful after the examples age.</p>';
+      }
+
+      function renderModel(m, step) {
+        const flow = m.pipeline.map((p) => '<span>' + esc(p) + '</span>').join('<i>&rsaquo;</i>');
+        const dims = data.dimensions.map((d) => '<dt>' + esc(d) + '</dt><dd>' + esc(m.dimensions[d]) + '</dd>').join('');
+        return '<h2>' + esc(m.acronym) + '<small>' + esc(m.name) + '</small></h2>' +
+          '<p>' + esc(m.summary) + '</p>' +
+          '<h3>Step ' + step + ' of 8 in the scenario</h3>' +
+          '<div class="scenario"><p>' + esc(m.scenario_role) + '</p><span class="handoff">Passes on: ' + esc(m.passes_on) + '</span></div>' +
+          '<h3>Pipeline</h3><div class="flow">' + flow + '</div>' +
+          '<p style="margin-top:10px">' + esc(m.how) + '</p>' +
+          '<div class="grid"><div><h3>Examples</h3>' + linkList(m.examples, 'by') + '</div>' +
+          '<div><h3>Living catalogs</h3>' + linkList(m.catalogs, 'kind') +
+          (m.note ? '<p class="note">' + esc(m.note) + '</p>' : '') + '</div></div>' +
+          '<h3>Dimensions</h3><dl class="dims">' + dims + '</dl>';
+      }
+
+      function renderCompare() {
+        return '<h2>Compare</h2><p>The five dimensions side by side, in scenario order.</p><h3>&nbsp;</h3>' +
+          '<div class="table-wrap"><table><thead><tr><th>Type</th>' +
+          data.dimensions.map((d) => '<th>' + esc(d) + '</th>').join('') + '</tr></thead><tbody>' +
+          chain.map((m) => '<tr><td><a href="#' + m.id + '">' + esc(m.acronym) + '</a></td>' +
+            data.dimensions.map((d) => '<td>' + esc(m.dimensions[d]) + '</td>').join('') + '</tr>').join('') +
+          '</tbody></table></div>';
+      }
+
+      let index = 0;
+      function go(id) {
+        const i = pages.findIndex((p) => p.id === id);
+        index = i < 0 ? 0 : i;
+        const p = pages[index];
+        $('page').innerHTML = p.id === 'overview' ? renderOverview()
+          : p.id === 'compare' ? renderCompare()
+          : renderModel(byId[p.id], p.step);
+        document.querySelectorAll('.tab').forEach((t) => t.setAttribute('aria-selected', t.dataset.id === p.id));
+        $('prev').disabled = index === 0;
+        $('next').disabled = index === pages.length - 1;
+        $('count').textContent = (index + 1) + ' / ' + pages.length;
+        if (location.hash.slice(1) !== p.id) history.replaceState(null, '', '#' + p.id);
+      }
+
+      $('prev').addEventListener('click', () => go(pages[Math.max(0, index - 1)].id));
+      $('next').addEventListener('click', () => go(pages[Math.min(pages.length - 1, index + 1)].id));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') $('prev').click();
+        if (e.key === 'ArrowRight') $('next').click();
+      });
+      window.addEventListener('hashchange', () => go(location.hash.slice(1)));
+
+      go(location.hash.slice(1));
+    })();
+  </script>
+</body>
+</html>

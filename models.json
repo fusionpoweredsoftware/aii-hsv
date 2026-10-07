@@ -1,0 +1,238 @@
+{
+  "title": "8 Specialized AI Model Types",
+  "publisher": "AI Innovators of Huntsville",
+  "page": "https://aiihsv.netlify.app/models.html",
+  "updated": "2026-10-07",
+  "about": "Human page and this machine-readable file share one source. Each model type lists its pipeline, concrete examples, and living catalogs: databases that keep listing new examples as they are released. A single scenario runs through all 8 types in order so their roles connect.",
+  "unifying_idea": "All 8 follow the same shape: encode an input into vectors, transform those vectors, decode them into an output. They differ along five dimensions: the unit they think in, what goes in, what comes out, the architectural trick, and how big they are.",
+  "dimensions": ["unit", "input", "output", "trick", "size"],
+  "scenario": {
+    "title": "The leaking dishwasher",
+    "setup": "A customer opens a support app, snaps a photo of a puddle under their dishwasher, and types: \"Water everywhere after every cycle. It's a 2021 model, I think it's still under warranty. Can someone come fix it?\" The 8 model types below handle the request in order, each passing something to the next.",
+    "order": ["slm", "sam", "vlm", "mlm", "lcm", "llm", "moe", "lam"],
+    "outcome": "Within one reply the customer gets a plain explanation (torn door gasket), a part already ordered under warranty, and a technician booked. No single model did that; the chain did."
+  },
+  "models": [
+    {
+      "id": "llm",
+      "acronym": "LLM",
+      "name": "Large Language Model",
+      "summary": "Predicts the next token of text, one at a time, using a large transformer. The general-purpose reasoner and writer.",
+      "pipeline": ["input", "tokenization", "embedding", "transformer", "output"],
+      "how": "Text is split into tokens (word pieces), each token becomes a vector, and stacked transformer layers let every token attend to every earlier one. The final layer scores every possible next token; one is picked, appended, and the loop repeats.",
+      "dimensions": {
+        "unit": "token",
+        "input": "text",
+        "output": "text",
+        "trick": "self-attention over all previous tokens, trained on next-token prediction at huge scale",
+        "size": "billions to trillions of parameters"
+      },
+      "scenario_role": "Takes everything gathered so far (the diagnosis, the repair steps, the warranty rule) and writes the friendly reply the customer actually reads.",
+      "passes_on": "a drafted reply plus a plan: confirm warranty, order gasket, book visit",
+      "examples": [
+        { "name": "Claude", "by": "Anthropic", "url": "https://www.anthropic.com/claude" },
+        { "name": "GPT-4o", "by": "OpenAI", "url": "https://openai.com/index/hello-gpt-4o/" },
+        { "name": "Gemini", "by": "Google", "url": "https://deepmind.google/technologies/gemini/" },
+        { "name": "Llama 3", "by": "Meta", "url": "https://ai.meta.com/blog/meta-llama-3/" }
+      ],
+      "catalogs": [
+        { "name": "Hugging Face: text-generation models", "kind": "model hub", "url": "https://huggingface.co/models?pipeline_tag=text-generation&sort=trending" },
+        { "name": "LMArena leaderboard", "kind": "human-preference leaderboard", "url": "https://lmarena.ai/leaderboard" },
+        { "name": "Artificial Analysis", "kind": "quality, speed and price comparison", "url": "https://artificialanalysis.ai/leaderboards/models" }
+      ]
+    },
+    {
+      "id": "lcm",
+      "acronym": "LCM",
+      "name": "Large Concept Model",
+      "summary": "Reasons over whole sentences as single \"concepts\" instead of word pieces, so it plans at the level of ideas.",
+      "pipeline": ["input", "sentence segmentation", "SONAR embedding", "diffusion", "advanced patterning", "hidden process", "quantization", "output"],
+      "how": "Text is split into sentences and each sentence is mapped into SONAR, a language-independent sentence-embedding space. The model then predicts the next sentence embedding (Meta's best variant uses diffusion to do this), and a decoder turns that embedding back into a sentence in any supported language.",
+      "dimensions": {
+        "unit": "sentence (concept)",
+        "input": "text or speech, in many languages",
+        "output": "text or speech, in many languages",
+        "trick": "predicts the next sentence embedding instead of the next token",
+        "size": "billions of parameters (research stage)"
+      },
+      "scenario_role": "Reads the 60-page service manual for that dishwasher model and condenses the gasket-replacement section into five ordered steps, without getting lost in word-level detail.",
+      "passes_on": "a five-step repair summary",
+      "examples": [
+        { "name": "Large Concept Models (LCM)", "by": "Meta FAIR", "url": "https://github.com/facebookresearch/large_concept_model" },
+        { "name": "LCM paper", "by": "Meta FAIR", "url": "https://arxiv.org/abs/2412.08821" },
+        { "name": "SONAR embedding space", "by": "Meta FAIR", "url": "https://github.com/facebookresearch/SONAR" }
+      ],
+      "catalogs": [
+        { "name": "arXiv search: \"large concept model\"", "kind": "paper index", "url": "https://arxiv.org/search/?query=%22large+concept+model%22&searchtype=all&order=-announced_date_first" },
+        { "name": "Hugging Face Papers: concept models", "kind": "paper index", "url": "https://huggingface.co/papers?q=large%20concept%20model" }
+      ],
+      "note": "This is the youngest type here; the catalogs mostly list research papers rather than ready-to-use models."
+    },
+    {
+      "id": "lam",
+      "acronym": "LAM",
+      "name": "Large Action Model",
+      "summary": "Turns a goal into actions in the real world: clicking, calling APIs, filling forms. The model that does things, not just says things.",
+      "pipeline": ["input processing", "perception system", "intent recognition", "task breakdown", "action planning", "memory system", "neuro-symbolic integration", "quantization", "feedback integration"],
+      "how": "It perceives the current state (a screen, an API response), recognizes the intent, breaks the goal into steps, and emits structured actions such as function calls. Memory tracks what already happened, symbolic rules keep actions valid, and the result of each action feeds back into the next decision.",
+      "dimensions": {
+        "unit": "action (tool call, click, keystroke)",
+        "input": "goal plus observed state (screens, API results)",
+        "output": "executable actions",
+        "trick": "trained on action trajectories and function-calling data, with a perceive, act, observe loop",
+        "size": "small to large; often an LLM fine-tuned for tools"
+      },
+      "scenario_role": "Executes the plan: looks up the order to confirm warranty, places the gasket order, and books the earliest technician slot in the scheduling system.",
+      "passes_on": "confirmation numbers for the part and the visit",
+      "examples": [
+        { "name": "xLAM", "by": "Salesforce AI Research", "url": "https://github.com/SalesforceAIResearch/xLAM" },
+        { "name": "Computer use", "by": "Anthropic", "url": "https://docs.anthropic.com/en/docs/agents-and-tools/computer-use" },
+        { "name": "Operator / ChatGPT agent", "by": "OpenAI", "url": "https://openai.com/index/introducing-operator/" },
+        { "name": "Gorilla", "by": "UC Berkeley", "url": "https://gorilla.cs.berkeley.edu/" }
+      ],
+      "catalogs": [
+        { "name": "Berkeley Function-Calling Leaderboard", "kind": "tool-use leaderboard", "url": "https://gorilla.cs.berkeley.edu/leaderboard.html" },
+        { "name": "OSWorld", "kind": "computer-use benchmark", "url": "https://os-world.github.io/" },
+        { "name": "WebArena", "kind": "web-agent benchmark", "url": "https://webarena.dev/" }
+      ]
+    },
+    {
+      "id": "moe",
+      "acronym": "MoE",
+      "name": "Mixture of Experts",
+      "summary": "A big model where only a few specialist sub-networks run for each token, so it has the knowledge of a huge model at the cost of a small one.",
+      "pipeline": ["input", "router mechanism", "expert 1", "expert 2", "expert 3", "expert 4", "top-K selection", "weighted combination", "output"],
+      "how": "Inside each layer, a small router network scores every expert for the current token, keeps the top K (often 2 of 8, or 8 of 256), runs only those, and blends their outputs by the router's weights. Most parameters sit idle for any given token.",
+      "dimensions": {
+        "unit": "token (routed per layer)",
+        "input": "text (or any modality the base model takes)",
+        "output": "text",
+        "trick": "sparse routing: only the top-K experts run per token",
+        "size": "huge total parameters, small active parameters"
+      },
+      "scenario_role": "Is how the LLM step is served affordably. When the reply mentions warranty law, the router sends those tokens to experts that learned legal text; appliance vocabulary goes to others.",
+      "passes_on": "the same reply, produced at a fraction of the compute",
+      "examples": [
+        { "name": "Mixtral 8x7B", "by": "Mistral AI", "url": "https://mistral.ai/news/mixtral-of-experts" },
+        { "name": "DeepSeek-V3", "by": "DeepSeek", "url": "https://github.com/deepseek-ai/DeepSeek-V3" },
+        { "name": "Qwen3 MoE", "by": "Alibaba Qwen", "url": "https://github.com/QwenLM/Qwen3" },
+        { "name": "Switch Transformer paper", "by": "Google", "url": "https://arxiv.org/abs/2101.03961" }
+      ],
+      "catalogs": [
+        { "name": "Hugging Face: models tagged moe", "kind": "model hub", "url": "https://huggingface.co/models?other=moe&sort=trending" },
+        { "name": "Artificial Analysis", "kind": "quality, speed and price comparison", "url": "https://artificialanalysis.ai/leaderboards/models" }
+      ]
+    },
+    {
+      "id": "vlm",
+      "acronym": "VLM",
+      "name": "Vision-Language Model",
+      "summary": "Looks at images and reads text together, then answers in language. An LLM that can see.",
+      "pipeline": ["image input", "text input", "vision encoder", "text encoder", "projection interface", "multimodal processor", "language model", "output generation"],
+      "how": "A vision encoder turns the image into patch vectors, a projection layer maps them into the same space as the language model's token vectors, and the language model reads image patches and text tokens side by side to generate an answer.",
+      "dimensions": {
+        "unit": "image patch plus token",
+        "input": "images and text",
+        "output": "text",
+        "trick": "a projection layer that lets a language model read vision features as if they were tokens",
+        "size": "1 billion to hundreds of billions of parameters"
+      },
+      "scenario_role": "Looks at the photo with the masks from SAM plus the customer's words and states: \"The lower-left door gasket is torn; water is escaping there, not from the hose.\"",
+      "passes_on": "a written diagnosis",
+      "examples": [
+        { "name": "LLaVA", "by": "UW Madison and Microsoft", "url": "https://llava-vl.github.io/" },
+        { "name": "Qwen2.5-VL", "by": "Alibaba Qwen", "url": "https://github.com/QwenLM/Qwen2.5-VL" },
+        { "name": "PaliGemma", "by": "Google", "url": "https://ai.google.dev/gemma/docs/paligemma" },
+        { "name": "GPT-4o vision", "by": "OpenAI", "url": "https://openai.com/index/hello-gpt-4o/" }
+      ],
+      "catalogs": [
+        { "name": "Hugging Face: image-text-to-text models", "kind": "model hub", "url": "https://huggingface.co/models?pipeline_tag=image-text-to-text&sort=trending" },
+        { "name": "OpenVLM Leaderboard", "kind": "VLM leaderboard", "url": "https://huggingface.co/spaces/opencompass/open_vlm_leaderboard" },
+        { "name": "MMMU", "kind": "multimodal benchmark", "url": "https://mmmu-benchmark.github.io/" }
+      ]
+    },
+    {
+      "id": "slm",
+      "acronym": "SLM",
+      "name": "Small Language Model",
+      "summary": "A compact language model, usually under about 10 billion parameters, built to run fast and privately on a phone, laptop or edge device.",
+      "pipeline": ["input processing", "compact tokenization", "efficient transformer", "model quantization", "memory optimization", "edge deployment", "output generation"],
+      "how": "Same next-token idea as an LLM, but with fewer, leaner layers, trained on carefully curated data or distilled from a larger model, then quantized (for example to 4-bit numbers) so it fits in device memory.",
+      "dimensions": {
+        "unit": "token",
+        "input": "text",
+        "output": "text",
+        "trick": "distillation, curated data and quantization to fit on-device",
+        "size": "about 0.1 to 10 billion parameters"
+      },
+      "scenario_role": "Runs on the customer's phone before anything is uploaded: strips the home address and phone number from the message and tells the customer \"Got it, analyzing your photo\" instantly, even on a weak signal.",
+      "passes_on": "a redacted message and the photo",
+      "examples": [
+        { "name": "Phi-4-mini", "by": "Microsoft", "url": "https://azure.microsoft.com/en-us/products/phi" },
+        { "name": "Gemma 3", "by": "Google", "url": "https://ai.google.dev/gemma" },
+        { "name": "Llama 3.2 1B and 3B", "by": "Meta", "url": "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/" },
+        { "name": "SmolLM", "by": "Hugging Face", "url": "https://huggingface.co/HuggingFaceTB" }
+      ],
+      "catalogs": [
+        { "name": "Ollama library", "kind": "local-model registry", "url": "https://ollama.com/library" },
+        { "name": "LM Studio model catalog", "kind": "local-model registry", "url": "https://lmstudio.ai/models" },
+        { "name": "Hugging Face: text-generation models", "kind": "model hub", "url": "https://huggingface.co/models?pipeline_tag=text-generation&sort=trending" }
+      ]
+    },
+    {
+      "id": "mlm",
+      "acronym": "MLM",
+      "name": "Masked Language Model",
+      "summary": "Reads a whole passage in both directions at once and fills in hidden words. Not a writer; an understander, used for search, classification and embeddings.",
+      "pipeline": ["text input", "token masking", "embedding layer", "left context", "right context", "bidirectional attention", "masked token prediction", "feature representation"],
+      "how": "During training some tokens are hidden and the model predicts them from the words on both sides. After training, the prediction head is usually dropped and the rich per-token or per-sentence vectors are used to classify text or find similar text.",
+      "dimensions": {
+        "unit": "token (seen in both directions)",
+        "input": "text",
+        "output": "vectors (representations), labels",
+        "trick": "bidirectional attention trained by filling in masked words",
+        "size": "about 100 million to 1.5 billion parameters"
+      },
+      "scenario_role": "Classifies the ticket (category: appliance repair, urgency: high, sentiment: frustrated) and embeds it to find the three most similar solved tickets and the right manual for that model number.",
+      "passes_on": "ticket labels, similar past cases, the correct manual",
+      "examples": [
+        { "name": "BERT", "by": "Google", "url": "https://huggingface.co/google-bert/bert-base-uncased" },
+        { "name": "RoBERTa", "by": "Meta", "url": "https://huggingface.co/FacebookAI/roberta-base" },
+        { "name": "DeBERTa-v3", "by": "Microsoft", "url": "https://huggingface.co/microsoft/deberta-v3-base" },
+        { "name": "ModernBERT", "by": "Answer.AI and LightOn", "url": "https://huggingface.co/answerdotai/ModernBERT-base" }
+      ],
+      "catalogs": [
+        { "name": "Hugging Face: fill-mask models", "kind": "model hub", "url": "https://huggingface.co/models?pipeline_tag=fill-mask&sort=trending" },
+        { "name": "MTEB leaderboard", "kind": "embedding leaderboard", "url": "https://huggingface.co/spaces/mteb/leaderboard" },
+        { "name": "GLUE leaderboard", "kind": "language-understanding benchmark", "url": "https://gluebenchmark.com/leaderboard" }
+      ]
+    },
+    {
+      "id": "sam",
+      "acronym": "SAM",
+      "name": "Segment Anything Model",
+      "summary": "Given an image and a hint (a click, a box, a word), outlines exactly which pixels belong to the object. It cuts things out; it does not name them.",
+      "pipeline": ["prompt input", "image input", "prompt encoder", "image encoder", "image embedding", "mask decoder", "feature correlation", "segmentation output"],
+      "how": "A heavy image encoder runs once to turn the image into an embedding. A light prompt encoder turns each click or box into vectors, and a fast mask decoder correlates the two to output a pixel mask, so new prompts on the same image are nearly instant.",
+      "dimensions": {
+        "unit": "pixel (mask)",
+        "input": "image plus prompt (point, box, mask, or text in newer versions)",
+        "output": "segmentation masks",
+        "trick": "encode the image once, then answer many cheap prompts against it",
+        "size": "about 10 million to 1 billion parameters"
+      },
+      "scenario_role": "Outlines the puddle, the door gasket, and the drain hose in the photo so the next model knows exactly which regions to look at.",
+      "passes_on": "three labeled masks over the photo",
+      "examples": [
+        { "name": "Segment Anything (SAM)", "by": "Meta", "url": "https://segment-anything.com/" },
+        { "name": "SAM 2 (images and video)", "by": "Meta", "url": "https://github.com/facebookresearch/sam2" },
+        { "name": "MobileSAM", "by": "Kyung Hee University", "url": "https://github.com/ChaoningZhang/MobileSAM" },
+        { "name": "EfficientSAM", "by": "Meta", "url": "https://github.com/yformer/EfficientSAM" }
+      ],
+      "catalogs": [
+        { "name": "Hugging Face: mask-generation models", "kind": "model hub", "url": "https://huggingface.co/models?pipeline_tag=mask-generation&sort=trending" },
+        { "name": "Hugging Face: image-segmentation models", "kind": "model hub", "url": "https://huggingface.co/models?pipeline_tag=image-segmentation&sort=trending" }
+      ]
+    }
+  ]
+}
