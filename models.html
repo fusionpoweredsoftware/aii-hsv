@@ -113,6 +113,16 @@
       border: 1px solid rgba(6, 182, 212, 0.35); background: rgba(6, 182, 212, 0.08);
     }
     .flow i { color: var(--text-muted); font-style: normal; font-size: 0.8rem; }
+    /* Pipeline: one step per line on a vertical rail, so steps never wrap mid-flow. */
+    ol.steps { list-style: none; counter-reset: step; break-inside: avoid; position: relative; }
+    ol.steps::before { content: ''; position: absolute; left: 0.7rem; top: 0.9rem; bottom: 0.9rem; width: 1px; background: rgba(6, 182, 212, 0.35); }
+    ol.steps li { counter-increment: step; position: relative; padding: 3px 0 3px 2.2rem; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+    ol.steps li::before {
+      content: counter(step); position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 1.4rem; height: 1.4rem; border-radius: 50%; display: grid; place-items: center;
+      font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; color: var(--text-primary);
+      background: #0b1024; border: 1px solid rgba(6, 182, 212, 0.6);
+    }
 
     .callout { border-left: 3px solid var(--accent-purple); padding: 10px 14px; background: rgba(139, 92, 246, 0.07); border-radius: 0 8px 8px 0; margin-top: 14px; }
     .callout p { color: var(--text-secondary); }
@@ -246,13 +256,13 @@
       }
 
       function renderModel(m, step) {
-        const flow = m.pipeline.map((p) => '<span>' + esc(p) + '</span>').join('<i>&rsaquo;</i>');
+        const flow = m.pipeline.map((p) => '<li>' + esc(p) + '</li>').join('');
         const dims = data.dimensions.map((d) => '<dt>' + esc(d) + '</dt><dd>' + esc(m.dimensions[d]) + '</dd>').join('');
         return '<h2>' + esc(m.acronym) + '<small>' + esc(m.name) + '</small></h2>' +
           '<p>' + esc(m.summary) + '</p>' +
           '<h3>Step ' + step + ' of 8 in the scenario</h3>' +
           '<div class="scenario"><p>' + esc(m.scenario_role) + '</p><span class="handoff">Passes on: ' + esc(m.passes_on) + '</span></div>' +
-          '<h3>Pipeline</h3><div class="flow">' + flow + '</div>' +
+          '<h3>Pipeline</h3><ol class="steps">' + flow + '</ol>' +
           '<p style="margin-top:10px">' + esc(m.how) + '</p>' +
           '<div class="grid"><div><h3>Examples</h3>' + linkList(m.examples, 'by') + '</div>' +
           '<div><h3>Living catalogs</h3>' + linkList(m.catalogs, 'kind') +
