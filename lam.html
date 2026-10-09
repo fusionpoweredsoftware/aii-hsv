@@ -127,6 +127,10 @@
       border-radius: 10px; padding: 12px 14px; color: var(--text-secondary);
     }
 
+    figure.pic { margin: 14px 0 0; text-align: center; break-inside: avoid; }
+    figure.pic img { max-width: 100%; max-height: 32vh; object-fit: contain; border-radius: 12px; background: rgba(255, 255, 255, 0.04); }
+    figure.pic figcaption { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; }
+    figure.pic svg { width: 100%; max-height: 34vh; }
     .card code { font-size: 0.85em; background: rgba(0, 0, 0, 0.35); border-radius: 4px; padding: 1px 5px; }
 
     /* Probability demo */
@@ -189,6 +193,13 @@
           But any capable chatbot today can also take actions when you hand it tools. So is a LAM a genuinely new
           kind of model, or just a regular LLM wrapped in software that lets it act?
         </p>
+        <figure class="pic" id="r1">
+          <img src="https://www.rabbit.tech/_next/image?url=%2Fmedia%2Fr1%2Fr1_hardwarespec.png&amp;w=750&amp;q=75"
+               data-fallback="https://www.rabbit.tech/og/magicrecorder_og_1200x630.jpg"
+               alt="The Rabbit R1, a small orange handheld device with a screen, scroll wheel and camera"
+               onerror="if (this.dataset.fallback) { this.src = this.dataset.fallback; this.dataset.fallback = ''; } else { this.closest('figure').remove(); }">
+          <figcaption>The Rabbit R1 (2024), sold on the promise of a &ldquo;large action model&rdquo;. Image: rabbit.tech</figcaption>
+        </figure>
         <h3>The two positions</h3>
         <ul class="items">
           <li><strong>&ldquo;Just a harness&rdquo;</strong> The model still only writes text. The software around it turns that text into clicks and API calls. The &ldquo;action&rdquo; lives in the wrapper.</li>
@@ -271,6 +282,20 @@
           <li><strong>Confused deputy</strong> The agent acts with your logins and permissions, so whoever steers it borrows your authority.</li>
           <li><strong>Irreversible steps</strong> Payments, deletions and messages can&rsquo;t be taken back by a better next step.</li>
         </ul>
+        <figure class="pic">
+          <svg viewBox="0 0 420 300" role="img" aria-label="The lethal trifecta: three overlapping circles labelled private data, untrusted content, and a way to send data out, with danger where all three overlap">
+            <g font-family="Inter, sans-serif" font-size="15" text-anchor="middle">
+              <circle cx="150" cy="115" r="85" fill="rgba(59,130,246,0.18)" stroke="#3b82f6" stroke-width="2"/>
+              <circle cx="270" cy="115" r="85" fill="rgba(139,92,246,0.18)" stroke="#8b5cf6" stroke-width="2"/>
+              <circle cx="210" cy="200" r="85" fill="rgba(6,182,212,0.18)" stroke="#06b6d4" stroke-width="2"/>
+              <text x="118" y="95" fill="#f0f0f5">Private</text><text x="118" y="113" fill="#f0f0f5">data</text>
+              <text x="302" y="95" fill="#f0f0f5">Untrusted</text><text x="302" y="113" fill="#f0f0f5">content</text>
+              <text x="210" y="240" fill="#f0f0f5">A way to</text><text x="210" y="258" fill="#f0f0f5">send data out</text>
+              <text x="210" y="158" fill="#fca5a5" font-weight="700" font-size="16">Leak</text>
+            </g>
+          </svg>
+          <figcaption>The lethal trifecta: all three together let injected text steal your data.</figcaption>
+        </figure>
         <h3>Guardrails that help</h3>
         <ul class="items">
           <li><strong>Least privilege</strong> Give it only the tools and access the task needs.</li>
