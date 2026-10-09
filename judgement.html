@@ -70,7 +70,7 @@
       font-family: var(--font-heading); font-weight: 600; font-size: 0.9rem;
       background: var(--bg-card); color: var(--text-secondary);
       border: 1px solid var(--border-subtle); border-radius: 8px;
-      padding: 8px 12px; cursor: pointer;
+      padding: 8px 12px; cursor: pointer; flex: 1 1 auto; white-space: nowrap;
     }
     .tab:hover { color: var(--text-primary); }
     .tab[aria-selected="true"] { color: var(--text-primary); border-color: var(--accent-purple); background: rgba(139, 92, 246, 0.15); }
@@ -86,6 +86,8 @@
     .card .cols {
       flex: 1; min-height: 0; overflow: hidden;
       column-count: 2; column-gap: 48px; column-fill: auto;
+    }
+    .card .cols.balanced { column-fill: balance;
     }
     @media (max-width: 899px) { .card .cols { column-count: 1; } }
     .cols > *, .cols li, .cols p, .cols pre { break-inside: avoid; }
@@ -127,7 +129,7 @@
 
     /* Probability demo */
     .demo { margin-top: 8px; }
-    .bar-row { display: grid; grid-template-columns: 64px 1fr 52px; align-items: center; gap: 10px; margin: 6px 0; font-size: 0.9rem; }
+    .bar-row { display: grid; grid-template-columns: 7em 1fr 52px; align-items: center; gap: 10px; margin: 6px 0; font-size: 0.9rem; }
     .bar-row .label { font-family: var(--font-heading); font-weight: 600; }
     .bar-track { height: 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.05); overflow: hidden; }
     .bar-fill { height: 100%; border-radius: 999px; background: var(--accent-gradient); transition: width 0.2s; }
@@ -177,18 +179,18 @@
       <section data-id="overview" data-label="Overview">
         <h2>A call is a prediction</h2>
         <p>
-          Ask a model &ldquo;Does this answer solve the problem? Yes or no.&rdquo; and it doesn&rsquo;t look anything up
-          or run a test. It reads the whole prompt and predicts the most fitting next words. The verdict is
-          whatever text is most likely to follow, given everything it learned in training and everything
-          you put in the prompt.
+          Give a model a problem and a pile of options, and ask which three would help most. It doesn&rsquo;t
+          try anything out or run a test. It reads the whole prompt and predicts the most fitting next words.
+          Its picks are whatever text is most likely to follow, given everything it learned in training and
+          everything you put in the prompt.
         </p>
         <h3>The pipeline</h3>
         <div class="flow">
-          <span>Situation + criteria</span><i>&rsaquo;</i>
+          <span>Problem + options</span><i>&rsaquo;</i>
           <span>Tokens</span><i>&rsaquo;</i>
           <span>Learned patterns</span><i>&rsaquo;</i>
           <span>Probabilities</span><i>&rsaquo;</i>
-          <span>Verdict + reasons</span>
+          <span>Picks + reasons</span>
         </div>
         <div class="callout">
           <p><strong>The one idea:</strong> every AI judgement is shaped by three things &mdash; what the model
@@ -198,18 +200,18 @@
       </section>
 
       <section data-id="probabilities" data-label="Probabilities" hidden>
-        <h2>Yes, no, or maybe</h2>
+        <h2>Which option wins</h2>
         <p>
-          At the moment of the verdict, the model assigns a score to every possible next token. Those scores
-          are turned into probabilities. The model doesn&rsquo;t &ldquo;believe&rdquo; one answer; it holds a
-          spread across all of them, and one gets picked.
+          At the moment of the pick, the model assigns a score to every possible next token, including every
+          option on the list. Those scores are turned into probabilities. The model doesn&rsquo;t
+          &ldquo;believe&rdquo; one option is right; it holds a spread across all of them, and one gets picked.
         </p>
         <p>
           <strong>Temperature</strong> controls how that pick happens. Near zero, the top choice nearly always
-          wins. Higher, the spread flattens and less likely answers start to show up &mdash; which is why the same
-          question can get a different call on a second try.
+          wins. Higher, the spread flattens and less likely options start to show up &mdash; which is why the same
+          problem and the same options can get a different call on a second try.
         </p>
-        <h3>Try it</h3>
+        <h3>Try it: your car is stuck in mud</h3>
         <div class="demo" id="demo"></div>
         <div class="slider">
           <label for="temp">Temperature</label>
@@ -217,8 +219,8 @@
           <output id="tempOut" for="temp">1.0</output>
         </div>
         <p class="note" style="margin-top:12px;font-size:0.85rem;color:var(--text-muted)">
-          Illustrative numbers. Some APIs expose these as &ldquo;logprobs&rdquo;, which lets you read a
-          judge&rsquo;s confidence instead of just its answer.
+          Illustrative numbers for the first pick. Some APIs expose these as &ldquo;logprobs&rdquo;, which lets
+          you read a judge&rsquo;s confidence instead of just its answer.
         </p>
       </section>
 
@@ -232,7 +234,8 @@
           <li><strong>Written principles</strong> Some labs also train against a written set of principles (a &ldquo;constitution&rdquo;), so the model learns to critique answers against stated rules.</li>
         </ul>
         <div class="callout">
-          <p>Whatever the raters rewarded &mdash; including their blind spots &mdash; becomes part of the model&rsquo;s taste.</p>
+          <p>Whatever the raters rewarded &mdash; including their blind spots &mdash; becomes part of the model&rsquo;s taste.
+          Raters tend to reward the sensible, practical, realistic answer, so that is what a model reaches for first.</p>
         </div>
       </section>
 
@@ -241,10 +244,11 @@
         <p>The same model makes very different calls depending on how the question is framed.</p>
         <div class="grid">
           <div>
-            <h3>Three ways to judge</h3>
+            <h3>Four ways to judge</h3>
             <ul class="items">
               <li><strong>Pointwise</strong> Score one answer on its own (&ldquo;rate 1&ndash;10&rdquo;).</li>
               <li><strong>Pairwise</strong> Pick the better of two answers. Usually more consistent than scores.</li>
+              <li><strong>Selection</strong> Pick the best few from a pool, and say why the rest don&rsquo;t make it. Every option is judged against the others.</li>
               <li><strong>Reference-based</strong> Compare against a known good answer.</li>
             </ul>
           </div>
@@ -258,11 +262,12 @@
           </div>
         </div>
         <h3>A minimal judge prompt</h3>
-        <pre>You are grading whether an answer solves a problem.
-Problem: {problem}
-Answer: {answer}
-Criteria: The answer must be practical and directly address the problem.
-First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
+        <pre>Problem: {problem}
+Options (shuffled): {options}
+Pick the 3 options that best solve the problem.
+For each pick, say what it could do and how it helps.
+For 3 of the others, say why they don't help.
+Reply with JSON only: {"helpful": [...], "unhelpful": [...], "picks": [...]}</pre>
       </section>
 
       <section data-id="reasoning" data-label="Reasoning" hidden>
@@ -275,6 +280,10 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
         <p>
           That&rsquo;s why judge prompts often ask the model to <strong>think before it answers</strong>, and why
           &ldquo;reasoning&rdquo; models that write long internal deliberation tend to judge better on hard cases.
+        </p>
+        <p>
+          With a pool of options, the same idea applies per option: have it write what each one could do and how
+          it helps <em>before</em> it writes the final list of picks.
         </p>
         <div class="callout">
           <p><strong>Caveat:</strong> written reasoning isn&rsquo;t guaranteed to be the real reason. Research on
@@ -291,11 +300,14 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
             <li><strong>Position bias</strong> In pairwise comparisons, favoring whichever answer appears first (or second).</li>
             <li><strong>Length bias</strong> Rating longer, more detailed-sounding answers higher, even when they aren&rsquo;t better.</li>
             <li><strong>Self-preference</strong> Preferring answers written in its own style, or by its own model family.</li>
+            <li><strong>Order effects</strong> In a long list, options near the start or end get noticed more than ones in the middle.</li>
           </ul>
           <ul class="items">
             <li><strong>Leniency</strong> Giving the benefit of the doubt; preference training rewards agreeable responses.</li>
             <li><strong>Surface matching</strong> Rewarding the right keywords instead of the right idea.</li>
             <li><strong>Framing and anchoring</strong> Swaying toward a verdict the prompt hints at, or toward a score it saw earlier.</li>
+            <li><strong>Obvious over clever</strong> The expected use of a thing beats an inventive one, because that&rsquo;s what most training text describes.</li>
+            <li><strong>Carryover</strong> Earlier problems and picks in the same conversation quietly shape the next call.</li>
           </ul>
         </div>
       </section>
@@ -304,7 +316,8 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
         <h2>Making an AI judge trustworthy</h2>
         <ul class="items">
           <li><strong>Check against people</strong> Have humans judge a sample and measure how often the AI agrees.</li>
-          <li><strong>Swap the order</strong> In pairwise judging, run both orders and only count consistent verdicts.</li>
+          <li><strong>Swap the order</strong> In pairwise judging, run both orders and only count consistent verdicts. With a pool, shuffle the list every time.</li>
+          <li><strong>Check the output</strong> Reject picks that aren&rsquo;t on the list and ask again. If it still can&rsquo;t answer cleanly, toss the call instead of guessing.</li>
           <li><strong>Ask more than once</strong> Sample several verdicts, or use a panel of different models, and take the majority.</li>
           <li><strong>Check calibration</strong> When it says it&rsquo;s 80% sure, is it right about 80% of the time?</li>
           <li><strong>Keep it narrow</strong> Clear rubric, low temperature, structured output, reasons before verdict.</li>
@@ -315,7 +328,7 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
         </div>
       </section>
 
-      <section data-id="alignment" data-label="The Alignment Problem" hidden>
+      <section data-id="alignment" data-label="Alignment" hidden>
         <h2>The Alignment Problem</h2>
         <p>
           <strong>Brian Christian, <em>The Alignment Problem: Machine Learning and Human Values</em> (2020).</strong>
@@ -340,14 +353,32 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
         </div>
       </section>
 
+      <section data-id="judge" data-label="Think Like the Judge" hidden>
+        <h2>Thinking like the judge</h2>
+        <p>
+          Flip the setup. If people are rewarded for predicting an AI&rsquo;s picks, the winning move isn&rsquo;t
+          the answer <em>you</em> think is best. It&rsquo;s the answer the model will call best.
+        </p>
+        <ul class="items">
+          <li><strong>Read the problem the way it does</strong> Literal, practical, realistic. It solves the problem as written, not the one you imagine.</li>
+          <li><strong>Expect the common use</strong> A clever use can be right and still lose to the obvious one.</li>
+          <li><strong>Mind the pool</strong> A call is relative. The same option can win or lose depending on what else is on the table.</li>
+          <li><strong>Read the reasons</strong> Its stated reasons show the standard it&rsquo;s applying. Use them to calibrate the next call.</li>
+        </ul>
+        <div class="callout">
+          <p><strong>The alignment problem in reverse:</strong> instead of shaping a model to our values, we start
+          shaping ourselves to its. Notice how quickly that happens.</p>
+        </div>
+      </section>
+
       <section data-id="discuss" data-label="Discuss" hidden>
         <h2>Questions for the room</h2>
         <ul class="items">
+          <li><strong>Predict the judge</strong> Given a problem and a pile of options, how often could you guess an AI&rsquo;s top three?</li>
+          <li><strong>Obvious or clever?</strong> When the inventive answer loses to the expected one, is the judge wrong, or is it just a different standard?</li>
           <li><strong>When is a judgement call good enough?</strong> Where would you accept an AI&rsquo;s verdict without a human check, and where never?</li>
-          <li><strong>Judges all the way down</strong> If models are trained on AI feedback and graded by AI judges, whose standards are we really measuring?</li>
           <li><strong>Explanations</strong> Does a convincing explanation make you trust a call more than it should?</li>
           <li><strong>Specified vs. meant</strong> Where have you seen an AI do exactly what you asked and still miss the point?</li>
-          <li><strong>Disagreement</strong> When the AI and a person disagree, who should win, and how would you know?</li>
         </ul>
       </section>
 
@@ -384,7 +415,7 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
       });
 
       // Probability demo: fixed logits, softmax at the chosen temperature.
-      const options = [['Yes', 2.0], ['No', 1.1], ['Maybe', -0.4]];
+      const options = [['Floor mats', 2.0], ['Rope', 1.5], ['Flashlight', 0.1], ['Umbrella', -0.7]];
       $('demo').innerHTML = options.map(([label]) =>
         '<div class="bar-row"><span class="label">' + label + '</span>' +
         '<div class="bar-track"><div class="bar-fill"></div></div><span class="pct"></span></div>'
@@ -408,6 +439,9 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
       function subCount(p) { return Math.max(1, Math.round((p.cols.scrollWidth + step(p) - p.cols.clientWidth) / step(p))); }
       function render() {
         const p = pages[index];
+        // Balance the columns when the tab fits on one screen; otherwise fill them in order.
+        p.cols.classList.remove('balanced');
+        if (subCount(p) === 1) p.cols.classList.add('balanced');
         const n = subCount(p);
         sub = Math.min(sub, n - 1);
         p.cols.scrollLeft = sub * step(p);
