@@ -15,6 +15,7 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: clamp(16px, 0.9vw + 8px, 26px); }
 
     :root {
       --bg-primary: #050510;
@@ -47,15 +48,21 @@
 
     a { color: var(--accent-cyan); }
 
-    .container { max-width: 1000px; margin: 0 auto; padding: 32px 16px 48px; }
+    .container { width: 100%; padding: 24px 16px 40px; }
+    @media (min-width: 900px) { .container { padding: 24px 24px 40px; } }
 
     header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
     .brand { display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; font-family: var(--font-heading); font-weight: 600; }
     .brand img { height: 32px; }
 
-    h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15; margin-bottom: 8px; }
+    h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 3.4rem); line-height: 1.15; margin-bottom: 8px; }
     h1 span { background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .lede { color: var(--text-secondary); max-width: 720px; margin-bottom: 24px; }
+    .lede { color: var(--text-secondary); max-width: 46em; margin-bottom: 24px; font-size: 1.1rem; }
+
+    .hero { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+    .hero-qr { flex-shrink: 0; text-align: center; margin-bottom: 24px; }
+    .hero-qr img { display: block; width: clamp(120px, 11vw, 220px); height: auto; padding: 10px; background: #fff; border-radius: 12px; }
+    @media (max-width: 720px) { .hero-qr { display: none; } }
 
     /* Pager tabs */
     .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
@@ -118,7 +125,7 @@
     .pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; }
     .pager button {
       background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-subtle);
-      border-radius: 8px; padding: 10px 16px; font-family: var(--font-heading); font-weight: 600; cursor: pointer;
+      border-radius: 8px; padding: 10px 16px; font-family: var(--font-heading); font-size: 1rem; font-weight: 600; cursor: pointer;
     }
     .pager button:disabled { opacity: 0.35; cursor: default; }
     .pager .count { color: var(--text-muted); font-size: 0.85rem; }
@@ -132,12 +139,19 @@
       <a class="brand" href="index.html"><img src="aiihsv-logo-complete.png" alt="">AI Innovators HSV</a>
     </header>
 
+    <div class="hero">
+      <div>
     <h1>How AIs Make a <span>Judgement Call</span></h1>
     <p class="lede">
       When an AI decides whether an answer is good, it isn&rsquo;t weighing evidence the way a person does.
       It&rsquo;s predicting text. This page walks through what that means, where a model&rsquo;s sense of
       &ldquo;good&rdquo; comes from, and why its calls can be useful and still go wrong.
     </p>
+      </div>
+      <div class="hero-qr">
+        <img src="judgement-qr.svg" alt="QR code for this page">
+      </div>
+    </div>
 
     <nav class="tabs" role="tablist" id="tabs"></nav>
 
