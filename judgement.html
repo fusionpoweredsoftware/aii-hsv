@@ -15,7 +15,7 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: clamp(16px, 0.9vw + 8px, 26px); }
+    html { font-size: clamp(16px, 0.75vw + 8px, 24px); }
 
     :root {
       --bg-primary: #050510;
@@ -48,24 +48,24 @@
 
     a { color: var(--accent-cyan); }
 
-    .container { width: 100%; padding: 24px 16px 40px; }
-    @media (min-width: 900px) { .container { padding: 24px 24px 40px; } }
+    .container { width: 100%; height: 100vh; height: 100dvh; padding: 16px 16px 12px; display: flex; flex-direction: column; overflow: hidden; }
+    @media (min-width: 900px) { .container { padding: 20px 24px 14px; } }
 
-    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
     .brand { display: flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; font-family: var(--font-heading); font-weight: 600; }
     .brand img { height: 32px; }
 
     h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 3.4rem); line-height: 1.15; margin-bottom: 8px; }
     h1 span { background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .lede { color: var(--text-secondary); max-width: 46em; margin-bottom: 24px; font-size: 1.1rem; }
+    .lede { color: var(--text-secondary); max-width: 52em; margin-bottom: 14px; font-size: 1rem; }
 
     .hero { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
-    .hero-qr { flex-shrink: 0; text-align: center; margin-bottom: 24px; }
-    .hero-qr img { display: block; width: clamp(120px, 11vw, 220px); height: auto; padding: 10px; background: #fff; border-radius: 12px; }
-    @media (max-width: 720px) { .hero-qr { display: none; } }
+    .hero-qr { flex-shrink: 0; text-align: center; margin-bottom: 16px; }
+    .hero-qr img { display: block; width: clamp(100px, 8vw, 180px); height: auto; padding: 10px; background: #fff; border-radius: 12px; }
+    @media (max-width: 720px) { .hero-qr, .lede { display: none; } h1 { margin-bottom: 12px; } }
 
     /* Pager tabs */
-    .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
     .tab {
       font-family: var(--font-heading); font-weight: 600; font-size: 0.9rem;
       background: var(--bg-card); color: var(--text-secondary);
@@ -79,13 +79,27 @@
     .card {
       background: var(--bg-card); border: 1px solid var(--border-subtle);
       border-radius: 16px; padding: 28px; backdrop-filter: blur(10px);
+      flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column;
     }
+    /* One screen per page: content flows into columns; overflow columns become sub-pages. */
+    .card section { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .card .cols {
+      flex: 1; min-height: 0; overflow: hidden;
+      column-count: 2; column-gap: 48px; column-fill: auto;
+    }
+    @media (max-width: 899px) { .card .cols { column-count: 1; } }
+    .cols > *, .cols li, .cols p, .cols pre { break-inside: avoid; }
+    .cols ul.items { break-inside: auto; }
+    .cols h3 { break-after: avoid; }
+    .cols > :first-child { margin-top: 0; }
+    .cols .grid { display: contents; }
     .card h2 { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 6px; }
     .card h3 { font-family: var(--font-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-cyan); margin: 22px 0 8px; }
     .card p { color: var(--text-secondary); }
     .card p + p { margin-top: 10px; }
     .card strong { color: var(--text-primary); }
     .card section[hidden] { display: none; }
+    .card h2 + .cols { margin-top: 10px; }
 
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
     @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } .card { padding: 20px; } }
@@ -122,15 +136,18 @@
     .slider input { flex: 1; min-width: 160px; accent-color: var(--accent-purple); }
     .slider output { font-family: var(--font-heading); color: var(--text-primary); min-width: 32px; }
 
-    .pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; }
+    .pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; }
     .pager button {
       background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-subtle);
       border-radius: 8px; padding: 10px 16px; font-family: var(--font-heading); font-size: 1rem; font-weight: 600; cursor: pointer;
     }
     .pager button:disabled { opacity: 0.35; cursor: default; }
-    .pager .count { color: var(--text-muted); font-size: 0.85rem; }
+    .pager .count { color: var(--text-muted); font-size: 0.85rem; display: flex; align-items: center; gap: 10px; }
+    .dots { display: inline-flex; gap: 6px; }
+    .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--border-subtle); }
+    .dots i.on { background: var(--accent-purple); }
 
-    footer { margin-top: 32px; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+    footer { margin-top: 8px; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
   </style>
 </head>
 <body>
@@ -349,7 +366,14 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
     (function () {
       const $ = (id) => document.getElementById(id);
       const sections = Array.from(document.querySelectorAll('#page section'));
-      const pages = sections.map((s) => ({ id: s.dataset.id, label: s.dataset.label, el: s }));
+      const pages = sections.map((s) => {
+        // Wrap everything after the heading in a column box that can be paged sideways.
+        const cols = document.createElement('div');
+        cols.className = 'cols';
+        Array.from(s.children).filter((c) => c.tagName !== 'H2').forEach((c) => cols.appendChild(c));
+        s.appendChild(cols);
+        return { id: s.dataset.id, label: s.dataset.label, el: s, cols };
+      });
 
       $('tabs').innerHTML = pages.map((p, i) =>
         '<button class="tab" role="tab" data-id="' + p.id + '"><span class="step">' + (i + 1) + '</span>' + p.label + '</button>'
@@ -379,21 +403,37 @@ First explain your reasoning in two sentences, then reply PASS or FAIL.</pre>
       $('temp').addEventListener('input', renderDemo);
       renderDemo();
 
-      let index = 0;
-      function go(id) {
+      let index = 0, sub = 0;
+      function step(p) { return p.cols.clientWidth + parseFloat(getComputedStyle(p.cols).columnGap || 0); }
+      function subCount(p) { return Math.max(1, Math.round((p.cols.scrollWidth + step(p) - p.cols.clientWidth) / step(p))); }
+      function render() {
+        const p = pages[index];
+        const n = subCount(p);
+        sub = Math.min(sub, n - 1);
+        p.cols.scrollLeft = sub * step(p);
+        $('prev').disabled = index === 0 && sub === 0;
+        $('next').disabled = index === pages.length - 1 && sub === n - 1;
+        $('count').innerHTML = (index + 1) + ' / ' + pages.length +
+          (n > 1 ? ' <span class="dots">' + Array.from({ length: n }, (_, k) => '<i' + (k === sub ? ' class="on"' : '') + '></i>').join('') + '</span>' : '');
+      }
+      function go(id, atEnd) {
         const i = pages.findIndex((p) => p.id === id);
         index = i < 0 ? 0 : i;
         const p = pages[index];
         pages.forEach((q) => { q.el.hidden = q !== p; });
         document.querySelectorAll('.tab').forEach((t) => t.setAttribute('aria-selected', t.dataset.id === p.id));
-        $('prev').disabled = index === 0;
-        $('next').disabled = index === pages.length - 1;
-        $('count').textContent = (index + 1) + ' / ' + pages.length;
+        sub = atEnd ? subCount(p) - 1 : 0;
+        render();
         if (location.hash.slice(1) !== p.id) history.replaceState(null, '', '#' + p.id);
       }
 
-      $('prev').addEventListener('click', () => go(pages[Math.max(0, index - 1)].id));
-      $('next').addEventListener('click', () => go(pages[Math.min(pages.length - 1, index + 1)].id));
+      $('prev').addEventListener('click', () => {
+        if (sub > 0) { sub--; render(); } else if (index > 0) go(pages[index - 1].id, true);
+      });
+      $('next').addEventListener('click', () => {
+        if (sub < subCount(pages[index]) - 1) { sub++; render(); } else if (index < pages.length - 1) go(pages[index + 1].id);
+      });
+      window.addEventListener('resize', render);
       document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT') return;
         if (e.key === 'ArrowLeft') $('prev').click();
