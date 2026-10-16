@@ -168,7 +168,7 @@ body.locked { overflow: hidden; }
       <label>COMING AS<select name="costume"><option>Pajamas</option><option>Monster costume</option><option>Not sure yet</option></select></label>
     </div>
     <button type="submit">I ACCEPT THE SUMMONS</button>
-    <div class="rsvp-note">Questions? <span class="mail">andreyjb@yahoo.com</span></div>
+    <div class="rsvp-note">Questions? <span class="mail">andrey@aii.ofhsv.org</span></div>
   </form>
 
   <div class="parade" aria-hidden="true">
@@ -196,7 +196,7 @@ body.locked { overflow: hidden; }
         const name = (f.elements.name.value.trim().split(' ')[0] || 'MONSTER').toUpperCase();
         f.outerHTML = '<div class="rsvp rsvp-done" role="status"><b>YOU\'RE IN, ' + name.replace(/[<>&"]/g, '') + '!</b>SEE YOU OCT 24 AT 6 PM.<br>BRING A FRIEND!</div>';
       })
-      .catch(() => { b.disabled = false; b.textContent = 'I ACCEPT THE SUMMONS'; alert('That didn\'t go through. Please try again, or email andreyjb@yahoo.com.'); });
+      .catch(() => { b.disabled = false; b.textContent = 'I ACCEPT THE SUMMONS'; alert('That didn\'t go through. Please try again, or email andrey@aii.ofhsv.org.'); });
   });
 })();
 </script>
