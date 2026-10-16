@@ -67,12 +67,14 @@ canvas#board { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 
 .panel { min-width: 0; background: var(--panel); border: 2px solid var(--slate); outline: 2px solid var(--void); padding: 12px 14px; }
 .wide { grid-column: 1 / -1; }
 .label { font-family: var(--pixel); font-size: 12px; color: var(--c, var(--gold)); }
-.value { font-size: 19px; font-weight: 600; overflow-wrap: anywhere; }
+.value { font: 400 34px/1.1 "VT323", ui-monospace, monospace; letter-spacing: .02em; overflow-wrap: anywhere; }
 .ph { color: var(--gold); border-bottom: 2px dotted var(--gold); }
 .map { display: table; margin-top: 12px; font: 400 24px/1 "VT323", ui-monospace, monospace; letter-spacing: .02em; color: var(--void); background: var(--gold); padding: 7px 10px; text-decoration: none; box-shadow: 0 3px 0 #8a5a12; }
+.map { white-space: nowrap; }
+@media (max-width: 380px) { .map { font-size: 20px; } }
 .map[hidden] { display: none; }
 /* the revealed address: a pixel face whose numbers read clearly */
-#addr:not(.ph) { display: inline-block; margin-top: 6px; font: 400 34px/1.1 "VT323", ui-monospace, monospace; letter-spacing: .02em; color: var(--cream); user-select: all; }
+#addr:not(.ph) { color: var(--cream); user-select: all; }
 .shout { display: flex; align-items: center; justify-content: center; font-family: var(--pixel); font-size: 18px; color: var(--mint); text-align: center; }
 .rsvp { background: var(--cream); color: var(--void); text-align: center; padding: 14px; font-family: var(--pixel); font-size: 15px; line-height: 1.7; }
 #music { position: fixed; right: max(12px, env(safe-area-inset-right, 0px)); bottom: max(12px, env(safe-area-inset-bottom, 0px)); z-index: 5;
