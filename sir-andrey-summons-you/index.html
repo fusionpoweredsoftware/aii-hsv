@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Retro Chess &amp; Ping Pong Party</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Pixelify+Sans:wght@400;600&family=Jersey+10&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Jersey+10&display=swap">
 <style>
 /* Layout: a game title screen on black; pixel title up top, a live rally on a monster-chess board, details as dark game panels, a parade of monsters at the foot */
 :root {
@@ -16,7 +16,7 @@
   --mint: #a7e0a0;
   --sky: #8fe3ff;
   --pixel: "Silkscreen", "Courier New", monospace;
-  --body: "Pixelify Sans", "Silkscreen", "Courier New", monospace;
+  --body: "Jersey 10", "Silkscreen", "Courier New", monospace;
   color-scheme: dark;
 }
 html, body { background: var(--void); color: var(--cream); }
@@ -28,7 +28,7 @@ body::before {
 body { background: transparent; }
 #sky { position: fixed; inset: 0 0 auto 0; width: 100%; height: 100vh; height: 100lvh; z-index: -1; pointer-events: none; image-rendering: pixelated; }
 body {
-  font-family: var(--body); font-size: 17px; line-height: 1.45;
+  font-family: var(--body); font-size: 23px; line-height: 1.3; letter-spacing: .02em;
   padding-block: 28px 40px;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
@@ -67,9 +67,9 @@ canvas#board { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 
 .panel { min-width: 0; background: var(--panel); border: 2px solid var(--slate); outline: 2px solid var(--void); padding: 12px 14px; }
 .wide { grid-column: 1 / -1; }
 .label { font-family: var(--pixel); font-size: 12px; color: var(--c, var(--gold)); }
-.value { font: 400 36px/1.15 "Jersey 10", var(--body); letter-spacing: .02em; overflow-wrap: anywhere; }
+.value { font: 400 36px/1.15 var(--body); letter-spacing: .02em; overflow-wrap: anywhere; }
 .ph { color: var(--gold); border-bottom: 2px dotted var(--gold); }
-.map { display: table; margin-top: 12px; font: 400 30px/1 "Jersey 10", var(--body); letter-spacing: .03em; color: var(--void); background: var(--gold); padding: 7px 10px; text-decoration: none; box-shadow: 0 3px 0 #8a5a12; }
+.map { display: table; margin-top: 12px; font: 400 30px/1 var(--body); letter-spacing: .03em; color: var(--void); background: var(--gold); padding: 7px 10px; text-decoration: none; box-shadow: 0 3px 0 #8a5a12; }
 .map { white-space: nowrap; }
 .mapframe { display: block; width: 100%; height: 260px; margin-top: 14px; border: 2px solid var(--void); outline: 2px solid var(--slate); filter: saturate(.85) brightness(.92); }
 .mapframe[hidden] { display: none; }
@@ -86,9 +86,9 @@ canvas#board { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 
   border: 2px solid var(--cream); outline: 2px solid var(--void); padding: 8px 10px; cursor: pointer; }
 #music[aria-pressed="true"] { background: #9cff5a; color: var(--void); }
 .rsvp { display: grid; gap: 16px; text-align: left; }
-.rsvp-head { text-align: center; font: 400 46px/1 "Jersey 10", var(--body); letter-spacing: .04em; }
+.rsvp-head { text-align: center; font: 400 46px/1 var(--body); letter-spacing: .04em; }
 .rsvp label { display: grid; gap: 6px; font-size: 16px; letter-spacing: .06em; }
-.rsvp input, .rsvp select { font: 600 21px var(--body); color: var(--void); background: #fffaf0; border: 2px solid var(--void); border-radius: 0; padding: 11px 12px; width: 100%; min-width: 0; }
+.rsvp input, .rsvp select { font: 400 26px var(--body); letter-spacing: .02em; color: var(--void); background: #fffaf0; border: 2px solid var(--void); border-radius: 0; padding: 11px 12px; width: 100%; min-width: 0; }
 .rsvp input:focus, .rsvp select:focus { outline: 3px solid #9cff5a; outline-offset: 0; }
 .rsvp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 @media (max-width: 420px) { .rsvp-row { grid-template-columns: 1fr; } .rsvp-head { font-size: 40px; } }
@@ -98,7 +98,7 @@ canvas#board { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 
 .rsvp-note { text-align: center; font-size: 15px; }
 .rsvp-done { text-align: center; display: grid; gap: 8px; }
 .rsvp-done b { font-size: 26px; color: #5a0d6b; }
-.rsvp .mail { font-family: var(--body); font-weight: 600; font-size: 22px; user-select: all; }
+.rsvp .mail { color: inherit; text-decoration: underline; text-underline-offset: 3px; font-family: var(--body); font-weight: 400; font-size: 28px; letter-spacing: .02em; }
 .parade { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
 .parade img { width: 36px; height: 36px; filter: brightness(.7); animation: bob 1.6s steps(2) infinite; }
 .parade img:nth-child(2n) { animation-delay: -.8s; }
@@ -168,7 +168,7 @@ body.locked { overflow: hidden; }
       <label>COMING AS<select name="costume"><option>Pajamas</option><option>Monster costume</option><option>Not sure yet</option></select></label>
     </div>
     <button type="submit">I ACCEPT THE SUMMONS</button>
-    <div class="rsvp-note">Questions? <span class="mail">andrey@aii.ofhsv.org</span></div>
+    <div class="rsvp-note">Questions? <a class="mail" href="mailto:andrey@aii.ofhsv.org">andrey@aii.ofhsv.org</a></div>
   </form>
 
   <div class="parade" aria-hidden="true">
