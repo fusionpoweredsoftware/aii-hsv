@@ -85,12 +85,12 @@ canvas#board { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 
   border: 2px solid var(--cream); outline: 2px solid var(--void); padding: 8px 10px; cursor: pointer; }
 #music[aria-pressed="true"] { background: #9cff5a; color: var(--void); }
 .rsvp { display: grid; gap: 16px; text-align: left; }
-.rsvp-head { text-align: center; font-size: 30px; font-weight: 700; letter-spacing: .06em; line-height: 1.2; }
+.rsvp-head { text-align: center; font: 400 46px/1 "Jersey 10", var(--body); letter-spacing: .04em; }
 .rsvp label { display: grid; gap: 6px; font-size: 16px; letter-spacing: .06em; }
 .rsvp input, .rsvp select { font: 600 21px var(--body); color: var(--void); background: #fffaf0; border: 2px solid var(--void); border-radius: 0; padding: 11px 12px; width: 100%; min-width: 0; }
 .rsvp input:focus, .rsvp select:focus { outline: 3px solid #9cff5a; outline-offset: 0; }
 .rsvp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 420px) { .rsvp-row { grid-template-columns: 1fr; } .rsvp-head { font-size: 20px; } }
+@media (max-width: 420px) { .rsvp-row { grid-template-columns: 1fr; } .rsvp-head { font-size: 40px; } }
 .rsvp button { font: 700 21px var(--pixel); letter-spacing: .06em; color: #9cff5a; background: #1a0f2a; border: 2px solid var(--void); box-shadow: 0 4px 0 #5a0d6b; padding: 16px 12px; cursor: pointer; }
 .rsvp button:active { transform: translateY(4px); box-shadow: none; }
 .rsvp button:disabled { opacity: .6; }
@@ -159,7 +159,7 @@ body.locked { overflow: hidden; }
   <form class="rsvp" name="party-rsvp" method="POST" data-netlify="true" netlify-honeypot="bot-field">
     <input type="hidden" name="form-name" value="party-rsvp">
     <p hidden><label>Leave this empty <input name="bot-field"></label></p>
-    <div class="rsvp-head">RSVP BY OCT 20</div>
+    <div class="rsvp-head">RSVP BY OCT 20th</div>
     <label>NAME<input name="name" autocomplete="name" required></label>
     <label>ANY CONTACT INFO<input name="contact" placeholder="Email, phone or Discord" required></label>
     <div class="rsvp-row">
