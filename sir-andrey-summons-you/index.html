@@ -82,7 +82,7 @@ canvas#board { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 
   border: 2px solid var(--cream); outline: 2px solid var(--void); padding: 8px 10px; cursor: pointer; }
 #music[aria-pressed="true"] { background: #9cff5a; color: var(--void); }
 .rsvp { display: grid; gap: 12px; text-align: left; }
-.rsvp-head { text-align: center; }
+.rsvp-head { text-align: center; font-size: 26px; font-weight: 700; letter-spacing: .06em; line-height: 1.2; }
 .rsvp label { display: grid; gap: 4px; font-size: 12px; letter-spacing: .06em; }
 .rsvp input, .rsvp select { font: 600 17px var(--body); color: var(--void); background: #fffaf0; border: 2px solid var(--void); border-radius: 0; padding: 8px 10px; width: 100%; min-width: 0; }
 .rsvp input:focus, .rsvp select:focus { outline: 3px solid #9cff5a; outline-offset: 0; }
@@ -155,7 +155,7 @@ body.locked { overflow: hidden; }
   <form class="rsvp" name="party-rsvp" method="POST" data-netlify="true" netlify-honeypot="bot-field">
     <input type="hidden" name="form-name" value="party-rsvp">
     <p hidden><label>Leave this empty <input name="bot-field"></label></p>
-    <div class="rsvp-head">RSVP BY OCT 18</div>
+    <div class="rsvp-head">RSVP BY OCT 20</div>
     <label>NAME<input name="name" autocomplete="name" required></label>
     <label>ANY CONTACT INFO<input name="contact" placeholder="Email, phone or Discord" required></label>
     <div class="rsvp-row">
