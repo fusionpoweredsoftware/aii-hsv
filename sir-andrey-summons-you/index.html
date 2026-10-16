@@ -190,20 +190,23 @@ body.locked { overflow: hidden; }
 })();
 </script>
 <script>
-// the address travels encrypted in the invite link after the #; this page holds the key
+// the address travels scrambled in the invite link after the #; this page holds the key
 (() => {
-  const KEY = '0ee2e30ca46a16556a6be9f3fbc6f0aa';
-  const el = document.getElementById('addr');
+  const KEY = '0ee2e30ca46a16556a6be9f3fbc6f0aa', el = document.getElementById('addr');
+  const sha = async t => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)))].map(b => b.toString(16).padStart(2, '0')).join('');
   async function reveal() {
-    const h = decodeURIComponent(location.hash.slice(1)).trim().replace(/-/g, '+').replace(/_/g, '/').replace(/=+$/, '');
-    if (!h || !crypto.subtle) return;
-    const CODE = h + '='.repeat((4 - h.length % 4) % 4), key = KEY;
-    const raw = Uint8Array.from(atob(CODE), c => c.charCodeAt(0)), salt = raw.slice(8, 16), ct = raw.slice(16);
-    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(key), 'PBKDF2', false, ['deriveBits']);
-    const bits = new Uint8Array(await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' }, base, 384));
-    const aes = await crypto.subtle.importKey('raw', bits.slice(0, 32), 'AES-CBC', false, ['decrypt']);
-    el.textContent = new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-CBC', iv: bits.slice(32) }, aes, ct));
-    el.classList.remove('ph');
+    const h = decodeURIComponent(location.hash.slice(1)).trim().toLowerCase();
+    if (!h) return;
+    const fail = () => { el.textContent = 'This invite link looks incomplete. Ask Andrey for a fresh one.'; };
+    if (!/^[0-9a-f]+$/.test(h) || h.length < 26 || h.length % 2 || !crypto.subtle) return fail();
+    const nonce = h.slice(0, 16), tag = h.slice(-8), ct = h.slice(16, -8).match(/../g).map(x => parseInt(x, 16)), out = [];
+    for (let b = 0; b * 32 < ct.length; b++) {
+      const ks = await sha(KEY + nonce + b);
+      for (let j = 0; j < 32 && b * 32 + j < ct.length; j++) out.push(ct[b * 32 + j] ^ parseInt(ks.substr(j * 2, 2), 16));
+    }
+    const addr = new TextDecoder().decode(new Uint8Array(out));
+    if ((await sha(KEY + nonce + addr)).slice(0, 8) !== tag) return fail();
+    el.textContent = addr; el.classList.remove('ph');
   }
   reveal().catch(() => {});
   addEventListener('hashchange', () => reveal().catch(() => {}));
