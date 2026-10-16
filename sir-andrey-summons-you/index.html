@@ -91,14 +91,14 @@ canvas#board { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 
 .rsvp input, .rsvp select { font: 400 26px var(--body); letter-spacing: .02em; color: var(--void); background: #fffaf0; border: 2px solid var(--void); border-radius: 0; padding: 11px 12px; width: 100%; min-width: 0; }
 .rsvp input:focus, .rsvp select:focus { outline: 3px solid #9cff5a; outline-offset: 0; }
 .rsvp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 420px) { .rsvp-row { grid-template-columns: 1fr; } .rsvp-head { font-size: 40px; } }
+@media (max-width: 420px) { .rsvp .mail { font-size: 29px; } .rsvp-row { grid-template-columns: 1fr; } .rsvp-head { font-size: 40px; } }
 .rsvp button { font: 700 21px var(--pixel); letter-spacing: .06em; color: #9cff5a; background: #1a0f2a; border: 2px solid var(--void); box-shadow: 0 4px 0 #5a0d6b; padding: 16px 12px; cursor: pointer; }
 .rsvp button:active { transform: translateY(4px); box-shadow: none; }
 .rsvp button:disabled { opacity: .6; }
-.rsvp-note { text-align: center; font-size: 15px; }
+.rsvp-note { text-align: center; font-size: 21px; }
 .rsvp-done { text-align: center; display: grid; gap: 8px; }
 .rsvp-done b { font-size: 26px; color: #5a0d6b; }
-.rsvp .mail { color: inherit; text-decoration: underline; text-underline-offset: 3px; font-family: var(--body); font-weight: 400; font-size: 28px; letter-spacing: .02em; }
+.rsvp .mail { color: inherit; text-decoration: underline; text-underline-offset: 3px; font-family: var(--body); font-weight: 400; font-size: 36px; letter-spacing: .02em; white-space: nowrap; }
 .parade { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
 .parade img { width: 36px; height: 36px; filter: brightness(.7); animation: bob 1.6s steps(2) infinite; }
 .parade img:nth-child(2n) { animation-delay: -.8s; }
