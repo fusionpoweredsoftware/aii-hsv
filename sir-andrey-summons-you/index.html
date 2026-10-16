@@ -177,11 +177,12 @@ body.locked { overflow: hidden; }
 })();
 </script>
 <script>
-// the address is stored encrypted; the key only travels in the invite link after the #
+// the address travels encrypted in the invite link after the #; this page holds the key
 (() => {
-  const CODE = ''; // paste the CODE from encrypt-address.sh here
-  const key = decodeURIComponent(location.hash.slice(1)), el = document.getElementById('addr');
-  if (!CODE || !key || !crypto.subtle) return;
+  const KEY = '0ee2e30ca46a16556a6be9f3fbc6f0aa';
+  const h = location.hash.slice(1).replace(/-/g, '+').replace(/_/g, '/'), el = document.getElementById('addr');
+  if (!h || !crypto.subtle) return;
+  const CODE = h + '='.repeat((4 - h.length % 4) % 4), key = KEY;
   (async () => {
     const raw = Uint8Array.from(atob(CODE), c => c.charCodeAt(0)), salt = raw.slice(8, 16), ct = raw.slice(16);
     const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(key), 'PBKDF2', false, ['deriveBits']);
