@@ -97,7 +97,7 @@ The AI Innovators of Huntsville meet in the Sony presentation room of Gigaparts 
 
       // Short talk names: the part before any colon ("Corner: Walk onto..." -> "Corner")
       const names = talks.map(c => clean(c.querySelector('.talk-title')?.textContent).split(':')[0].trim()).filter(Boolean);
-      const list = clean(doc.querySelector('.talks')?.dataset.nedTitle) || names.length > 1 ? names.slice(0, -1).join(', ') + (names.length > 2 ? ',' : '') + ' and ' + names.at(-1) : (names[0] || '');
+      const list = clean(doc.querySelector('.talks')?.dataset.nedTitle) || (names.length > 1 ? names.slice(0, -1).join(', ') + (names.length > 2 ? ',' : '') + ' and ' + names.at(-1) : (names[0] || ''));
       document.getElementById('title').textContent =
         `Monthly Meetup at ${venue} - AI Innovators of Huntsville${list ? ': ' + list : ''}`;
       document.getElementById('desc').textContent = [
