@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Next Event Description - AI Innovators of Huntsville</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050510; --card: rgba(15,15,40,0.7); --text: #f0f0f5; --muted: rgba(240,240,245,0.6);
+      --border: rgba(255,255,255,0.1); --purple: #8b5cf6; --cyan: #06b6d4;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+    h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.6rem; margin: 0 0 4px; }
+    .sub { color: var(--muted); margin: 0 0 24px; font-size: 0.95rem; }
+    .block { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+    .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .label { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+    button { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font: 600 0.9rem 'Inter', sans-serif; cursor: pointer; }
+    pre { margin: 0; white-space: pre-wrap; word-wrap: break-word; font: 0.95rem/1.5 'Inter', system-ui, sans-serif; }
+    .err { color: #f87171; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Next Event Description</h1>
+    <p class="sub">Generated from the <a href="flyer.html" style="color:var(--cyan)">flyer</a>. Update the flyer and this updates too.</p>
+    <div class="block">
+      <div class="head"><span class="label">Title</span><button data-copy="title">Copy</button></div>
+      <pre id="title">Loading&hellip;</pre>
+    </div>
+    <div class="block">
+      <div class="head"><span class="label">Description</span><button data-copy="desc">Copy</button></div>
+      <pre id="desc">Loading&hellip;</pre>
+    </div>
+  </div>
+  <script>
+    const ABOUT = `About AI Innovators of Huntsville:
+
+The AI Innovators of Huntsville meet in the Sony presentation room of Gigaparts every second Friday of the month (unless posted otherwise), discussing a wide variety of topics related to AI, such as:
+
+• What actually breaks when AI systems leave demos and hit the real world
+• Hardware-aware AI: sensors, latency, power, and failure modes
+• Coordinating multiple agents without centralized control
+• Where automation still needs humans in the loop—and why
+• Open protocols versus closed platforms for AI systems
+• Computer vision in uncontrolled environments
+• Building tools that survive bad data, noise, and ambiguity
+• Local experimentation with robotics, automation, and AI hardware
+• Practical ethics: responsibility when systems make mistakes
+• Collaborative projects and shared infrastructure within the Huntsville AI community`;
+    const OPEN_MIC = "Then we close with an open mic. The floor is yours: bring a project, a demo, a question, or something you've been experimenting with.";
+    const PIZZA = "🍕 Pizza will be available for the early birds, so come early, grab a slice, and settle in. 🍕";
+
+    const clean = s => (s || '').replace(/\s+/g, ' ').trim();
+    function ordinal(n) {
+      const v = n % 100;
+      return n + (v >= 11 && v <= 13 ? 'th' : ['th','st','nd','rd'][n % 10] || 'th');
+    }
+    function shortDate(d) {
+      // "Friday, November 13, 2026" -> "Friday, November 13th"
+      const m = d.match(/^(\w+),\s*(\w+)\s+(\d+)/);
+      return m ? `${m[1]}, ${m[2]} ${ordinal(+m[3])}` : d;
+    }
+
+    fetch('flyer.html', { cache: 'no-store' }).then(r => r.text()).then(html => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const meta = {};
+      doc.querySelectorAll('.flyer-meta .meta-item').forEach(m => {
+        meta[clean(m.querySelector('.meta-label')?.textContent).toLowerCase()] = clean(m.querySelector('.meta-value')?.textContent);
+      });
+      const date = meta.date || '';
+      const time = meta.time || '6:00 PM';
+      const venue = (meta.location || 'Gigaparts').split('·')[0].trim();
+
+      if (!date || /coming soon/i.test(date)) {
+        document.getElementById('title').textContent = 'Next event information coming soon.';
+        document.getElementById('desc').textContent = 'The flyer has no event yet.';
+        return;
+      }
+
+      const leads = ['We kick off with', 'Next,', 'Then', 'After that,'];
+      const talks = [...doc.querySelectorAll('.talks .talk-card')]
+        .filter(c => !/open mic/i.test(clean(c.querySelector('.talk-type')?.textContent)));
+      const paras = talks.map((c, i) => {
+        if (c.dataset.ned) return clean(c.dataset.ned);
+        const title = clean(c.querySelector('.talk-title')?.textContent);
+        const speaker = clean(c.querySelector('.talk-speaker')?.textContent);
+        const desc = clean(c.querySelector('.talk-desc')?.textContent);
+        const lead = leads[Math.min(i, leads.length - 1)];
+        return `${lead} ${speaker ? speaker + ' presents ' : ''}${title}. ${desc}`;
+      });
+
+      const firstTitle = clean(talks[0]?.querySelector('.talk-title')?.textContent);
+      document.getElementById('title').textContent =
+        `Monthly Meetup at ${venue} - AI Innovators of Huntsville${firstTitle ? ': ' + firstTitle : ''}`;
+      document.getElementById('desc').textContent = [
+        `AI Innovators of Huntsville - ${shortDate(date)}, ${time} at ${venue}.`,
+        ...paras, OPEN_MIC, PIZZA, ABOUT
+      ].join('\n\n');
+    }).catch(() => {
+      document.getElementById('desc').innerHTML = '<span class="err">Could not load the flyer.</span>';
+    });
+
+    document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(document.getElementById(b.dataset.copy).textContent);
+        b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy', 1500);
+      } catch { b.textContent = 'Select & copy'; }
+    }));
+  </script>
+</body>
+</html>
